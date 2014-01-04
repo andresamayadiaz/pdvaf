@@ -1,0 +1,33 @@
+<div class="page-header">
+  <%= link_to new_traslado_path, :class => 'btn btn-primary' do %>
+    <span class="glyphicon glyphicon-plus"></span>
+    Nuevo Traslado
+  <% end %>
+  <h1>Listado traslados</h1>
+</div>
+
+<div class="table-responsive">
+  <table class="table table-striped table-bordered table-hover">
+    <thead>
+      <tr>
+            <th>Tipo</th>
+            <th>Nombre</th>
+            <th>Tasa</th>
+            <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <%= content_tag_for(:tr, @traslados) do |traslado| %>
+            <td><%= traslado.tipo %></td>
+            <td><%= traslado.nombre %></td>
+            <td><%= traslado.tasa %></td>
+            <td><%= link_to 'Show', traslado %></td>
+        <td><%= link_to 'Edit', edit_traslado_path(traslado) %></td>
+        <td><%= link_to 'Destroy', traslado, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      <% end %>
+    </tbody>
+  </table>
+</div>

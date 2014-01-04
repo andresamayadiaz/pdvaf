@@ -17,3 +17,91 @@ Preferences:
 ________________________
 
 License
+
+
+________________________
+API
+________________________
+
+________________________
+Emision
+
+(
+    [metodo] = > emitir
+	[userg] = > 52b2f582 - a394 - 447c - b754 - 2210b86af0fc
+	[sucursalg] = > 52b2f582 - 9310 - 46e6 - a19e - 2210b86af0fc
+	[Comprobante] = > {
+        "fecha": "2014-01-04T01:52:17",
+        "serie": "52bda3bb-f73c-4847-abb2-4349b86af0fc",
+        "tipoDeComprobante": "ingreso",
+        "condicionesDePago": "CONTADO",
+        "formaDePago": "PAGO EN UNA SOLA EXHIBICION",
+        "subTotal": "150",
+        "descuento": "0",
+        "total": "174",
+        "decimales": "2",
+        "version": "2",
+        "metodoDePago": "NO IDENTIFICADO",
+        "numerocta": "NO IDENTIFICADO",
+        "moneda": "MXN",
+        "tipoCambio": "1",
+        "Receptor": {
+            "rfc": "LBR080722E41",
+            "nombre": "LOGISTICA BRENMARY, S.A. DE C.V.",
+            "email": "oramirez@cscnet.com.mx",
+            "Domicilio": {
+                "noExterior": "SN",
+                "noInterior": "",
+                "calle": "CARRETERA AEROPUERTO KM 1.345",
+                "colonia": "SC",
+                "referencia": "",
+                "municipio": "NUEVO LAREDO",
+                "estado": "TAMAULIPAS",
+                "pais": "MEXICO",
+                "codigoPostal": "88009"
+            }
+        },
+        "Conceptos": {
+            "Concepto": [{
+                "cantidad": "1",
+                "unidad": "NO APLICA",
+                "descripcion": "PAGO PREVALIDACION PEDIMENTOS DE IMPORTACION TEMPORAL DE REMOLQUES, SEMIREMOLQUES Y PORTA CONTENEDORES. LEY ADUANERA ART 16-B D.O.F. 01-ENERO-2002 REGLA 3.2.16 INCISO J D.O.F. 22-ABRIL-2002",
+                "valorUnitario": "150",
+                "importe": "150"
+            }]
+        },
+        "Impuestos": {
+            "Retenciones": [{
+                "impuesto": "IVA",
+                "importe": "0"
+            }],
+            "Traslados": [{
+                "impuesto": "IVA",
+                "tasa": "16",
+                "importe": "24"
+            }],
+            "totalImpuestosRetenidos": "0",
+            "totalImpuestosTrasladados": "24"
+        },
+        "Addenda": ""
+    }
+)
+
+________________________
+Retorno
+
+{
+    "exito": 1,
+    "id": "52c8106e-b310-4882-bdce-2623b86af0fc",
+    "mensaje": "CFDi generado correctamente",
+    "selloDigital": "bABimC4Wgns9H8ObRhjytQH4NscfwSRj0ECLCwCA4PefTZM4b8ElxsithR89qEPsCEuHvtBQkDgDZHOh9e1b7nSlPJQlLznIq0mB9eWK9zxLWiI2nuMUoOslkbyibkLiXiY3CGMGfokqytj3r5089HlSTTjV+A2RA8D2VBZqHmQ=",
+    "selloDigitalSAT": "kf82+RChL2UUPGvo2gTmUyWi7mumIi8aXPDegmCe+82VApet7UVrGN88buzGx+fCgVA8F++87S6ZaqvE6O8d7lHZkmp+qH26ha76Q7whLX+YMhIC70KgC9EfA9KgXtEfD31TOTHl\/rDieOSIuk7cdqWg8CTGig\/MZBW6yna+4bQ=",
+    "NoSerieCertificado": "00001000000202347338",
+    "NoSerieCertificadoSAT": "00001000000202639096",
+    "Folio": "B-369",
+    "uuid": "AF6FA3F5-1F2D-4450-910B-222D1EED6800",
+    "fechatimbrado": "2014-01-04T13:51:10",
+    "CadenaOriginal": "||3.2|2014-01-04T13:45:16|ingreso|PAGO EN UNA SOLA EXHIBICION|15 DIAS|1500|0|1|MXN|1680|transferencia electronica|PROLONGACION MONTERREY #7617 FRACC. AMERICA SUR #4 NUEVO LAREDO Tamaulipas Mexico 88299|5719, 9981|FMS900401RL2|FLETES MODERNOS SAGO SA DE CV|PROLONGACION MONTERREY|7617|FRACC. AMERICA SUR #4|NUEVO LAREDO|Tamaulipas|Mexico|88299|PROLONGACION MONTERREY|7617|FRACC. AMERICA SUR #4|NUEVO LAREDO|Tamaulipas|Mexico|88299|REGIMEN CONTRIBUYENTE DE REGIMEN SIMPLIFICADO|CMA9109119L0|COMERCIALIZADORA MEXICO AMERICANA, S. DE R.L. DE C.V.|AV.NEXTENGO|78|SANTA CRUZ ACAYUCAN|AZCAPOTZALCO|DISTRITO FEDERAL|MEXICO|02770|1|NO APLICA|FLETE - FLETE|1500|1500|IVA|60|60|IVA|16|240|240||",
+    "CadenaOriginalSAT": "||1.0|AF6FA3F5-1F2D-4450-910B-222D1EED6800|2014-01-04T13:51:10|kf82+RChL2UUPGvo2gTmUyWi7mumIi8aXPDegmCe+82VApet7UVrGN88buzGx+fCgVA8F++87S6ZaqvE6O8d7lHZkmp+qH26ha76Q7whLX+YMhIC70KgC9EfA9KgXtEfD31TOTHl\/rDieOSIuk7cdqWg8CTGig\/MZBW6yna+4bQ=|00001000000202639096||",
+    "url": "http:\/\/v32.facturasoftcsc.com\/fsv32\/cfdis\/getxml\/52c8106e-b310-4882-bdce-2623b86af0fc\/529f2a15-e360-46d5-bb1d-6ecbb86af0fc\/529f2a15-7490-4562-82e9-6ecbb86af0fc"
+}

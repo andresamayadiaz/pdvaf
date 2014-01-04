@@ -1,0 +1,20 @@
+<div class="page-header">
+  <%= link_to productos_path, :class => 'btn btn-default' do %>
+    <span class="glyphicon glyphicon-list-alt"></span>
+    Back
+  <% end %>
+  <%= link_to edit_producto_path(@producto), :class => 'btn btn-primary' do %>
+    <span class="glyphicon glyphicon-pencil"></span>
+    Edit
+  <% end %>
+  <h1>Show producto</h1>
+</div>
+
+<dl class="dl-horizontal">
+  <dt>Nombre:</dt>
+  <dd><%= @producto.nombre %></dd>
+
+  <dt>Unidad:</dt>
+  <dd><%= @producto.unidad.nombre %></dd>
+
+</dl>

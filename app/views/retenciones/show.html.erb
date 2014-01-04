@@ -1,0 +1,23 @@
+<div class="page-header">
+  <%= link_to retenciones_path, :class => 'btn btn-default' do %>
+    <span class="glyphicon glyphicon-list-alt"></span>
+    Atras
+  <% end %>
+  <%= link_to edit_retencion_path(@retencion), :class => 'btn btn-primary' do %>
+    <span class="glyphicon glyphicon-pencil"></span>
+    Editar
+  <% end %>
+  <h1>Ver retencion</h1>
+</div>
+
+<dl class="dl-horizontal">
+  <dt>Tipo:</dt>
+  <dd><%= @retencion.tipo %></dd>
+
+  <dt>Nombre:</dt>
+  <dd><%= @retencion.nombre %></dd>
+
+  <dt>Tasa:</dt>
+  <dd><%= @retencion.tasa %></dd>
+
+</dl>

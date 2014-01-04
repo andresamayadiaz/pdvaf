@@ -1,0 +1,49 @@
+<div class="page-header">
+  <%= link_to new_cliente_path, :class => 'btn btn-primary' do %>
+    <span class="glyphicon glyphicon-plus"></span>
+    New Cliente
+  <% end %>
+  <h1>Listing clientes</h1>
+</div>
+
+<div class="table-responsive">
+  <table class="table table-striped table-bordered table-hover">
+    <thead>
+      <tr>
+            <th>Rfc</th>
+            <th>Nombre</th>
+            <th>Email</th>
+            <th>Noexterior</th>
+            <th>Nointerior</th>
+            <th>Calle</th>
+            <th>Colonia</th>
+            <th>Municipio</th>
+            <th>Estado</th>
+            <th>Pais</th>
+            <th>Codigopostal</th>
+            <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <%= content_tag_for(:tr, @clientes) do |cliente| %>
+            <td><%= cliente.rfc %></td>
+            <td><%= cliente.nombre %></td>
+            <td><%= cliente.email %></td>
+            <td><%= cliente.noExterior %></td>
+            <td><%= cliente.noInterior %></td>
+            <td><%= cliente.calle %></td>
+            <td><%= cliente.colonia %></td>
+            <td><%= cliente.municipio %></td>
+            <td><%= cliente.estado %></td>
+            <td><%= cliente.pais %></td>
+            <td><%= cliente.codigoPostal %></td>
+            <td><%= link_to 'Show', cliente %></td>
+        <td><%= link_to 'Edit', edit_cliente_path(cliente) %></td>
+        <td><%= link_to 'Destroy', cliente, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      <% end %>
+    </tbody>
+  </table>
+</div>

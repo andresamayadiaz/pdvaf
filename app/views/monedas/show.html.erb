@@ -1,0 +1,23 @@
+<div class="page-header">
+  <%= link_to monedas_path, :class => 'btn btn-default' do %>
+    <span class="glyphicon glyphicon-list-alt"></span>
+    Back
+  <% end %>
+  <%= link_to edit_moneda_path(@moneda), :class => 'btn btn-primary' do %>
+    <span class="glyphicon glyphicon-pencil"></span>
+    Edit
+  <% end %>
+  <h1>Show moneda</h1>
+</div>
+
+<dl class="dl-horizontal">
+  <dt>Nombre:</dt>
+  <dd><%= @moneda.nombre %></dd>
+
+  <dt>Codigo:</dt>
+  <dd><%= @moneda.codigo %></dd>
+
+  <dt>Tipocambio:</dt>
+  <dd><%= @moneda.tipocambio %></dd>
+
+</dl>

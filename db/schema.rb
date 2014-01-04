@@ -11,7 +11,70 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140104193752) do
+ActiveRecord::Schema.define(version: 20140104203343) do
+
+  create_table "clientes", force: true do |t|
+    t.string   "rfc"
+    t.text     "nombre"
+    t.string   "email"
+    t.string   "noExterior"
+    t.string   "noInterior"
+    t.string   "calle"
+    t.string   "colonia"
+    t.string   "municipio"
+    t.string   "estado"
+    t.string   "pais"
+    t.string   "codigoPostal"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "conceptos", force: true do |t|
+    t.decimal  "cantidad"
+    t.string   "unidad"
+    t.text     "descripcion"
+    t.decimal  "valorUnitario"
+    t.decimal  "importe"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "formasdepagos", force: true do |t|
+    t.string   "nombre"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "metodosdepagos", force: true do |t|
+    t.string   "nombre"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "monedas", force: true do |t|
+    t.string   "nombre"
+    t.string   "codigo"
+    t.decimal  "tipocambio"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "productos", force: true do |t|
+    t.text     "nombre"
+    t.integer  "unidad_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "productos", ["unidad_id"], name: "index_productos_on_unidad_id"
+
+  create_table "retenciones", force: true do |t|
+    t.string   "tipo"
+    t.string   "nombre"
+    t.decimal  "tasa"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "roles", force: true do |t|
     t.string   "name"
@@ -23,6 +86,20 @@ ActiveRecord::Schema.define(version: 20140104193752) do
 
   add_index "roles", ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id"
   add_index "roles", ["name"], name: "index_roles_on_name"
+
+  create_table "traslados", force: true do |t|
+    t.string   "tipo"
+    t.string   "nombre"
+    t.decimal  "tasa"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "unidades", force: true do |t|
+    t.string   "nombre"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
