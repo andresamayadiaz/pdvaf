@@ -1,4 +1,6 @@
 Pdvaf::Application.routes.draw do
+  resources :precios
+
   resources :conceptos
 
   resources :remisiones

@@ -11,29 +11,54 @@
       </ul>
     </div>
   <% end %>
-
-  <div class="form-group">
-    <%= f.label :nombre, :class => "col-lg-2 control-label" %>
-    <div class="col-lg-10">
-      <%= f.text_area :nombre, :class => "form-control" %>
+  
+  <div class="row">
+    <div class="col-lg-8">
+      <div class="form-group">
+        <%= f.label :nombre, :class => "col-lg-2 control-label" %>
+        <div class="col-lg-10">
+          <%= f.text_area :nombre, :class => "form-control" %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :codigobarras, :class => "col-lg-2 control-label" %>
+        <div class="col-lg-10">
+          <%= f.text_field :codigobarras, :class => "form-control" %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :unidad, :class => "col-lg-2 control-label" %>
+        <div class="col-lg-10">
+          <% #f.select_field :unidad, :class => "form-control" %>
+          <%= collection_select(:producto, :unidad_id, @unidades, :id, :nombre, {:prompt => false}, :class => "form-control") %>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-lg-offset-2 col-lg-10">
+          <%= f.submit :class => "btn btn-primary" %>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <td>Moneda</td>
+            <td>Precio</td>
+          </tr>
+        </thead>
+        <tbody>
+        <% @monedas.each_with_index  do |moneda, index| %>
+            <tr>
+              <td><%= moneda.codigo %><%= moneda.id %></td>
+              <%= f.fields_for :precios, @producto.precios do |precio_form| %>
+                <td><%= precio_form.text_field :precio %><%= precio_form.hidden_field :moneda_id, :value => moneda.id %></td>
+              <% end %>
+            </tr>
+        <% end %>
+      </tbody>
+      </table>
     </div>
   </div>
-  <div class="form-group">
-    <%= f.label :codigobarras, :class => "col-lg-2 control-label" %>
-    <div class="col-lg-10">
-      <%= f.text_field :codigobarras, :class => "form-control" %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :unidad, :class => "col-lg-2 control-label" %>
-    <div class="col-lg-10">
-      <% #f.select_field :unidad, :class => "form-control" %>
-      <%= collection_select(:producto, :unidad_id, @unidades, :id, :nombre, {:prompt => false}, :class => "form-control") %>
-    </div>
-  </div>
-  <div class="form-group">
-    <div class="col-lg-offset-2 col-lg-10">
-      <%= f.submit :class => "btn btn-primary" %>
-    </div>
-  </div>
+  
 <% end %>

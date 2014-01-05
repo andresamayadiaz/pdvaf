@@ -1,0 +1,33 @@
+<div class="page-header">
+  <%= link_to new_precio_path, :class => 'btn btn-primary' do %>
+    <span class="glyphicon glyphicon-plus"></span>
+    Nuevo Precio
+  <% end %>
+  <h1>Listado precios</h1>
+</div>
+
+<div class="table-responsive">
+  <table class="table table-striped table-bordered table-hover">
+    <thead>
+      <tr>
+            <th>Producto</th>
+            <th>Moneda</th>
+            <th>Precio</th>
+            <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <%= content_tag_for(:tr, @precios) do |precio| %>
+            <td><%= precio.producto %></td>
+            <td><%= precio.moneda %></td>
+            <td><%= precio.precio %></td>
+            <td><%= link_to 'Show', precio %></td>
+        <td><%= link_to 'Edit', edit_precio_path(precio) %></td>
+        <td><%= link_to 'Destroy', precio, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      <% end %>
+    </tbody>
+  </table>
+</div>

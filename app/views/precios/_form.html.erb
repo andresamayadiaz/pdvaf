@@ -1,0 +1,38 @@
+<%= form_for(@precio, :html => { :class => "form-horizontal" }) do |f| %>
+  <% if @precio.errors.any? %>
+    <div class="alert alert-danger alert-dismissable">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      <h4><%= pluralize(@precio.errors.count, "error") %> prohibited this precio from being saved:</h4>
+
+      <ul>
+      <% @precio.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :producto, :class => "col-lg-2 control-label" %>
+    <div class="col-lg-10">
+      <%= f.text_field :producto, :class => "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :moneda, :class => "col-lg-2 control-label" %>
+    <div class="col-lg-10">
+      <%= f.text_field :moneda, :class => "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :precio, :class => "col-lg-2 control-label" %>
+    <div class="col-lg-10">
+      <%= f.text_field :precio, :class => "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-lg-offset-2 col-lg-10">
+      <%= f.submit :class => "btn btn-primary" %>
+    </div>
+  </div>
+<% end %>
