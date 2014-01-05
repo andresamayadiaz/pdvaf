@@ -17,6 +17,7 @@ class RemisionesController < ApplicationController
     @remision = Remision.new
     @clientes = Cliente.all
     @formasdepago = Formasdepago.all
+    @metodosdepago = Metodosdepago.all
   end
 
   # GET /remisiones/1/edit

@@ -4,7 +4,19 @@ class ProductosController < ApplicationController
   # GET /productos
   # GET /productos.json
   def index
-    @productos = Producto.all
+    
+     if params[:term]
+       @productos = Producto.order("nombre ASC").find(:all, :conditions => "productos.codigobarras LIKE '%#{params[:term]}%' OR productos.nombre LIKE '%#{params[:term]}%'")
+     else
+       @productos = Producto.all
+     end
+    
+     respond_to do |format|  
+       format.html # index.html.erb  
+       # Here is where you can specify how to handle the request for "/productos.json"
+       format.json { render :json => @productos.to_json(:include => :unidad) }
+    end
+    
   end
 
   # GET /productos/1
