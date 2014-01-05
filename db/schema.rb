@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140104222625) do
+ActiveRecord::Schema.define(version: 20140105002532) do
 
   create_table "clientes", force: true do |t|
     t.string   "rfc"
@@ -33,11 +33,14 @@ ActiveRecord::Schema.define(version: 20140104222625) do
     t.decimal  "cantidad"
     t.string   "unidad"
     t.text     "descripcion"
-    t.decimal  "valorUnitario"
+    t.decimal  "valorunitario"
     t.decimal  "importe"
+    t.integer  "remision_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "conceptos", ["remision_id"], name: "index_conceptos_on_remision_id"
 
   create_table "condicionesdepagos", force: true do |t|
     t.string   "nombre"
@@ -82,26 +85,24 @@ ActiveRecord::Schema.define(version: 20140104222625) do
 
   add_index "productos", ["unidad_id"], name: "index_productos_on_unidad_id"
 
-  create_table "productos_traslados", id: false, force: true do |t|
-    t.integer "producto_id"
-    t.integer "traslado_id"
-  end
-
-  add_index "productos_traslados", ["producto_id"], name: "index_productos_traslados_on_producto_id"
-  add_index "productos_traslados", ["traslado_id"], name: "index_productos_traslados_on_traslado_id"
-
-  create_table "productos_traslados_tables", id: false, force: true do |t|
-    t.integer "producto_id"
-    t.integer "traslado_id"
-  end
-
-  create_table "retenciones", force: true do |t|
-    t.string   "tipo"
-    t.string   "nombre"
-    t.decimal  "tasa"
+  create_table "remisiones", force: true do |t|
+    t.integer  "cliente_id"
+    t.integer  "condicionesdepago_id"
+    t.integer  "formasdepago_id"
+    t.integer  "metodosdepago_id"
+    t.decimal  "subtotal"
+    t.decimal  "descuento"
+    t.decimal  "total"
+    t.decimal  "totalimpuestosretenidos"
+    t.decimal  "totalimpuestostrasladados"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "remisiones", ["cliente_id"], name: "index_remisiones_on_cliente_id"
+  add_index "remisiones", ["condicionesdepago_id"], name: "index_remisiones_on_condicionesdepago_id"
+  add_index "remisiones", ["formasdepago_id"], name: "index_remisiones_on_formasdepago_id"
+  add_index "remisiones", ["metodosdepago_id"], name: "index_remisiones_on_metodosdepago_id"
 
   create_table "roles", force: true do |t|
     t.string   "name"
@@ -113,14 +114,6 @@ ActiveRecord::Schema.define(version: 20140104222625) do
 
   add_index "roles", ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id"
   add_index "roles", ["name"], name: "index_roles_on_name"
-
-  create_table "traslados", force: true do |t|
-    t.string   "tipo"
-    t.string   "nombre"
-    t.decimal  "tasa"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
 
   create_table "unidades", force: true do |t|
     t.string   "nombre"

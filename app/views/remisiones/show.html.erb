@@ -1,0 +1,41 @@
+<div class="page-header">
+  <%= link_to remisiones_path, :class => 'btn btn-default' do %>
+    <span class="glyphicon glyphicon-list-alt"></span>
+    Atras
+  <% end %>
+  <%= link_to edit_remision_path(@remision), :class => 'btn btn-primary' do %>
+    <span class="glyphicon glyphicon-pencil"></span>
+    Editar
+  <% end %>
+  <h1>Ver remision</h1>
+</div>
+
+<dl class="dl-horizontal">
+  <dt>Cliente:</dt>
+  <dd><%= @remision.cliente %></dd>
+
+  <dt>Condicionesdepago:</dt>
+  <dd><%= @remision.condicionesdepago %></dd>
+
+  <dt>Formasdepago:</dt>
+  <dd><%= @remision.formasdepago %></dd>
+
+  <dt>Metodosdepago:</dt>
+  <dd><%= @remision.metodosdepago %></dd>
+
+  <dt>Subtotal:</dt>
+  <dd><%= @remision.subtotal %></dd>
+
+  <dt>Descuento:</dt>
+  <dd><%= @remision.descuento %></dd>
+
+  <dt>Total:</dt>
+  <dd><%= @remision.total %></dd>
+
+  <dt>Totalimpuestosretenidos:</dt>
+  <dd><%= @remision.totalimpuestosretenidos %></dd>
+
+  <dt>Totalimpuestostrasladados:</dt>
+  <dd><%= @remision.totalimpuestostrasladados %></dd>
+
+</dl>

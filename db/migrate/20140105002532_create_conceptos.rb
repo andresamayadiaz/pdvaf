@@ -4,8 +4,9 @@ class CreateConceptos < ActiveRecord::Migration
       t.decimal :cantidad
       t.string :unidad
       t.text :descripcion
-      t.decimal :valorUnitario
+      t.decimal :valorunitario
       t.decimal :importe
+      t.references :remision, index: true
 
       t.timestamps
     end

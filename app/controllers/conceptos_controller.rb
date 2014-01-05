@@ -69,6 +69,6 @@ class ConceptosController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def concepto_params
-      params.require(:concepto).permit(:cantidad, :unidad, :descripcion, :valorUnitario, :importe)
+      params.require(:concepto).permit(:cantidad, :unidad, :descripcion, :valorunitario, :importe, :remision_id)
     end
 end

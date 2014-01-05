@@ -1,9 +1,11 @@
 Pdvaf::Application.routes.draw do
+  resources :conceptos
+
+  resources :remisiones
+
   resources :condicionesdepagos
 
   resources :configuraciones
-
-  resources :conceptos
 
   resources :monedas
 

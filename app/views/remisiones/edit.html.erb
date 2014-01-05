@@ -1,0 +1,13 @@
+<div class="page-header">
+  <%= link_to remisiones_path, :class => 'btn btn-default' do %>
+    <span class="glyphicon glyphicon-list-alt"></span>
+    Atras
+  <% end %>
+  <%= link_to @remision, :class => 'btn btn-primary' do %>
+    <span class="glyphicon glyphicon-info-sign"></span>
+    Ver
+  <% end %>
+  <h1>Editar remision</h1>
+</div>
+
+<%= render 'form' %>

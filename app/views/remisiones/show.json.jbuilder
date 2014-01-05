@@ -1,0 +1,1 @@
+json.extract! @remision, :id, :cliente_id, :condicionesdepago_id, :formasdepago_id, :metodosdepago_id, :subtotal, :descuento, :total, :totalimpuestosretenidos, :totalimpuestostrasladados, :created_at, :updated_at

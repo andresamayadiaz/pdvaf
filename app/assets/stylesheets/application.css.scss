@@ -11,3 +11,16 @@
  *= require_self
  *= require_tree .
  */
+.invoice-head td {
+  padding: 0 8px;
+}
+.invoice-body{
+  background-color:transparent;
+}
+.invoice-thank{
+  margin-top: 60px;
+  padding: 5px;
+}
+address{
+  margin-top:15px;
+}
