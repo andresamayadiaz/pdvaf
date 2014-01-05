@@ -1,0 +1,2 @@
+module CondicionesdepagosHelper
+end

@@ -11,6 +11,7 @@
     <thead>
       <tr>
             <th>Nombre</th>
+            <th>Codigo Barras</th>
             <th>Unidad</th>
             <th></th>
         <th></th>
@@ -21,6 +22,7 @@
     <tbody>
       <%= content_tag_for(:tr, @productos) do |producto| %>
             <td><%= producto.nombre %></td>
+            <td><%= producto.codigobarras %></td>
             <td><%= producto.unidad.nombre %></td>
             <td><%= link_to 'Ver', producto %></td>
         <td><%= link_to 'Editar', edit_producto_path(producto) %></td>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140104203343) do
+ActiveRecord::Schema.define(version: 20140104222625) do
 
   create_table "clientes", force: true do |t|
     t.string   "rfc"
@@ -35,6 +35,19 @@ ActiveRecord::Schema.define(version: 20140104203343) do
     t.text     "descripcion"
     t.decimal  "valorUnitario"
     t.decimal  "importe"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "condicionesdepagos", force: true do |t|
+    t.string   "nombre"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "configuraciones", force: true do |t|
+    t.string   "nombre"
+    t.string   "valor"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -64,9 +77,23 @@ ActiveRecord::Schema.define(version: 20140104203343) do
     t.integer  "unidad_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "codigobarras"
   end
 
   add_index "productos", ["unidad_id"], name: "index_productos_on_unidad_id"
+
+  create_table "productos_traslados", id: false, force: true do |t|
+    t.integer "producto_id"
+    t.integer "traslado_id"
+  end
+
+  add_index "productos_traslados", ["producto_id"], name: "index_productos_traslados_on_producto_id"
+  add_index "productos_traslados", ["traslado_id"], name: "index_productos_traslados_on_traslado_id"
+
+  create_table "productos_traslados_tables", id: false, force: true do |t|
+    t.integer "producto_id"
+    t.integer "traslado_id"
+  end
 
   create_table "retenciones", force: true do |t|
     t.string   "tipo"

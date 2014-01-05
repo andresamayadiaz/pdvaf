@@ -1,0 +1,26 @@
+<%= form_for(@condicionesdepago, :html => { :class => "form-horizontal" }) do |f| %>
+  <% if @condicionesdepago.errors.any? %>
+    <div class="alert alert-danger alert-dismissable">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      <h4><%= pluralize(@condicionesdepago.errors.count, "error") %> prohibited this condicionesdepago from being saved:</h4>
+
+      <ul>
+      <% @condicionesdepago.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :nombre, :class => "col-lg-2 control-label" %>
+    <div class="col-lg-10">
+      <%= f.text_field :nombre, :class => "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-lg-offset-2 col-lg-10">
+      <%= f.submit :class => "btn btn-primary" %>
+    </div>
+  </div>
+<% end %>

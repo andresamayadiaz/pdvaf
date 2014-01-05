@@ -20,6 +20,7 @@ class ProductosController < ApplicationController
 
   # GET /productos/1/edit
   def edit
+    @unidades = Unidad.all
   end
 
   # POST /productos
@@ -46,6 +47,7 @@ class ProductosController < ApplicationController
         format.html { redirect_to @producto, notice: 'Producto was successfully updated.' }
         format.json { head :no_content }
       else
+        @unidades = Unidad.all
         format.html { render action: 'edit' }
         format.json { render json: @producto.errors, status: :unprocessable_entity }
       end
@@ -70,6 +72,6 @@ class ProductosController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def producto_params
-      params.require(:producto).permit(:nombre, :unidad_id)
+      params.require(:producto).permit(:nombre, :unidad_id, :codigobarras)
     end
 end

@@ -20,5 +20,7 @@ ActiveSupport::Inflector.inflections do |inflect|
   inflect.irregular 'unidad', 'unidades'
   inflect.irregular 'retencion', 'retenciones'
   inflect.irregular 'concepto', 'conceptos'
+  inflect.irregular 'configuracion', 'configuraciones'
+  inflect.irregular 'remision', 'remisiones'
   
 end

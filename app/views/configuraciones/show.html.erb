@@ -1,0 +1,20 @@
+<div class="page-header">
+  <%= link_to configuraciones_path, :class => 'btn btn-default' do %>
+    <span class="glyphicon glyphicon-list-alt"></span>
+    Atras
+  <% end %>
+  <%= link_to edit_configuracion_path(@configuracion), :class => 'btn btn-primary' do %>
+    <span class="glyphicon glyphicon-pencil"></span>
+    Editar
+  <% end %>
+  <h1>Ver configuracion</h1>
+</div>
+
+<dl class="dl-horizontal">
+  <dt>Nombre:</dt>
+  <dd><%= @configuracion.nombre %></dd>
+
+  <dt>Valor:</dt>
+  <dd><%= @configuracion.valor %></dd>
+
+</dl>
