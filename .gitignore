@@ -31,8 +31,8 @@ db/*.sqlite3
 .rspec
 .redcar/
 .sass-cache
-/config/config.yml
-/config/database.yml
+#/config/config.yml
+#/config/database.yml
 /coverage.data
 /coverage/
 /db/*.javadb/
@@ -79,4 +79,4 @@ pickle-email-*.html
 **.swp
 
 # Ignore application configuration
-/config/application.yml
+#/config/application.yml
