@@ -34,30 +34,19 @@
         </div>
       </div>
       <div class="form-group">
+        <%= f.label :precio, :class => "col-lg-2 control-label" %>
+        <div class="col-lg-10">
+          <%= f.text_field :precio, :class => "form-control" %>
+        </div>
+      </div>
+      <div class="form-group">
         <div class="col-lg-offset-2 col-lg-10">
           <%= f.submit :class => "btn btn-primary" %>
         </div>
       </div>
     </div>
     <div class="col-lg-4">
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <td>Moneda</td>
-            <td>Precio</td>
-          </tr>
-        </thead>
-        <tbody>
-        <% @monedas.each_with_index  do |moneda, index| %>
-            <tr>
-              <td><%= moneda.codigo %><%= moneda.id %></td>
-              <%= f.fields_for :precios, @producto.precios do |precio_form| %>
-                <td><%= precio_form.text_field :precio %><%= precio_form.hidden_field :moneda_id, :value => moneda.id %></td>
-              <% end %>
-            </tr>
-        <% end %>
-      </tbody>
-      </table>
+		&nbsp;
     </div>
   </div>
   

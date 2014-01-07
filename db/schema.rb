@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140105201352) do
+ActiveRecord::Schema.define(version: 20140107005934) do
 
   create_table "clientes", force: true do |t|
     t.string   "rfc"
@@ -93,6 +93,7 @@ ActiveRecord::Schema.define(version: 20140105201352) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "codigobarras"
+    t.decimal  "precio"
   end
 
   add_index "productos", ["unidad_id"], name: "index_productos_on_unidad_id"

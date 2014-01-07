@@ -13,6 +13,7 @@
             <th>Nombre</th>
             <th>Codigo Barras</th>
             <th>Unidad</th>
+			<th>Precio</th>
             <th></th>
         <th></th>
         <th></th>
@@ -24,6 +25,7 @@
             <td><%= producto.nombre %></td>
             <td><%= producto.codigobarras %></td>
             <td><%= producto.unidad.nombre %></td>
+			<td><%= number_to_currency(producto.precio, {:precision => 2}) %></td>
             <td><%= link_to 'Ver', producto %></td>
         <td><%= link_to 'Editar', edit_producto_path(producto) %></td>
         <td><%= link_to 'Eliminar', producto, method: :delete, data: { confirm: 'Are you sure?' } %></td>

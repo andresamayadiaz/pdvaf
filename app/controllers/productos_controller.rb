@@ -28,14 +28,11 @@ class ProductosController < ApplicationController
   def new
     @producto = Producto.new
     @unidades = Unidad.all
-    @monedas = Moneda.all
-    @producto.precios.build
   end
 
   # GET /productos/1/edit
   def edit
     @unidades = Unidad.all
-    @monedas = Moneda.all
   end
 
   # POST /productos
@@ -87,6 +84,6 @@ class ProductosController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def producto_params
-      params.require(:producto).permit(:nombre, :unidad_id, :codigobarras, precios_attributes: [:producto_id, :moneda_id, :precio])
+      params.require(:producto).permit(:nombre, :unidad_id, :codigobarras, :precio)
     end
 end

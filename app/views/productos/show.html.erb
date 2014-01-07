@@ -19,5 +19,8 @@
 
   <dt>Unidad:</dt>
   <dd><%= @producto.unidad.nombre %></dd>
+  
+  <dt>Precio:</dt>
+  <dd><%= number_to_currency(@producto.precio, {:precision => 2}) %></dd>
 
 </dl>

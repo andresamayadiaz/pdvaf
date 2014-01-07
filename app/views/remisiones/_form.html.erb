@@ -56,7 +56,7 @@
           <th>P. Unit.</th>
           <th>Cantidad</th>
           <th>Unidad</th>
-					<th>Importe</th>
+		  <th>Importe</th>
 				</tr>
   			<tr>
           <td class="col-lg-1"><div id="agregar" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span></div></td>
@@ -64,7 +64,7 @@
   				<td class="col-lg-2"><%= text_field_tag "punit", nil, {:class => "form-control text-right"} %></td>
           <td class="col-lg-1"><%= text_field_tag "cantidad", nil, {:class => "form-control text-right"} %></td>
   				<td class="col-lg-2"><%= text_field_tag "unidad", nil, {:class => "form-control"} %></td>
-          <td class="col-lg-2"><p class="lead text-right">$20,000.00</p></td>
+          <td class="col-lg-2"><p id="importe" class="lead text-right">$0.00</p></td>
   			</tr>
 			</thead>
 			<tbody id="conceptos">
