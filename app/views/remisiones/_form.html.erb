@@ -14,7 +14,7 @@
 
 <div class="container">
 	<div class="row">
-		<div class="col-md-4">
+		<div class="col-md-5">
             <img src="#" class="img-rounded logo">
 			<address>
 	        <strong>ACME, Inc.</strong><br>
@@ -22,7 +22,7 @@
 	        Kent, WA 98089<br>
     	</address>
 		</div>
-		<div class="col-md-4 well">
+		<div class="col-md-6 well">
 			<table class="invoice-head">
 				<tbody>
 					<tr>
@@ -42,51 +42,73 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-md-8">
+		<div class="col-md-12">
 			<h2>Conceptos</h2>
 		</div>
 	</div>
 	<div class="row">
-  	<div class="col-md-8 well invoice-body">
+  	<div class="col-md-12 invoice-body">
   		<table class="table table-bordered table-striped">
 			<thead>
 				<tr>
-          <th>&nbsp;</th>
-          <th>Description</th>
-          <th>P. Unit.</th>
-          <th>Cantidad</th>
-          <th>Unidad</th>
-		  <th>Importe</th>
-				</tr>
-  			<tr>
-          <td class="col-lg-1"><div id="agregar" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span></div></td>
-  				<td class="col-lg-6"><%= text_area_tag "concepto", nil, {:class => "form-control", :placeholder => "Producto o Descripcion"} %></td>
-  				<td class="col-lg-2"><%= text_field_tag "punit", nil, {:class => "form-control text-right"} %></td>
-          <td class="col-lg-1"><%= text_field_tag "cantidad", nil, {:class => "form-control text-right"} %></td>
-  				<td class="col-lg-2"><%= text_field_tag "unidad", nil, {:class => "form-control"} %></td>
-          <td class="col-lg-2"><p id="importe" class="lead text-right">$0.00</p></td>
-  			</tr>
+		          <th><div id="agregar" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span></div></th>
+		          <th>Descripción</th>
+		          <th>P. Unit. ($)</th>
+		          <th>Cantidad</th>
+		          <th>Unidad</th>
+				  <th>IVA Traslad. (%)</th>
+				  <th class="visible"><div id="otrosimptos" class="btn btn-primary">Ver Otros Impuestos</div></th>
+				  <th class="hidden oculto">IEPS Traslad. (%)</th>
+				  <th class="hidden oculto">IVA Reten. (%)</th>
+				  <th class="hidden oculto">ISR Reten. (%)</th>
+				  <th>Importe ($)</th>
+		  		</tr>
 			</thead>
 			<tbody id="conceptos">
 			</tbody>
-      <tbody id="totales">
-        <tr>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-  				<td>&nbsp;</td>
-          <td><strong>SubTotal</strong></td>
-          <td><p class="lead text-right">$1000.00</strong></td>
-        </tr>
-        <tr>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-  				<td><strong>Total</strong></td>
-  				<td><p class="lead text-right">$1000.00</strong></td>
-  			</tr>
-      </tbody>
+		</table>
+	</div>
+	</div>
+	<div class="row">
+  	<div class="col-md-4 col-md-offset-8">
+		<table class="table table-striped">
+	      <tbody id="totales">
+	        <tr>
+				<td>&nbsp;</td>
+	          <td><strong>SubTotal</strong></td>
+	          <td><p id="subtotal" class="lead text-right">$0.00</strong></td>
+	        </tr>
+	        <tr>
+	  		  <td><strong>Descuento</strong></td>
+	          <td><%= text_field_tag "descuento", nil, {:class => "form-control text-right"} %>%</td>
+	          <td><p id="retenidos" class="lead text-right">$0.00</strong></td>
+	        </tr>
+	        <tr>
+				<td>&nbsp;</td>
+	          <td><strong>IVA Trasladado</strong></td>
+	          <td><p id="totivatrasladado" class="lead text-right">$0.00</strong></td>
+	        </tr>
+	        <tr class="hidden oculto">
+				<td>&nbsp;</td>
+	          <td><strong>IEPS Trasladado</strong></td>
+	          <td><p id="totiepstrasladado" class="lead text-right">$0.00</strong></td>
+	        </tr>
+	        <tr class="hidden oculto">
+				<td>&nbsp;</td>
+	          <td><strong>IVA Retenido</strong></td>
+	          <td><p id="totivaretenido" class="lead text-right">$0.00</strong></td>
+	        </tr>
+	        <tr class="hidden oculto">
+				<td>&nbsp;</td>
+	          <td><strong>ISR Retenido</strong></td>
+	          <td><p id="totisrretenido" class="lead text-right">$0.00</strong></td>
+	        </tr>
+	        <tr>
+	          <td>&nbsp;</td>
+	  				<td><strong>Total</strong></td>
+	  				<td><p id="total" class="lead text-right">$0.00</strong></td>
+	  			</tr>
+	      </tbody>
 		</table>
   	</div>
 	</div>
@@ -108,60 +130,6 @@
 	</div>
 </div>
 
-  <div class="form-group">
-    <%= f.label :cliente, :class => "col-lg-2 control-label" %>
-    <div class="col-lg-10">
-      <%= collection_select(:remision, :cliente_id, @clientes, :id, :nombre, {:prompt => false}, :class => "form-control") %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :condicionesdepago, :class => "col-lg-2 control-label" %>
-    <div class="col-lg-10">
-      <%= f.text_field :condicionesdepago, :class => "form-control" %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :formasdepago, :class => "col-lg-2 control-label" %>
-    <div class="col-lg-10">
-      <%= f.text_field :formasdepago, :class => "form-control" %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :metodosdepago, :class => "col-lg-2 control-label" %>
-    <div class="col-lg-10">
-      <%= f.text_field :metodosdepago, :class => "form-control" %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :subtotal, :class => "col-lg-2 control-label" %>
-    <div class="col-lg-10">
-      <%= f.text_field :subtotal, :class => "form-control" %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :descuento, :class => "col-lg-2 control-label" %>
-    <div class="col-lg-10">
-      <%= f.text_field :descuento, :class => "form-control" %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :total, :class => "col-lg-2 control-label" %>
-    <div class="col-lg-10">
-      <%= f.text_field :total, :class => "form-control" %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :totalimpuestosretenidos, :class => "col-lg-2 control-label" %>
-    <div class="col-lg-10">
-      <%= f.text_field :totalimpuestosretenidos, :class => "form-control" %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :totalimpuestostrasladados, :class => "col-lg-2 control-label" %>
-    <div class="col-lg-10">
-      <%= f.text_field :totalimpuestostrasladados, :class => "form-control" %>
-    </div>
-  </div>
   <div class="form-group">
     <div class="col-lg-offset-2 col-lg-10">
       <%= f.submit :class => "btn btn-primary" %>

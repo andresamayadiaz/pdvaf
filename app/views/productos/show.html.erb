@@ -22,5 +22,17 @@
   
   <dt>Precio:</dt>
   <dd><%= number_to_currency(@producto.precio, {:precision => 2}) %></dd>
+  
+  <dt>IVA Trasladado:</dt>
+  <dd><%= number_to_percentage(@producto.ivatrasladado) %></dd>
+  
+  <dt>IEPS Trasladado:</dt>
+  <dd><%= number_to_percentage(@producto.iepstrasladado) %></dd>
+  
+  <dt>IVA Retenido:</dt>
+  <dd><%= number_to_percentage(@producto.ivaretenido) %></dd>
+
+  <dt>ISR Retenido:</dt>
+  <dd><%= number_to_percentage(@producto.isrretenido) %></dd>
 
 </dl>

@@ -14,6 +14,10 @@
             <th>Codigo Barras</th>
             <th>Unidad</th>
 			<th>Precio</th>
+			<th>IVA Trasladado</th>
+			<th>IEPS Trasladado</th>
+			<th>IVA Retenido</th>
+			<th>ISR Retenido</th>
             <th></th>
         <th></th>
         <th></th>
@@ -26,6 +30,10 @@
             <td><%= producto.codigobarras %></td>
             <td><%= producto.unidad.nombre %></td>
 			<td><%= number_to_currency(producto.precio, {:precision => 2}) %></td>
+			<td><%= number_to_percentage(producto.ivatrasladado) %></td>
+			<td><%= number_to_percentage(producto.iepstrasladado) %></td>
+			<td><%= number_to_percentage(producto.ivaretenido) %></td>
+			<td><%= number_to_percentage(producto.isrretenido) %></td>
             <td><%= link_to 'Ver', producto %></td>
         <td><%= link_to 'Editar', edit_producto_path(producto) %></td>
         <td><%= link_to 'Eliminar', producto, method: :delete, data: { confirm: 'Are you sure?' } %></td>
