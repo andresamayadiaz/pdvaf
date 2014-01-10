@@ -1,0 +1,26 @@
+<div class="page-header">
+  <%= link_to sucursales_path, :class => 'btn btn-default' do %>
+    <span class="glyphicon glyphicon-list-alt"></span>
+    Atras
+  <% end %>
+  <%= link_to edit_sucursal_path(@sucursal), :class => 'btn btn-primary' do %>
+    <span class="glyphicon glyphicon-pencil"></span>
+    Editar
+  <% end %>
+  <h1>Ver sucursal</h1>
+</div>
+
+<dl class="dl-horizontal">
+  <dt>Nombre:</dt>
+  <dd><%= @sucursal.nombre %></dd>
+
+  <dt>Direccion:</dt>
+  <dd><%= @sucursal.direccion %></dd>
+
+  <dt>Telefono:</dt>
+  <dd><%= @sucursal.telefono %></dd>
+
+  <dt>Email:</dt>
+  <dd><%= @sucursal.email %></dd>
+
+</dl>

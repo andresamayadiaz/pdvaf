@@ -15,18 +15,22 @@ class Remision < ActiveRecord::Base
     totiepstras = 0.00;
     totivaret = 0.00;
     totisrret = 0.00;
+    
     self.conceptos.each do |concepto|
       
       concepto.calc_importe
       subt += concepto.importe
       
+      if self.descuento.nil?
+        self.descuento = 0.00
+      end
       unless concepto.ivatrasladado.nil?
-        totivaret = (concepto.importe * concepto.ivatrasladado / 100.00)
-        self.totalimpuestostrasladados = totivaret
+        totivatras = (concepto.importe * concepto.ivatrasladado / 100.00)
+        self.totalimpuestostrasladados = totivatras
       end
       unless concepto.iepstrasladado.nil?
         totiepstras = (concepto.importe * concepto.iepstrasladado / 100.00)
-        self.totalimpuestostrasladados += totiepsret
+        self.totalimpuestostrasladados += totiepstras
       end
       unless concepto.ivaretenido.nil?
         totivaret = (concepto.importe * concepto.ivaretenido / 100.00)

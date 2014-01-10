@@ -1,16 +1,4 @@
 //aad
-//AJAX Productos AutoComplete
-/*
-function( request, response ) {
-	    $.ajax({
-	      url: '/productos.json?q='+request.term,
-	      dataType: "json",
-	      success: function( data ) {
-	        console.log(data);
-	      }
-	    });
-},
-*/
 var lineas = 0;
 var otrosimptos = 0;
 
@@ -40,6 +28,7 @@ function calcTotales(){
 	var isrretenido = 0;
 	var pordesc = 0;
 	var descuento = 0;
+	var total = 0;
 	
 	$("#conceptos > tr").each(function(e, lin){
 		
@@ -56,7 +45,7 @@ function calcTotales(){
 	pordesc = $("#descuento").val();
 	descuento = (subtotal*pordesc/100);
 	
-	var total = (isNaN(subtotal) ? subtotal : 0) + (isNaN(ivatrasladado) ? ivatrasladado : 0) + (isNaN(iepstrasladado) ? iepstrasladado : 0) - (isNaN(ivaretenido) ? ivaretenido : 0) - (isNaN(isrretenido) ? isrretenido : 0);
+	total = (isNaN(subtotal) ? 0 : subtotal) + (isNaN(ivatrasladado) ? 0 : ivatrasladado) + (isNaN(iepstrasladado) ? 0 : iepstrasladado) - (isNaN(ivaretenido) ? 0 : ivaretenido) - (isNaN(isrretenido) ? 0 : isrretenido);
 	
 	$("#subtotal").html(formatMoney(subtotal,2,',', '.'));
 	$("#descuento").html(formatMoney(descuento,2,',', '.'));

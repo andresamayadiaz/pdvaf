@@ -1,4 +1,8 @@
 Pdvaf::Application.routes.draw do
+  resources :empresas
+
+  resources :sucursales
+
   resources :conceptos
 
   resources :remisiones

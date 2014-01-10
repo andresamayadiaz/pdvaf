@@ -31,11 +31,11 @@
             <td><%= remision.cliente.nombre %></td>
             <td><%= remision.formasdepago.nombre %></td>
             <td><%= remision.metodosdepago.nombre %></td>
-            <td><%= remision.subtotal %></td>
-            <td><%= remision.descuento %></td>
+            <td><%= number_to_currency(remision.subtotal) %></td>
+            <td><%= number_to_percentage(remision.descuento) %></td>
             <td><%= number_to_currency(remision.total) %></td>
-            <td><%= number_to_currency(remision.totalimpuestosretenidos) %></td>
             <td><%= number_to_currency(remision.totalimpuestostrasladados) %></td>
+            <td><%= number_to_currency(remision.totalimpuestosretenidos) %></td>
             <td><%= link_to 'Show', remision %></td>
         <td><%= link_to 'Edit', edit_remision_path(remision) %></td>
         <td><%= link_to 'Destroy', remision, method: :delete, data: { confirm: 'Are you sure?' } %></td>

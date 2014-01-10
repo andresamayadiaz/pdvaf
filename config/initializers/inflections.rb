@@ -22,5 +22,7 @@ ActiveSupport::Inflector.inflections do |inflect|
   inflect.irregular 'concepto', 'conceptos'
   inflect.irregular 'configuracion', 'configuraciones'
   inflect.irregular 'remision', 'remisiones'
+  inflect.irregular 'sucursal', 'sucursales'
+  inflect.irregular 'empresa', 'empresas'
   
 end

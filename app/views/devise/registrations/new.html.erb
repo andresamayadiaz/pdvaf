@@ -6,6 +6,12 @@
   <%= f.input :email, :required => true %>
   <%= f.input :password, :required => true %>
   <%= f.input :password_confirmation, :required => true %>
+  <hr>
+  <%= f.simple_fields_for :empresa do |fempresa| %>
+  	<%= fempresa.input :razonsocial, :required => true %>
+	<%= fempresa.input :rfc, :required => true %>
+  <% end %>
+  <hr>
   <%= f.button :submit, 'Sign up', :class => 'btn-primary' %>
 <% end %>
 <%= render "devise/shared/links" %>

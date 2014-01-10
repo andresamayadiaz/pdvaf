@@ -1,0 +1,47 @@
+<div class="page-header">
+  <%= link_to new_empresa_path, :class => 'btn btn-primary' do %>
+    <span class="glyphicon glyphicon-plus"></span>
+    Nuevo Empresa
+  <% end %>
+  <h1>Listado empresas</h1>
+</div>
+
+<div class="table-responsive">
+  <table class="table table-striped table-bordered table-hover">
+    <thead>
+      <tr>
+            <th>Razonsocial</th>
+            <th>Rfc</th>
+            <th>Noexterior</th>
+            <th>Nointerior</th>
+            <th>Calle</th>
+            <th>Colonia</th>
+            <th>Municipio</th>
+            <th>Estado</th>
+            <th>Pais</th>
+            <th>Codigopostal</th>
+            <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <%= content_tag_for(:tr, @empresas) do |empresa| %>
+            <td><%= empresa.razonsocial %></td>
+            <td><%= empresa.rfc %></td>
+            <td><%= empresa.noExterior %></td>
+            <td><%= empresa.noInterior %></td>
+            <td><%= empresa.calle %></td>
+            <td><%= empresa.colonia %></td>
+            <td><%= empresa.municipio %></td>
+            <td><%= empresa.estado %></td>
+            <td><%= empresa.pais %></td>
+            <td><%= empresa.codigoPostal %></td>
+            <td><%= link_to 'Show', empresa %></td>
+        <td><%= link_to 'Edit', edit_empresa_path(empresa) %></td>
+        <td><%= link_to 'Destroy', empresa, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      <% end %>
+    </tbody>
+  </table>
+</div>

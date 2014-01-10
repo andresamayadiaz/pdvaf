@@ -1,0 +1,44 @@
+<div class="page-header">
+  <%= link_to empresas_path, :class => 'btn btn-default' do %>
+    <span class="glyphicon glyphicon-list-alt"></span>
+    Atras
+  <% end %>
+  <%= link_to edit_empresa_path(@empresa), :class => 'btn btn-primary' do %>
+    <span class="glyphicon glyphicon-pencil"></span>
+    Editar
+  <% end %>
+  <h1>Ver empresa</h1>
+</div>
+
+<dl class="dl-horizontal">
+  <dt>Razonsocial:</dt>
+  <dd><%= @empresa.razonsocial %></dd>
+
+  <dt>Rfc:</dt>
+  <dd><%= @empresa.rfc %></dd>
+
+  <dt>Noexterior:</dt>
+  <dd><%= @empresa.noExterior %></dd>
+
+  <dt>Nointerior:</dt>
+  <dd><%= @empresa.noInterior %></dd>
+
+  <dt>Calle:</dt>
+  <dd><%= @empresa.calle %></dd>
+
+  <dt>Colonia:</dt>
+  <dd><%= @empresa.colonia %></dd>
+
+  <dt>Municipio:</dt>
+  <dd><%= @empresa.municipio %></dd>
+
+  <dt>Estado:</dt>
+  <dd><%= @empresa.estado %></dd>
+
+  <dt>Pais:</dt>
+  <dd><%= @empresa.pais %></dd>
+
+  <dt>Codigopostal:</dt>
+  <dd><%= @empresa.codigoPostal %></dd>
+
+</dl>
