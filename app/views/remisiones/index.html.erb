@@ -3,22 +3,22 @@
     <span class="glyphicon glyphicon-plus"></span>
     Nuevo Remision
   <% end %>
-  <h1>Listado remisiones</h1>
+  <h1>Listado de Remisiones</h1>
 </div>
 
 <div class="table-responsive">
   <table class="table table-striped table-bordered table-hover">
     <thead>
       <tr>
+            <th>ID</th>
             <th>Cliente</th>
-            <th>Condicionesdepago</th>
             <th>Formasdepago</th>
             <th>Metodosdepago</th>
             <th>Subtotal</th>
             <th>Descuento</th>
             <th>Total</th>
-            <th>Totalimpuestosretenidos</th>
-            <th>Totalimpuestostrasladados</th>
+            <th>Impuestos Trasladados</th>
+            <th>Impuestos Retenidos</th>
             <th></th>
         <th></th>
         <th></th>
@@ -27,15 +27,15 @@
 
     <tbody>
       <%= content_tag_for(:tr, @remisiones) do |remision| %>
-            <td><%= remision.cliente %></td>
-            <td><%= remision.condicionesdepago %></td>
-            <td><%= remision.formasdepago %></td>
-            <td><%= remision.metodosdepago %></td>
+            <td><%= remision.id %></td>
+            <td><%= remision.cliente.nombre %></td>
+            <td><%= remision.formasdepago.nombre %></td>
+            <td><%= remision.metodosdepago.nombre %></td>
             <td><%= remision.subtotal %></td>
             <td><%= remision.descuento %></td>
-            <td><%= remision.total %></td>
-            <td><%= remision.totalimpuestosretenidos %></td>
-            <td><%= remision.totalimpuestostrasladados %></td>
+            <td><%= number_to_currency(remision.total) %></td>
+            <td><%= number_to_currency(remision.totalimpuestosretenidos) %></td>
+            <td><%= number_to_currency(remision.totalimpuestostrasladados) %></td>
             <td><%= link_to 'Show', remision %></td>
         <td><%= link_to 'Edit', edit_remision_path(remision) %></td>
         <td><%= link_to 'Destroy', remision, method: :delete, data: { confirm: 'Are you sure?' } %></td>

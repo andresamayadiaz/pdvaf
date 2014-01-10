@@ -28,7 +28,9 @@ class RemisionesController < ApplicationController
   # POST /remisiones.json
   def create
     @remision = Remision.new(remision_params)
-
+    # Recalcular totales para asegurar integridad
+    @remision.calc_totales
+    
     respond_to do |format|
       if @remision.save
         format.html { redirect_to @remision, notice: 'Remision was successfully created.' }
@@ -72,6 +74,6 @@ class RemisionesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def remision_params
-      params.require(:remision).permit(:cliente_id, :condicionesdepago_id, :formasdepago_id, :metodosdepago_id, :subtotal, :descuento, :total, :totalimpuestosretenidos, :totalimpuestostrasladados, :conceptos)
+      params.require(:remision).permit(:cliente_id, :condicionesdepago_id, :formasdepago_id, :metodosdepago_id, :subtotal, :descuento, :total, :totalimpuestosretenidos, :totalimpuestostrasladados, conceptos_attributes: [:id, :cantidad, :unidad, :descripcion, :valorunitario, :importe, :ivatrasladado, :iepstrasladado, :ivaretenido, :isrretenido])
     end
 end

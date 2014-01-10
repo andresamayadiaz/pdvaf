@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140108220230) do
+ActiveRecord::Schema.define(version: 20140110040122) do
 
   create_table "clientes", force: true do |t|
     t.string   "rfc"
@@ -38,6 +38,10 @@ ActiveRecord::Schema.define(version: 20140108220230) do
     t.integer  "remision_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.decimal  "ivatrasladado"
+    t.decimal  "iepstrasladado"
+    t.decimal  "ivaretenido"
+    t.decimal  "isrretenido"
   end
 
   add_index "conceptos", ["remision_id"], name: "index_conceptos_on_remision_id"
