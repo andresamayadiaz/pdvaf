@@ -13,10 +13,12 @@ class User < ActiveRecord::Base
   
   def set_empresa
     
-    @empresa = Empresa.new
-    @empresa.razonsocial = self.name
-    @empresa.save!
-    self.empresa = @empresa
+    if self.empresa.nil?
+      @empresa = Empresa.new
+      @empresa.razonsocial = self.name
+      @empresa.save!
+      self.empresa = @empresa
+    end
     
   end
 
