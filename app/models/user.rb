@@ -8,4 +8,16 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable, :confirmable,
          :recoverable, :rememberable, :trackable, :validatable
+         
+  before_create :set_empresa
+  
+  def set_empresa
+    
+    @empresa = Empresa.new
+    @empresa.razonsocial = self.name
+    @empresa.save!
+    self.empresa = @empresa
+    
+  end
+
 end

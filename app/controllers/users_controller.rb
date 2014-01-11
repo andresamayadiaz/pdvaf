@@ -30,4 +30,9 @@ class UsersController < ApplicationController
       redirect_to users_path, :notice => "Can't delete yourself."
     end
   end
+  
+  def remision_params
+    params.require(:user).permit(:name, :email, :password, :password_confirmation, empresa_attributes: [:razonsocial, :rfc])
+  end
+  
 end
