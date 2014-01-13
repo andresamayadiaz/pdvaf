@@ -13,4 +13,25 @@
   <% if current_user.has_role? :admin %>
     <li><%= link_to 'Admin', users_path %></li>
   <% end %>
+  
+  <li class="dropdown">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Catalogos <b class="caret"></b></a>
+    <ul class="dropdown-menu">
+      <li><%= link_to 'Clientes', clientes_path %></li>
+      <li><%= link_to 'Productos', productos_path %></li>
+      <li><%= link_to 'Remisiones', remisiones_path %></li>
+      <li class="divider"></li>
+      <li><%= link_to 'Formas de Pago', formasdepagos_path %></li>
+      <li><%= link_to 'Metodos de Pago', metodosdepagos_path %></li>
+      <li><%= link_to 'Condiciones de Pago', condicionesdepagos_path %></li>
+      <li><%= link_to 'Unidades', unidades_path %></li>
+    </ul>
+  </li>
+  
+  <% if current_user.has_role? :gerente %>
+    <li><%= link_to 'Perfil de Empresa', edit_user_registration_path %></li>
+  <% end %>
+  
+  <li><%= link_to 'Nueva Remision', new_remision_path %></li>
+  
 <% end %>

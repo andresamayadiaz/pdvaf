@@ -119,15 +119,15 @@ function agregarLinea(){
 
 $(document).ready(function() {
 	
-	agregarLinea();
-	autoComp();
-	
 	$.ui.autocomplete.prototype._renderItem = function (ul, item) {
 	    return $( "<li>" )
 	      .attr( "data-value", item.nombre )
 	      .append( $( "<a>" ).text( item.nombre ) )
 	      .appendTo( ul );
 	};
+	
+	agregarLinea();
+	autoComp();
 	
 	$("#agregar").click(function(){
 		

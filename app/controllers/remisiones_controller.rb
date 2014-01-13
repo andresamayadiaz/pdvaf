@@ -61,7 +61,7 @@ class RemisionesController < ApplicationController
   def destroy
     @remision.destroy
     respond_to do |format|
-      format.html { redirect_to remisiones_url }
+      format.html { redirect_to remisiones_url, notice: 'Remision Eliminada.' }
       format.json { head :no_content }
     end
   end

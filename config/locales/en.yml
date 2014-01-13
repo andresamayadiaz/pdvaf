@@ -20,4 +20,11 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  AppName: "Punto de Venta AutoFactura.com"
+  views:
+      pagination:
+        first: "&laquo; Primera"
+        last: "Ultima &raquo;"
+        previous: "&lsaquo; Ant."
+        next: "Sig. &rsaquo;"
+        truncate: "..."

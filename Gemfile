@@ -31,3 +31,4 @@ group :test do
 end
 # aad
 gem 'bootstrap-generators', :git => 'git://github.com/decioferreira/bootstrap-generators.git'
+gem 'kaminari'

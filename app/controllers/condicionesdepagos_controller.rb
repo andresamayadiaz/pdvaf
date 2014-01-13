@@ -4,7 +4,7 @@ class CondicionesdepagosController < ApplicationController
   # GET /condicionesdepagos
   # GET /condicionesdepagos.json
   def index
-    @condicionesdepagos = Condicionesdepago.all
+    @condicionesdepagos = Condicionesdepago.all.page params[:page]
   end
 
   # GET /condicionesdepagos/1

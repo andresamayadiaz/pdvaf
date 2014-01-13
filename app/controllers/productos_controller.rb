@@ -8,7 +8,7 @@ class ProductosController < ApplicationController
      if params[:term]
        @productos = Producto.order("nombre ASC").find(:all, :conditions => "productos.codigobarras LIKE '%#{params[:term]}%' OR productos.nombre LIKE '%#{params[:term]}%'")
      else
-       @productos = Producto.all
+       @productos = Producto.all.page params[:page]
      end
     
      respond_to do |format|  

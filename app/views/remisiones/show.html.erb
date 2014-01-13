@@ -24,9 +24,9 @@
             <table class="invoice-head">
                 <tbody>
                     <tr>
-                        <td class="pull-right"><strong>Customer #</strong>
+                        <td class="pull-right"><strong>Cliente </strong>
                         </td>
-                        <td>21398324797234</td>
+                        <td><%= link_to @remision.cliente.nombre, cliente_path(@remision.cliente) %></td>
                     </tr>
                     <tr>
                         <td class="pull-right"><strong>Invoice #</strong>
@@ -34,9 +34,9 @@
                         <td>2340</td>
                     </tr>
                     <tr>
-                        <td class="pull-right"><strong>Date</strong>
+                        <td class="pull-right"><strong>Fecha </strong>
                         </td>
-                        <td>10-08-2013</td>
+                        <td><%= @remision.created_at.to_s(:db) %></td>
                     </tr>
                     <tr>
                         <td class="pull-right"><strong>Period</strong>
@@ -49,7 +49,7 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            	<h2>Invoice</h2>
+            	<h2>Conceptos</h2>
 
         </div>
     </div>
@@ -59,16 +59,18 @@
                 <thead>
                     <tr>
                         <th>Description</th>
-                        <th>Date</th>
-                        <th>Amount</th>
+                        <th>P. Unit.</th>
+                        <th>Cantidad</th>
                     </tr>
                 </thead>
                 <tbody>
+                <% @remision.conceptos.each do |concepto| %>
                     <tr>
-                        <td>Service request</td>
-                        <td>10/8/2013</td>
-                        <td>$1000.00</td>
+                        <td><%= concepto.descripcion %></td>
+                        <td><%= number_to_currency(concepto.valorunitario) %></td>
+                        <td><%= concepto.cantidad %></td>
                     </tr>
+                    <% end %>
                     <tr>
                         <td>&nbsp;</td>
                         <td><strong>Total</strong>

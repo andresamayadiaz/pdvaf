@@ -4,7 +4,7 @@ class FormasdepagosController < ApplicationController
   # GET /formasdepagos
   # GET /formasdepagos.json
   def index
-    @formasdepagos = Formasdepago.all
+    @formasdepagos = Formasdepago.all.page params[:page]
   end
 
   # GET /formasdepagos/1

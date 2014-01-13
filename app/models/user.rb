@@ -17,7 +17,16 @@ class User < ActiveRecord::Base
       @empresa = Empresa.new
       @empresa.razonsocial = self.name
       @empresa.save!
+      
+      @sucursal = Sucursal.new
+      @sucursal.nombre = "Matriz"
+      @sucursal.consecutivo = 1
+      @sucursal.empresa = @empresa
+      @sucursal.save!
+      
+      self.sucursal = @sucursal
       self.empresa = @empresa
+      self.add_role :gerente
     end
     
   end
