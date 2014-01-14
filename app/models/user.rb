@@ -16,6 +16,7 @@ class User < ActiveRecord::Base
     if self.empresa.nil?
       @empresa = Empresa.new
       @empresa.razonsocial = self.name
+      @empresa.rfc = self.name
       @empresa.save!
       
       @sucursal = Sucursal.new

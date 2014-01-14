@@ -4,7 +4,7 @@ class CondicionesdepagosController < ApplicationController
   # GET /condicionesdepagos
   # GET /condicionesdepagos.json
   def index
-    @condicionesdepagos = Condicionesdepago.all.page params[:page]
+    @condicionesdepagos = current_user.empresa.condicionesdepagos.page params[:page]
   end
 
   # GET /condicionesdepagos/1
@@ -14,7 +14,7 @@ class CondicionesdepagosController < ApplicationController
 
   # GET /condicionesdepagos/new
   def new
-    @condicionesdepago = Condicionesdepago.new
+    @condicionesdepago = current_user.empresa.condicionesdepagos.new
   end
 
   # GET /condicionesdepagos/1/edit
@@ -25,6 +25,7 @@ class CondicionesdepagosController < ApplicationController
   # POST /condicionesdepagos.json
   def create
     @condicionesdepago = Condicionesdepago.new(condicionesdepago_params)
+    @condicionesdepago.empresa = current_user.empresa
 
     respond_to do |format|
       if @condicionesdepago.save
@@ -41,6 +42,7 @@ class CondicionesdepagosController < ApplicationController
   # PATCH/PUT /condicionesdepagos/1.json
   def update
     respond_to do |format|
+      @condicionesdepago.empresa = current_user.empresa
       if @condicionesdepago.update(condicionesdepago_params)
         format.html { redirect_to @condicionesdepago, notice: 'Condicionesdepago was successfully updated.' }
         format.json { head :no_content }

@@ -1,6 +1,5 @@
 class EmpresasController < ApplicationController
   before_action :set_empresa, only: [:show, :edit, :update, :destroy]
-
   # GET /empresas
   # GET /empresas.json
   def index

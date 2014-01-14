@@ -4,7 +4,7 @@ class MetodosdepagosController < ApplicationController
   # GET /metodosdepagos
   # GET /metodosdepagos.json
   def index
-    @metodosdepagos = Metodosdepago.all.page params[:page]
+    @metodosdepagos = current_user.empresa.metodosdepagos.page params[:page]
   end
 
   # GET /metodosdepagos/1
@@ -14,7 +14,7 @@ class MetodosdepagosController < ApplicationController
 
   # GET /metodosdepagos/new
   def new
-    @metodosdepago = Metodosdepago.new
+    @metodosdepago = current_user.empresa.metodosdepagos.new
   end
 
   # GET /metodosdepagos/1/edit
@@ -24,7 +24,7 @@ class MetodosdepagosController < ApplicationController
   # POST /metodosdepagos
   # POST /metodosdepagos.json
   def create
-    @metodosdepago = Metodosdepago.new(metodosdepago_params)
+    @metodosdepago = current_user.empresa.metodosdepagos.new(metodosdepago_params)
 
     respond_to do |format|
       if @metodosdepago.save
@@ -41,6 +41,7 @@ class MetodosdepagosController < ApplicationController
   # PATCH/PUT /metodosdepagos/1.json
   def update
     respond_to do |format|
+      @metodosdepago.empresa = current_user.empresa
       if @metodosdepago.update(metodosdepago_params)
         format.html { redirect_to @metodosdepago, notice: 'Metodosdepago was successfully updated.' }
         format.json { head :no_content }

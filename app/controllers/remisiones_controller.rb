@@ -31,6 +31,9 @@ class RemisionesController < ApplicationController
     # Recalcular totales para asegurar integridad
     @remision.calc_totales
     
+    @remision.empresa = current_user.empresa
+    @remision.sucursal = current_user.sucursal
+    
     respond_to do |format|
       if @remision.save
         format.html { redirect_to @remision, notice: 'Remision was successfully created.' }

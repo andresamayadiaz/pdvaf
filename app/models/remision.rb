@@ -3,6 +3,8 @@ class Remision < ActiveRecord::Base
   belongs_to :condicionesdepago
   belongs_to :formasdepago
   belongs_to :metodosdepago
+  belongs_to :empresa
+  belongs_to :sucursal
   has_many :conceptos, dependent: :destroy
   
   accepts_nested_attributes_for :conceptos

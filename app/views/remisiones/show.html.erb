@@ -59,23 +59,60 @@
                 <thead>
                     <tr>
                         <th>Description</th>
+						<th>Cantidad</th>
                         <th>P. Unit.</th>
-                        <th>Cantidad</th>
+                        <th>IVA Tras.</th>
+						<th>IEPS Tras.</th>
+						<th>IVA Ret.</th>
+						<th>ISR Ret.</th>
                     </tr>
                 </thead>
                 <tbody>
                 <% @remision.conceptos.each do |concepto| %>
                     <tr>
                         <td><%= concepto.descripcion %></td>
-                        <td><%= number_to_currency(concepto.valorunitario) %></td>
-                        <td><%= concepto.cantidad %></td>
+						<td class="text-right"><%= concepto.cantidad %></td>
+                        <td class="text-right"><%= number_to_currency(concepto.valorunitario) %></td>
+						<td class="text-right"><%= concepto.ivatrasladado %>%</td>
+						<td class="text-right"><%= concepto.iepstrasladado %>%</td>
+						<td class="text-right"><%= concepto.ivaretenido %>%</td>
+						<td class="text-right"><%= concepto.isrretenido %>%</td>
+                        
                     </tr>
                     <% end %>
                     <tr>
-                        <td>&nbsp;</td>
-                        <td><strong>Total</strong>
+                        <td colspan="4">&nbsp;</td>
+                        <td colspan="2"><strong>Subtotal</strong>
                         </td>
-                        <td><strong>$1000.00</strong>
+                        <td class="text-right"><strong><%= number_to_currency(@remision.subtotal) %></strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">&nbsp;</td>
+                        <td colspan="2"><strong>Descuento</strong>
+                        </td>
+                        <td class="text-right"><strong><%= @remision.descuento %>%</strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">&nbsp;</td>
+                        <td colspan="2"><strong>Imptos. Trasladados</strong>
+                        </td>
+                        <td class="text-right"><strong><%= number_to_currency(@remision.totalimpuestostrasladados) %></strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">&nbsp;</td>
+                        <td colspan="2"><strong>Imptos. Retenidos</strong>
+                        </td>
+                        <td class="text-right"><strong><%= number_to_currency(@remision.totalimpuestosretenidos) %></strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">&nbsp;</td>
+                        <td colspan="2"><strong>Total</strong>
+                        </td>
+                        <td class="text-right"><strong><%= number_to_currency(@remision.total) %></strong>
                         </td>
                     </tr>
                 </tbody>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140113035423) do
+ActiveRecord::Schema.define(version: 20140114014104) do
 
   create_table "clientes", force: true do |t|
     t.string   "rfc"
@@ -50,7 +50,10 @@ ActiveRecord::Schema.define(version: 20140113035423) do
     t.string   "nombre"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "empresa_id"
   end
+
+  add_index "condicionesdepagos", ["empresa_id"], name: "index_condicionesdepagos_on_empresa_id"
 
   create_table "configuraciones", force: true do |t|
     t.string   "nombre"
@@ -78,13 +81,19 @@ ActiveRecord::Schema.define(version: 20140113035423) do
     t.string   "nombre"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "empresa_id"
   end
+
+  add_index "formasdepagos", ["empresa_id"], name: "index_formasdepagos_on_empresa_id"
 
   create_table "metodosdepagos", force: true do |t|
     t.string   "nombre"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "empresa_id"
   end
+
+  add_index "metodosdepagos", ["empresa_id"], name: "index_metodosdepagos_on_empresa_id"
 
   create_table "monedas", force: true do |t|
     t.string   "nombre"
@@ -133,12 +142,16 @@ ActiveRecord::Schema.define(version: 20140113035423) do
     t.decimal  "totalimpuestostrasladados"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "empresa_id"
+    t.integer  "sucursal_id"
   end
 
   add_index "remisiones", ["cliente_id"], name: "index_remisiones_on_cliente_id"
   add_index "remisiones", ["condicionesdepago_id"], name: "index_remisiones_on_condicionesdepago_id"
+  add_index "remisiones", ["empresa_id"], name: "index_remisiones_on_empresa_id"
   add_index "remisiones", ["formasdepago_id"], name: "index_remisiones_on_formasdepago_id"
   add_index "remisiones", ["metodosdepago_id"], name: "index_remisiones_on_metodosdepago_id"
+  add_index "remisiones", ["sucursal_id"], name: "index_remisiones_on_sucursal_id"
 
   create_table "roles", force: true do |t|
     t.string   "name"
