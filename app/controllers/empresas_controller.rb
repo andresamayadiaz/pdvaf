@@ -1,5 +1,7 @@
 class EmpresasController < ApplicationController
+  before_filter :authenticate_user!
   before_action :set_empresa, only: [:show, :edit, :update, :destroy]
+  
   # GET /empresas
   # GET /empresas.json
   def index
@@ -57,6 +59,24 @@ class EmpresasController < ApplicationController
     respond_to do |format|
       format.html { redirect_to empresas_url }
       format.json { head :no_content }
+    end
+  end
+  
+  def newuser
+    @user = current_user.empresa.users.new
+  end
+  
+  def createuser
+    @user = current_user.empresa.users.new(user_params)
+    
+    respond_to do |format|
+      if @user.save
+        format.html { redirect_to @user, notice: 'Usuario Creado.' }
+        format.json { render action: 'show', status: :created, location: @user }
+      else
+        format.html { render action: 'new' }
+        format.json { render json: @user.errors, status: :unprocessable_entity }
+      end
     end
   end
 

@@ -1,4 +1,5 @@
 class ProductosController < ApplicationController
+  before_filter :authenticate_user!
   before_action :set_producto, only: [:show, :edit, :update, :destroy]
 
   # GET /productos
@@ -6,9 +7,9 @@ class ProductosController < ApplicationController
   def index
     
      if params[:term]
-       @productos = Producto.order("nombre ASC").find(:all, :conditions => "productos.codigobarras LIKE '%#{params[:term]}%' OR productos.nombre LIKE '%#{params[:term]}%'")
+       @productos = current_user.empresa.productos.order("nombre ASC").find(:all, :conditions => "productos.codigobarras LIKE '%#{params[:term]}%' OR productos.nombre LIKE '%#{params[:term]}%'")
      else
-       @productos = Producto.all.page params[:page]
+       @productos = current_user.empresa.productos.page params[:page]
      end
     
      respond_to do |format|  
@@ -26,19 +27,19 @@ class ProductosController < ApplicationController
 
   # GET /productos/new
   def new
-    @producto = Producto.new
-    @unidades = Unidad.all
+    @producto = current_user.empresa.productos.new
+    @unidades = current_user.empresa.unidades.all
   end
 
   # GET /productos/1/edit
   def edit
-    @unidades = Unidad.all
+    @unidades = current_user.empresa.unidades.all
   end
 
   # POST /productos
   # POST /productos.json
   def create
-    @producto = Producto.new(producto_params)
+    @producto = current_user.empresa.productos.new(producto_params)
 
     respond_to do |format|
       if @producto.save
@@ -79,7 +80,7 @@ class ProductosController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_producto
-      @producto = Producto.find(params[:id])
+      @producto = current_user.empresa.productos.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

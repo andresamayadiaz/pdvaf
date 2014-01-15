@@ -1,4 +1,5 @@
 class MetodosdepagosController < ApplicationController
+  before_filter :authenticate_user!
   before_action :set_metodosdepago, only: [:show, :edit, :update, :destroy]
 
   # GET /metodosdepagos
@@ -65,7 +66,7 @@ class MetodosdepagosController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_metodosdepago
-      @metodosdepago = Metodosdepago.find(params[:id])
+      @metodosdepago = current_user.empresa.metodosdepagos.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

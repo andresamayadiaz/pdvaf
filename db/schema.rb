@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140114014104) do
+ActiveRecord::Schema.define(version: 20140115004116) do
 
   create_table "clientes", force: true do |t|
     t.string   "rfc"
@@ -27,7 +27,10 @@ ActiveRecord::Schema.define(version: 20140114014104) do
     t.string   "codigoPostal"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "empresa_id"
   end
+
+  add_index "clientes", ["empresa_id"], name: "index_clientes_on_empresa_id"
 
   create_table "conceptos", force: true do |t|
     t.decimal  "cantidad"
@@ -126,8 +129,10 @@ ActiveRecord::Schema.define(version: 20140114014104) do
     t.decimal  "iepstrasladado"
     t.decimal  "ivaretenido"
     t.decimal  "isrretenido"
+    t.integer  "empresa_id"
   end
 
+  add_index "productos", ["empresa_id"], name: "index_productos_on_empresa_id"
   add_index "productos", ["unidad_id"], name: "index_productos_on_unidad_id"
 
   create_table "remisiones", force: true do |t|
@@ -181,7 +186,10 @@ ActiveRecord::Schema.define(version: 20140114014104) do
     t.string   "nombre"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "empresa_id"
   end
+
+  add_index "unidades", ["empresa_id"], name: "index_unidades_on_empresa_id"
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false

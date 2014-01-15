@@ -1,10 +1,11 @@
 class SucursalesController < ApplicationController
+  before_filter :authenticate_user!
   before_action :set_sucursal, only: [:show, :edit, :update, :destroy]
 
   # GET /sucursales
   # GET /sucursales.json
   def index
-    @sucursales = Sucursal.all
+    @sucursales = current_user.empresa.sucursales.all
   end
 
   # GET /sucursales/1
@@ -14,7 +15,7 @@ class SucursalesController < ApplicationController
 
   # GET /sucursales/new
   def new
-    @sucursal = Sucursal.new
+    @sucursal = current_user.empresa.sucursales.new
   end
 
   # GET /sucursales/1/edit
@@ -24,7 +25,7 @@ class SucursalesController < ApplicationController
   # POST /sucursales
   # POST /sucursales.json
   def create
-    @sucursal = Sucursal.new(sucursal_params)
+    @sucursal = current_user.empresa.sucursales.new(sucursal_params)
 
     respond_to do |format|
       if @sucursal.save
@@ -64,7 +65,7 @@ class SucursalesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_sucursal
-      @sucursal = Sucursal.find(params[:id])
+      @sucursal = current_user.empresa.sucursales.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

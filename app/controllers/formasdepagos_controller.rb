@@ -1,4 +1,5 @@
 class FormasdepagosController < ApplicationController
+  before_filter :authenticate_user!
   before_action :set_formasdepago, only: [:show, :edit, :update, :destroy]
 
   # GET /formasdepagos

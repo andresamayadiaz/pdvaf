@@ -1,10 +1,18 @@
 class RemisionesController < ApplicationController
+  before_filter :authenticate_user!
   before_action :set_remision, only: [:show, :edit, :update, :destroy]
 
   # GET /remisiones
   # GET /remisiones.json
   def index
-    @remisiones = Remision.all
+    if params[:search]
+      desde = params[:desde] + ' 00:00:00'
+      hasta = params[:hasta] + ' 23:59:59'
+      #@remisiones = current_user.empresa.remisiones.find(:all, :conditions => ["created_at >= ? AND created_at <= ?",desde, hasta]).page params[:page]
+      @remisiones = current_user.empresa.remisiones.where("created_at >= ? AND created_at <= ?",desde, hasta).page params[:page]
+    else
+      @remisiones = current_user.empresa.remisiones.page params[:page]
+    end
   end
 
   # GET /remisiones/1
@@ -14,10 +22,10 @@ class RemisionesController < ApplicationController
 
   # GET /remisiones/new
   def new
-    @remision = Remision.new
+    @remision = current_user.empresa.remisiones.new
     @clientes = Cliente.all
-    @formasdepago = Formasdepago.all
-    @metodosdepago = Metodosdepago.all
+    @formasdepago = current_user.empresa.formasdepagos.all
+    @metodosdepago = current_user.empresa.metodosdepagos.all
   end
 
   # GET /remisiones/1/edit
@@ -27,7 +35,7 @@ class RemisionesController < ApplicationController
   # POST /remisiones
   # POST /remisiones.json
   def create
-    @remision = Remision.new(remision_params)
+    @remision = current_user.empresa.remisiones.new(remision_params)
     # Recalcular totales para asegurar integridad
     @remision.calc_totales
     
@@ -72,7 +80,7 @@ class RemisionesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_remision
-      @remision = Remision.find(params[:id])
+      @remision = current_user.empresa.remisiones.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

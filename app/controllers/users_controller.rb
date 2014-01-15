@@ -1,25 +1,30 @@
 class UsersController < ApplicationController
   before_filter :authenticate_user!
+  before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   def index
-    authorize! :index, @user, :message => 'Not authorized as an administrator.'
-    @users = User.all
+    #authorize! :index, @user, :message => 'Not authorized as an administrator.'
+    @users = current_user.empresa.users.all
   end
 
   def show
-    @user = User.find(params[:id])
+    @user = current_user.empresa.users.find(params[:id])
+  end
+  
+  # GET /users/1/edit
+  def edit
   end
   
   def update
-    authorize! :update, @user, :message => 'Not authorized as an administrator.'
+    #authorize! :update, @user, :message => 'Not authorized as an administrator.'
     @user = User.find(params[:id])
-    if @user.update_attributes(params[:user], :as => :admin)
+    if @user.update_attributes(params[:user])
       redirect_to users_path, :notice => "User updated."
     else
       redirect_to users_path, :alert => "Unable to update user."
     end
   end
-    
+  
   def destroy
     authorize! :destroy, @user, :message => 'Not authorized as an administrator.'
     user = User.find(params[:id])
@@ -31,8 +36,14 @@ class UsersController < ApplicationController
     end
   end
   
-  def remision_params
-    params.require(:user).permit(:name, :email, :password, :password_confirmation, empresa_attributes: [:razonsocial, :rfc])
-  end
-  
+  private
+    # Use callbacks to share common setup or constraints between actions.
+    def set_user
+      @user = current_user.empresa.users.find(params[:id])
+    end
+
+    # Never trust parameters from the scary internet, only allow the white list through.
+    def user_params
+      params.require(:user).permit(:name, :email, :password, :password_confirmation, empresa_attributes: [:razonsocial, :rfc])
+    end
 end

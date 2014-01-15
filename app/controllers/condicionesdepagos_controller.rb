@@ -1,4 +1,5 @@
 class CondicionesdepagosController < ApplicationController
+  before_filter :authenticate_user!
   before_action :set_condicionesdepago, only: [:show, :edit, :update, :destroy]
 
   # GET /condicionesdepagos
@@ -24,8 +25,7 @@ class CondicionesdepagosController < ApplicationController
   # POST /condicionesdepagos
   # POST /condicionesdepagos.json
   def create
-    @condicionesdepago = Condicionesdepago.new(condicionesdepago_params)
-    @condicionesdepago.empresa = current_user.empresa
+    @condicionesdepago = current_user.empresa.condicionesdepagos.new(condicionesdepago_params)
 
     respond_to do |format|
       if @condicionesdepago.save

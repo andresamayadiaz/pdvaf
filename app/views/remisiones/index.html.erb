@@ -4,6 +4,18 @@
     Nuevo Remision
   <% end %>
   <h1>Listado de Remisiones</h1>
+  <div class="row">
+	  <div class="col-md-6">
+		  <%= form_tag remisiones_path, :method => 'get' do |f| %>
+		 	 <%= label_tag 'Desde:', nil, class: ''  %>
+			 <%= text_field_tag 'desde', params[:desde], class: 'datepicker' %>
+			 <%= label_tag 'Hasta:', nil, class: ''  %>
+			 <%= text_field_tag 'hasta', params[:hasta], class: 'datepicker' %>
+			  <%= hidden_field_tag 'search'  %>
+			 <%= button_tag "Buscar", class: 'btn btn-default' %>
+		  <% end %>
+	  </div>
+  </div>
 </div>
 
 <div class="table-responsive">
@@ -20,8 +32,7 @@
             <th>Impuestos Retenidos</th>
             <th>Total</th>
             <th></th>
-        <th></th>
-        <th></th>
+        	<th></th>
       </tr>
     </thead>
 
@@ -37,9 +48,14 @@
             <td class="text-right"><%= number_to_currency(remision.totalimpuestosretenidos) %></td>
             <td class="text-right"><%= number_to_currency(remision.total) %></td>
             <td class="text-right"><%= link_to 'Show', remision %></td>
-        <td><%= link_to 'Edit', edit_remision_path(remision) %></td>
-        <td><%= link_to 'Destroy', remision, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        	<td><%= link_to 'Destroy', remision, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       <% end %>
     </tbody>
   </table>
+  <%= paginate @remisiones, :params => params %>
 </div>
+<script>
+$(document).ready(function() {
+	$('.datepicker').datepicker({dateFormat: 'yy-mm-dd'});
+});
+</script>

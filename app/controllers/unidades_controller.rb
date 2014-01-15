@@ -1,10 +1,11 @@
 class UnidadesController < ApplicationController
+  before_filter :authenticate_user!
   before_action :set_unidad, only: [:show, :edit, :update, :destroy]
 
   # GET /unidades
   # GET /unidades.json
   def index
-    @unidades = Unidad.all.page params[:page]
+    @unidades = current_user.empresa.unidades.page params[:page]
   end
 
   # GET /unidades/1
@@ -14,7 +15,7 @@ class UnidadesController < ApplicationController
 
   # GET /unidades/new
   def new
-    @unidad = Unidad.new
+    @unidad = current_user.empresa.unidades.new
   end
 
   # GET /unidades/1/edit
@@ -24,7 +25,7 @@ class UnidadesController < ApplicationController
   # POST /unidades
   # POST /unidades.json
   def create
-    @unidad = Unidad.new(unidad_params)
+    @unidad = current_user.empresa.unidades.new(unidad_params)
 
     respond_to do |format|
       if @unidad.save
@@ -41,6 +42,7 @@ class UnidadesController < ApplicationController
   # PATCH/PUT /unidades/1.json
   def update
     respond_to do |format|
+      @unidad.empresa = current_user.empresa
       if @unidad.update(unidad_params)
         format.html { redirect_to @unidad, notice: 'Unidad was successfully updated.' }
         format.json { head :no_content }
@@ -64,7 +66,7 @@ class UnidadesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_unidad
-      @unidad = Unidad.find(params[:id])
+      @unidad = current_user.empresa.unidades.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

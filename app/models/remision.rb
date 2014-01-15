@@ -9,6 +9,16 @@ class Remision < ActiveRecord::Base
   
   accepts_nested_attributes_for :conceptos
   
+  default_scope { order('created_at DESC') }
+  
+  def self.search(search)
+    if search
+      find(:all, :conditions => ['name LIKE ?', "%#{search}%"])
+    else
+      find(:all)
+    end
+  end
+  
   # Calcular los totales de la Remision
   def calc_totales
     

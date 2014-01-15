@@ -1,4 +1,8 @@
 Pdvaf::Application.routes.draw do
+  
+  get '/empresas/newuser', to: 'empresas#newuser'
+  post '/empresas/createuser', to: 'empresas#createuser'
+  
   resources :empresas
 
   resources :sucursales
@@ -26,4 +30,5 @@ Pdvaf::Application.routes.draw do
   root :to => "home#index"
   devise_for :users, :controllers => {:registrations => "registrations"}
   resources :users
+  
 end

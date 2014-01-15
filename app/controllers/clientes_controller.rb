@@ -1,10 +1,11 @@
 class ClientesController < ApplicationController
+  before_filter :authenticate_user!
   before_action :set_cliente, only: [:show, :edit, :update, :destroy]
 
   # GET /clientes
   # GET /clientes.json
   def index
-    @clientes = Cliente.all
+    @clientes = current_user.empresa.clientes.all
   end
 
   # GET /clientes/1
@@ -14,7 +15,7 @@ class ClientesController < ApplicationController
 
   # GET /clientes/new
   def new
-    @cliente = Cliente.new
+    @cliente = current_user.empresa.clientes.new
   end
 
   # GET /clientes/1/edit
@@ -24,7 +25,7 @@ class ClientesController < ApplicationController
   # POST /clientes
   # POST /clientes.json
   def create
-    @cliente = Cliente.new(cliente_params)
+    @cliente = current_user.empresa.clientes.new(cliente_params)
 
     respond_to do |format|
       if @cliente.save
@@ -64,7 +65,7 @@ class ClientesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_cliente
-      @cliente = Cliente.find(params[:id])
+      @cliente = current_user.empresa.clientes.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
