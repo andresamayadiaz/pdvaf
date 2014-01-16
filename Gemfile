@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 ruby '1.9.3'
 gem 'rails', '4.0.0'
 gem 'sqlite3'
+gem 'mysql2'
 gem 'sass-rails', '~> 4.0.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.0.0'
@@ -24,6 +25,8 @@ group :development do
 end
 group :development, :test do
   gem 'rspec-rails'
+  gem 'capistrano'
+  gem 'capistrano-ext'
 end
 group :test do
   gem 'database_cleaner', '1.0.1'
@@ -34,5 +37,5 @@ gem 'bootstrap-generators', :git => 'git://github.com/decioferreira/bootstrap-ge
 gem 'kaminari'
 
 # AutoFactura.com
-#gem 'autofactura', :git => 'git://github.com/andresamayadiaz/autofactura.git'
-gem 'autofactura', :path => "/Users/andresamayadiaz/rails/autofactura"
+gem 'autofactura', :git => 'git://github.com/andresamayadiaz/autofactura.git'
+#gem 'autofactura', :path => "/Users/andresamayadiaz/rails/autofactura"
