@@ -5,7 +5,7 @@ class EmpresasController < ApplicationController
   # GET /empresas
   # GET /empresas.json
   def index
-    @empresas = Empresa.all
+    @empresas = current_user.empresa
   end
 
   # GET /empresas/1
@@ -15,7 +15,7 @@ class EmpresasController < ApplicationController
 
   # GET /empresas/new
   def new
-    @empresa = Empresa.new
+    @empresa = current_user.empresa.new
   end
 
   # GET /empresas/1/edit
@@ -25,7 +25,7 @@ class EmpresasController < ApplicationController
   # POST /empresas
   # POST /empresas.json
   def create
-    @empresa = Empresa.new(empresa_params)
+    @empresa = current_user.empresa.new(empresa_params)
 
     respond_to do |format|
       if @empresa.save
@@ -64,10 +64,13 @@ class EmpresasController < ApplicationController
   
   def newuser
     @user = current_user.empresa.users.new
+    @sucursales = current_user.empresa.sucursales.all
   end
   
   def createuser
-    @user = current_user.empresa.users.new(user_params)
+    params.permit!
+    @user = current_user.empresa.users.new(params[:user])
+    @user.add_role :empleado
     
     respond_to do |format|
       if @user.save
@@ -83,7 +86,8 @@ class EmpresasController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_empresa
-      @empresa = Empresa.find(params[:id])
+      #@empresa = current_user.empresa.find(params[:id])
+      @empresa = current_user.empresa
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

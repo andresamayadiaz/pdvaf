@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Starter Template for Bootstrap</title>
+  <title>AutoFactura.com PDV <%= ENV['VERSION'] %></title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="description" content="">
   <meta name="author" content="">
@@ -21,9 +21,16 @@
 		<%= render 'layouts/navigation' %>
 	</header>
   <div class="container">
+	  
 	<%= render 'layouts/messages' %>
 
     <%= yield %>
+	
+    <div class="footer">
+	  <hr>
+  	  <p>© Company 2013</p>
+  	</div>
+	
   </div>
 </body>
 </html>

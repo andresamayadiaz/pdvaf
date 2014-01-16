@@ -16,11 +16,11 @@
 <div class="container">
 	<div class="row">
 		<div class="col-md-5">
-            <img src="#" class="img-rounded logo">
 			<address>
-	        <strong>ACME, Inc.</strong><br>
-	        P.O Box 3171<br>
-	        Kent, WA 98089<br>
+	        <strong><%= current_user.empresa.razonsocial %></strong><br>
+	        <%= current_user.empresa.rfc %> <%= current_user.empresa.calle %> <%= current_user.empresa.noExterior %><br>
+	        <%= current_user.empresa.colonia %> <%= current_user.empresa.municipio %> <%= current_user.empresa.estado %><br>
+			<%= current_user.empresa.pais %> <%= current_user.empresa.codigoPostal %><br>
     	</address>
 		</div>
 		<div class="col-md-6 well">
@@ -81,8 +81,8 @@
 	        </tr>
 	        <tr>
 	  		  <td><strong>Descuento</strong></td>
-	          <td><%= text_field_tag "descuento", nil, {:class => "form-control text-right"} %>%</td>
-	          <td><p id="retenidos" class="lead text-right">$0.00</strong></td>
+	          <td><%= text_field_tag "descuento", '0', {:class => "form-control text-right", :onkeyUp => "calcTotales();"} %>%</td>
+	          <td><p id="totdescuento" class="lead text-right">$0.00</strong></td>
 	        </tr>
 	        <tr>
 				<td>&nbsp;</td>
@@ -113,13 +113,14 @@
 		</table>
   	</div>
 	</div>
+    <div class="form-group">
+      <div class="col-lg-offset-2 col-lg-10">
+        <%= f.submit :class => "btn btn-primary pull-right" %>
+      </div>
+    </div>
+	<% end %>
 	<div class="row">
-		<div class="col-md-8 well invoice-thank">
-			<h5 style="text-align:center;">Thank You!</h5>
-		</div>
-	</div>
-	<div class="row">
-    	<div class="col-md-3">
+    	<div class="col-md-6">
 	        <strong>Phone:</strong> <a href="tel:555-555-5555">555-555-5555</a>
     	</div>
     	<div class="col-md-3">
@@ -130,10 +131,3 @@
     	</div>
 	</div>
 </div>
-
-  <div class="form-group">
-    <div class="col-lg-offset-2 col-lg-10">
-      <%= f.submit :class => "btn btn-primary" %>
-    </div>
-  </div>
-<% end %>

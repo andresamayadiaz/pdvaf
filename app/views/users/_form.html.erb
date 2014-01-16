@@ -25,6 +25,12 @@
     </div>
   </div>
   <div class="form-group">
+    <%= f.label :sucursal, :class => "col-lg-2 control-label" %>
+    <div class="col-lg-10">
+      <%= collection_select(:user, :sucursal_id, @sucursales, :id, :nombre, {:prompt => false}, :class => "form-control") %>
+    </div>
+  </div>
+  <div class="form-group">
     <%= f.label :password, :class => "col-lg-2 control-label" %>
     <div class="col-lg-10">
       <%= f.password_field :password, :class => "form-control" %>

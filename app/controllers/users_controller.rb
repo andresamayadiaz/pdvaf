@@ -13,10 +13,12 @@ class UsersController < ApplicationController
   
   # GET /users/1/edit
   def edit
+    @sucursales = current_user.empresa.sucursales.all
   end
   
   def update
     #authorize! :update, @user, :message => 'Not authorized as an administrator.'
+    params.permit!
     @user = User.find(params[:id])
     if @user.update_attributes(params[:user])
       redirect_to users_path, :notice => "User updated."

@@ -21,7 +21,8 @@ function mostrarOtrosImp(){
 
 function calcTotales(){
 	
-	var subtotal= 0;
+	var subtotal = 0;
+	var subtotal_desc = 0;
 	var ivatrasladado = 0;
 	var iepstrasladado = 0;
 	var ivaretenido = 0;
@@ -30,25 +31,32 @@ function calcTotales(){
 	var descuento = 0;
 	var total = 0;
 	
+	pordesc = $("#descuento").val();
+	if(pordesc > 100){
+		$("#descuento").val("0");
+		pordesc = 0;
+	}
+	
 	$("#conceptos > tr").each(function(e, lin){
 		
 		var importe = parseFloat($(lin).find(".importe").html());
+		var importe_desc = importe - (importe*pordesc/100);
 		subtotal += importe;
+		subtotal_desc += importe_desc;
 		
-		ivatrasladado += (importe*parseFloat($(lin).find(".ivatrasladado").val())/100);
-		iepstrasladado += (importe*parseFloat($(lin).find(".iepstrasladado").val())/100);
-		ivaretenido += (importe*parseFloat($(lin).find(".ivaretenido").val())/100);
-		isrretenido += (importe*parseFloat($(lin).find(".isrretenido").val())/100);
+		ivatrasladado += (importe_desc*parseFloat($(lin).find(".ivatrasladado").val())/100);
+		iepstrasladado += (importe_desc*parseFloat($(lin).find(".iepstrasladado").val())/100);
+		ivaretenido += (importe_desc*parseFloat($(lin).find(".ivaretenido").val())/100);
+		isrretenido += (importe_desc*parseFloat($(lin).find(".isrretenido").val())/100);
 		
 	});
 	
-	pordesc = $("#descuento").val();
 	descuento = (subtotal*pordesc/100);
 	
-	total = (isNaN(subtotal) ? 0 : subtotal) + (isNaN(ivatrasladado) ? 0 : ivatrasladado) + (isNaN(iepstrasladado) ? 0 : iepstrasladado) - (isNaN(ivaretenido) ? 0 : ivaretenido) - (isNaN(isrretenido) ? 0 : isrretenido);
+	total = (isNaN(subtotal_desc) ? 0 : subtotal_desc) + (isNaN(ivatrasladado) ? 0 : ivatrasladado) + (isNaN(iepstrasladado) ? 0 : iepstrasladado) - (isNaN(ivaretenido) ? 0 : ivaretenido) - (isNaN(isrretenido) ? 0 : isrretenido);
 	
 	$("#subtotal").html(formatMoney(subtotal,2,',', '.'));
-	$("#descuento").html(formatMoney(descuento,2,',', '.'));
+	$("#totdescuento").html(formatMoney(descuento,2,',', '.'));
 	$("#totivatrasladado").html(formatMoney(ivatrasladado,2,',', '.'));
 	$("#totiepstrasladado").html(formatMoney(iepstrasladado,2,',', '.'));
 	$("#totivaretenido").html(formatMoney(ivaretenido,2,',', '.'));

@@ -47,8 +47,8 @@
             <td class="text-right"><%= number_to_currency(remision.totalimpuestostrasladados) %></td>
             <td class="text-right"><%= number_to_currency(remision.totalimpuestosretenidos) %></td>
             <td class="text-right"><%= number_to_currency(remision.total) %></td>
-            <td class="text-right"><%= link_to 'Show', remision %></td>
-        	<td><%= link_to 'Destroy', remision, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <td class="text-right"><%= link_to 'Ver', remision, :class => "btn btn-info" %></td>
+        	<td><%= link_to 'Eliminar', remision, :class => "btn btn-danger", method: :delete, data: { confirm: 'Are you sure?' } %></td>
       <% end %>
     </tbody>
   </table>

@@ -26,11 +26,12 @@
       <li><%= link_to 'Condiciones de Pago', condicionesdepagos_path %></li>
       <li><%= link_to 'Unidades', unidades_path %></li>
 	  <li><%= link_to 'Sucursales', sucursales_path %></li>
+	  <li><%= link_to 'Usuarios', users_path %></li>
     </ul>
   </li>
   
   <% if current_user.has_role? :gerente %>
-    <li><%= link_to 'Perfil de Empresa', edit_user_registration_path %></li>
+    <li><%= link_to 'Perfil de Empresa', edit_empresa_path(current_user.empresa.id) %></li>
   <% end %>
   
   <li><%= link_to 'Nueva Remision', new_remision_path %></li>

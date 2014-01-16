@@ -32,3 +32,7 @@ end
 # aad
 gem 'bootstrap-generators', :git => 'git://github.com/decioferreira/bootstrap-generators.git'
 gem 'kaminari'
+
+# AutoFactura.com
+#gem 'autofactura', :git => 'git://github.com/andresamayadiaz/autofactura.git'
+gem 'autofactura', :path => "/Users/andresamayadiaz/rails/autofactura"

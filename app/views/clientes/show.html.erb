@@ -1,17 +1,17 @@
 <div class="page-header">
   <%= link_to clientes_path, :class => 'btn btn-default' do %>
     <span class="glyphicon glyphicon-list-alt"></span>
-    Back
+    Atras
   <% end %>
   <%= link_to edit_cliente_path(@cliente), :class => 'btn btn-primary' do %>
     <span class="glyphicon glyphicon-pencil"></span>
-    Edit
+    Editar
   <% end %>
-  <h1>Show cliente</h1>
+  <h1>Ver Cliente</h1>
 </div>
 
 <dl class="dl-horizontal">
-  <dt>Rfc:</dt>
+  <dt>RFC:</dt>
   <dd><%= @cliente.rfc %></dd>
 
   <dt>Nombre:</dt>
