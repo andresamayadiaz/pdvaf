@@ -8,7 +8,7 @@ GIT
 PATH
   remote: /Users/andresamayadiaz/rails/autofactura
   specs:
-    autofactura (0.0.7)
+    autofactura (0.1.0)
       rails (>= 3.2.14)
 
 GEM
