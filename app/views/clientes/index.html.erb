@@ -3,6 +3,12 @@
     <span class="glyphicon glyphicon-plus"></span>
     Nuevo Cliente
   <% end %>
+  <div class="pull-right">
+	  <%= form_tag import_clientes_path, :multipart => true do %>
+	    <%= file_field_tag :file %>
+	    <%= submit_tag "Importar" %>
+	  <% end %>
+  </div>
   <h1>Clientes</h1>
 </div>
 
@@ -46,4 +52,5 @@
       <% end %>
     </tbody>
   </table>
+  <%= paginate @clientes %>
 </div>

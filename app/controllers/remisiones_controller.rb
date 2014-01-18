@@ -35,7 +35,7 @@ class RemisionesController < ApplicationController
       :Receptor => {
         :rfc => @remision.cliente.rfc.to_s,
         :nombre => @remision.cliente.nombre.to_s,
-        :email => "andres.amaya.diaz@gmail.com",
+        :email => @remision.cliente.email.to_s,
         :Domicilio => {
           :noExterior => @remision.cliente.noExterior.to_s,
           :calle => @remision.cliente.calle.to_s,

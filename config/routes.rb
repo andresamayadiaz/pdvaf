@@ -19,11 +19,15 @@ Pdvaf::Application.routes.draw do
 
   resources :monedas
 
-  resources :productos
+  resources :productos do
+    collection { post :import }
+  end
 
   resources :unidades
 
-  resources :clientes
+  resources :clientes do
+    collection { post :import }
+  end
 
   resources :metodosdepagos
 

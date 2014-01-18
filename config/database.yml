@@ -19,6 +19,6 @@ production:
   adapter: mysql2
   database: pdvaf_production
   username: root
-  password: ceis12345
+  password: somepassword
   host: 127.0.0.1
   timeout: 5000

@@ -1,11 +1,16 @@
 class ClientesController < ApplicationController
   before_filter :authenticate_user!
   before_action :set_cliente, only: [:show, :edit, :update, :destroy]
+  
+  def import
+    Cliente.import(params[:file], current_user.empresa)
+    redirect_to clientes_url, notice: "Clientes Importados."
+  end
 
   # GET /clientes
   # GET /clientes.json
   def index
-    @clientes = current_user.empresa.clientes.all
+    @clientes = current_user.empresa.clientes.page params[:page]
   end
 
   # GET /clientes/1

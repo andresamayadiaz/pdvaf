@@ -2,6 +2,11 @@ class ProductosController < ApplicationController
   before_filter :authenticate_user!
   before_action :set_producto, only: [:show, :edit, :update, :destroy]
 
+  def import
+    Producto.import(params[:file], current_user.empresa)
+    redirect_to productos_url, notice: "Productos Importados."
+  end
+
   # GET /productos
   # GET /productos.json
   def index
