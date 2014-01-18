@@ -3,13 +3,11 @@
     <div class="alert alert-danger alert-dismissable">
       <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
       <h4><%= pluralize(@remision.errors.count, "error") %> prohibited this remision from being saved:</h4>
-
       <ul>
-      <% @remision.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
+	      <% @remision.errors.full_messages.each do |msg| %>
+	        <li><%= msg %></li>
+	      <% end %>
       </ul>
-	  
     </div>
   <% end %>
 
@@ -17,11 +15,12 @@
 	<div class="row">
 		<div class="col-md-5">
 			<address>
-	        <strong><%= current_user.empresa.razonsocial %></strong><br>
-	        <%= current_user.empresa.rfc %> <%= current_user.empresa.calle %> <%= current_user.empresa.noExterior %><br>
-	        <%= current_user.empresa.colonia %> <%= current_user.empresa.municipio %> <%= current_user.empresa.estado %><br>
-			<%= current_user.empresa.pais %> <%= current_user.empresa.codigoPostal %><br>
-    	</address>
+		        <strong><%= current_user.empresa.razonsocial %></strong><br>
+		        <%= current_user.empresa.rfc %> <%= current_user.empresa.calle %> <%= current_user.empresa.noExterior %><br>
+		        <%= current_user.empresa.colonia %> <%= current_user.empresa.municipio %> <%= current_user.empresa.estado %><br>
+				<%= current_user.empresa.pais %> <%= current_user.empresa.codigoPostal %><br>
+				<strong>Sucursal: <%= current_user.sucursal.nombre %></strong>
+    		</address>
 		</div>
 		<div class="col-md-6 well">
 			<table class="invoice-head">
@@ -58,7 +57,7 @@
 		          <th>Cantidad</th>
 		          <th>Unidad</th>
 				  <th>IVA Traslad. (%)</th>
-				  <th class="visible"><div id="otrosimptos" class="btn btn-primary">Ver Otros Impuestos</div></th>
+				  <th class="visible"><div id="otrosimptos" class="btn btn-info">Ver Otros Impuestos</div></th>
 				  <th class="hidden oculto">IEPS Traslad. (%)</th>
 				  <th class="hidden oculto">IVA Reten. (%)</th>
 				  <th class="hidden oculto">ISR Reten. (%)</th>
@@ -115,19 +114,16 @@
 	</div>
     <div class="form-group">
       <div class="col-lg-offset-2 col-lg-10">
-        <%= f.submit :class => "btn btn-primary pull-right" %>
+        <%= f.submit "Crear Remision", :class => "btn btn-primary pull-right" %>
       </div>
     </div>
 	<% end %>
-	<div class="row">
-    	<div class="col-md-6">
-	        <strong>Phone:</strong> <a href="tel:555-555-5555">555-555-5555</a>
-    	</div>
-    	<div class="col-md-3">
-	        <strong>Email:</strong> <a href="mailto:hello@5marks.co">hello@bootply.com</a>
-    	</div>
-    	<div class="col-md-3">
-	        <strong>Website:</strong> <a href="http://5marks.co">http://bootply.com</a>
-    	</div>
-	</div>
+    <div class="row">
+        <div class="col-md-12 well invoice-thank">
+            	<h5 style="text-align:center;">Tel. <%= current_user.sucursal.telefono %> | E-mail. <%= current_user.sucursal.email %></h5>
+        </div>
+    </div>
 </div>
+<script>
+init();
+</script>

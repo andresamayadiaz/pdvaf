@@ -125,7 +125,7 @@ function agregarLinea(){
 	lineas++;
 }
 
-$(document).ready(function() {
+function init(){
 	
 	$.ui.autocomplete.prototype._renderItem = function (ul, item) {
 	    return $( "<li>" )
@@ -133,21 +133,27 @@ $(document).ready(function() {
 	      .append( $( "<a>" ).text( item.nombre ) )
 	      .appendTo( ul );
 	};
-	
+
 	agregarLinea();
 	autoComp();
-	
+
 	$("#agregar").click(function(){
-		
+		console.log("agregar");
 		agregarLinea();
 		if(otrosimptos==1){
 			mostrarOtrosImp();
 		}
-	
+
 	});
-	
+
 	$("#otrosimptos").click(function(){
 		mostrarOtrosImp();
 	});	
+	
+}
+
+$(document).ready(function() {
+
+		init();
 	
 });

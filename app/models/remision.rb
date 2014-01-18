@@ -11,6 +11,13 @@ class Remision < ActiveRecord::Base
   
   default_scope { order('created_at DESC') }
   
+  before_save :set_defaults
+  
+  def set_defaults
+    self.facturada ||= false
+    return true
+  end
+  
   def self.search(search)
     if search
       find(:all, :conditions => ['name LIKE ?', "%#{search}%"])

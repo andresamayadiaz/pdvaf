@@ -1,6 +1,98 @@
 class RemisionesController < ApplicationController
   before_filter :authenticate_user!
-  before_action :set_remision, only: [:show, :edit, :update, :destroy]
+  before_action :set_remision, only: [:show, :edit, :update, :destroy, :facturar, :series]
+
+  # GET /remisiones/1/facturar
+  def facturar
+    
+    af = Autofactura::Autofactura.new({ :user => current_user.empresa.af_user, :sucursal => @remision.sucursal.af_sucursal })
+    conceptos = Array.new
+    @remision.conceptos.each do |concepto|
+      
+      conceptos.push ({:cantidad => concepto.cantidad.to_f,
+          :unidad => concepto.unidad.to_s,
+          :descripcion => concepto.descripcion.to_s,
+          :valorUnitario => concepto.valorunitario.to_f,
+          :ret_iva => concepto.ivaretenido.to_f,
+          :tras_ieps => concepto.iepstrasladado.to_f,
+          :tras_iva => concepto.ivatrasladado.to_f,
+          :ret_isr => concepto.isrretenido.to_f})
+      
+    end
+    
+    comp = { 
+      :serie => params[:serie],
+      :tipoDeComprobante => "ingreso",
+      :condicionesDePago => "CONTADO",
+      :formaDePago => @remision.formasdepago.nombre.to_s,
+      :metodoDePago => @remision.metodosdepago.nombre.to_s,
+      :numerocta => "NO IDENTIFICADO",
+      :version => "3.2",
+      :tipoCambio => 1,
+      :moneda => "MXN",
+      :decimales => 2,
+      :descuento_porcentual => @remision.descuento.to_f,
+      :Receptor => {
+        :rfc => @remision.cliente.rfc.to_s,
+        :nombre => @remision.cliente.nombre.to_s,
+        :email => "andres.amaya.diaz@gmail.com",
+        :Domicilio => {
+          :noExterior => @remision.cliente.noExterior.to_s,
+          :calle => @remision.cliente.calle.to_s,
+          :colonia => @remision.cliente.colonia.to_s,
+          :municipio => @remision.cliente.municipio.to_s,
+          :estado => @remision.cliente.estado.to_s,
+          :pais => @remision.cliente.pais.to_s,
+          :codigoPostal => @remision.cliente.codigoPostal.to_s
+        } # Fin Domicilio
+      }, # Fin Receptor
+      :Addenda => ""
+     }
+     comp[:Conceptos] = conceptos
+     logger.debug "---------------------------------------"
+     logger.debug "COMPROBANTE"
+     logger.debug "---------------------------------------"
+     logger.debug comp.to_json
+     logger.debug "---------------------------------------"
+     logger.debug "AUTOFACTURA"
+     logger.debug "---------------------------------------"
+     comprobante = Autofactura::Comprobante.new( comp )
+     resp = af.emitir(comprobante)
+     logger.debug resp.body
+     # TODO 
+     # Validar exito, si si poner @remision.facturada = true y datos extra
+     response = JSON.parse resp.body
+     if response['exito']
+       
+       @remision.facturada = true
+       @remision.uuid = response['uuid']
+       @remision.af_id = response['id']
+       @remision.seriefolio = response['Folio']
+       @remision.pdf_url = 'http://app.autofactura.com/cfdis/cfdipdf/' + response['id']
+       @remision.xml_url = response['url']
+       @remision.save
+       
+       redirect_to @remision, notice: 'Remision Facturada.'
+       
+     else
+       
+       redirect_to @remision, error: 'Remision No Facturada. ' + response['mensaje']
+              
+     end
+
+  end
+  
+  # GET /remisiones/1/series
+  def series
+    
+    af = Autofactura::Autofactura.new({ :user => current_user.empresa.af_user, :sucursal => @remision.sucursal.af_sucursal })
+    @series = af.series
+    respond_to do |format|
+        format.html { redirect_to @remision, notice: 'No se puede acceder el metodo.' }
+        format.json { render :json => @series }
+      end
+    
+  end
 
   # GET /remisiones
   # GET /remisiones.json
@@ -23,9 +115,9 @@ class RemisionesController < ApplicationController
   # GET /remisiones/new
   def new
     @remision = current_user.empresa.remisiones.new
-    @clientes = Cliente.all
-    @formasdepago = current_user.empresa.formasdepagos.all
-    @metodosdepago = current_user.empresa.metodosdepagos.all
+    @clientes = current_user.empresa.clientes.load
+    @formasdepago = current_user.empresa.formasdepagos.load
+    @metodosdepago = current_user.empresa.metodosdepagos.load
   end
 
   # GET /remisiones/1/edit
@@ -47,7 +139,12 @@ class RemisionesController < ApplicationController
         format.html { redirect_to @remision, notice: 'Remision was successfully created.' }
         format.json { render action: 'show', status: :created, location: @remision }
       else
-        format.html { render action: 'new' }
+        format.html { 
+          @clientes = current_user.empresa.clientes.load
+          @formasdepago = current_user.empresa.formasdepagos.load
+          @metodosdepago = current_user.empresa.metodosdepagos.load
+          render action: 'new' 
+        }
         format.json { render json: @remision.errors, status: :unprocessable_entity }
       end
     end
@@ -85,6 +182,6 @@ class RemisionesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def remision_params
-      params.require(:remision).permit(:cliente_id, :condicionesdepago_id, :formasdepago_id, :metodosdepago_id, :subtotal, :descuento, :total, :totalimpuestosretenidos, :totalimpuestostrasladados, conceptos_attributes: [:id, :cantidad, :unidad, :descripcion, :valorunitario, :importe, :ivatrasladado, :iepstrasladado, :ivaretenido, :isrretenido])
+      params.require(:remision).permit(:serie, :cliente_id, :condicionesdepago_id, :formasdepago_id, :metodosdepago_id, :subtotal, :descuento, :total, :totalimpuestosretenidos, :totalimpuestostrasladados, conceptos_attributes: [:id, :cantidad, :unidad, :descripcion, :valorunitario, :importe, :ivatrasladado, :iepstrasladado, :ivaretenido, :isrretenido])
     end
 end

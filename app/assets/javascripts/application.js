@@ -14,5 +14,11 @@
 //= require jquery_ujs
 //= require jquery.ui.all
 //= require turbolinks
-//= require bootstrap
+//= require bootstrap/tooltip
+//= require bootstrap/alert
+//= require bootstrap/button
+//= require bootstrap/popover
+//= require bootstrap/carousel
+//= require bootstrap/modal
+//= require bootstrap/dropdown
 //= require_tree .

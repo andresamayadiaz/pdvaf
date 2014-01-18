@@ -3,9 +3,11 @@
     <span class="glyphicon glyphicon-list-alt"></span>
     Atras
   <% end %>
-  <%= link_to edit_remision_path(@remision), :class => 'btn btn-primary' do %>
-    <span class="glyphicon glyphicon-pencil"></span>
-    Editar
+  <!-- Button trigger modal -->
+  <% unless @remision.facturada %>
+	  <a class="btn btn-primary" data-toggle="modal" data-target="#facturarModal">
+	    Facturar
+	  </a>
   <% end %>
   <h1>Remisión #<%= @remision.id %></h1>
 </div>
@@ -13,12 +15,13 @@
 <div class="container">
     <div class="row">
         <div class="col-md-5">
-            <img src="//placehold.it/170x40" class="img-rounded logo img-responsive">	<address>
-			        <strong>ACME, Inc.</strong><br>
-			        P.O Box 3171<br>
-			        Kent, WA 98089<br>
-		    	</address>
-
+			<address>
+		        <strong><%= current_user.empresa.razonsocial %></strong><br>
+		        <%= current_user.empresa.rfc %> <%= current_user.empresa.calle %> <%= current_user.empresa.noExterior %><br>
+		        <%= current_user.empresa.colonia %> <%= current_user.empresa.municipio %> <%= current_user.empresa.estado %><br>
+				<%= current_user.empresa.pais %> <%= current_user.empresa.codigoPostal %><br>
+				<strong>Sucursal: <%= @remision.sucursal.nombre %></strong>
+    		</address>
         </div>
         <div class="col-md-6 well">
             <table class="invoice-head">
@@ -29,20 +32,41 @@
                         <td><%= link_to @remision.cliente.nombre, cliente_path(@remision.cliente) %></td>
                     </tr>
                     <tr>
-                        <td class="pull-right"><strong>Invoice #</strong>
+                        <td class="pull-right"><strong>Dirección </strong>
                         </td>
-                        <td>2340</td>
+                        <td><%= @remision.cliente.calle + ", " + @remision.cliente.noExterior + " " + @remision.cliente.noInterior + ", " + @remision.cliente.colonia + ", " + @remision.cliente.municipio + ", " + @remision.cliente.estado + ", " + @remision.cliente.pais + ", " + @remision.cliente.codigoPostal %></td>
                     </tr>
                     <tr>
                         <td class="pull-right"><strong>Fecha </strong>
                         </td>
                         <td><%= @remision.created_at.to_s(:db) %></td>
                     </tr>
-                    <tr>
-                        <td class="pull-right"><strong>Period</strong>
-                        </td>
-                        <td>9/1/2103 - 9/30/2013</td>
-                    </tr>
+					<% if @remision.facturada %>
+	                    <tr>
+	                        <td>&nbsp;</td>
+	                        <td><strong>CFDi</strong></td>
+	                    </tr>
+	                    <tr>
+	                        <td class="pull-right"><strong>Folio </strong>
+	                        </td>
+	                        <td><%= @remision.seriefolio %></td>
+	                    </tr>
+	                    <tr>
+	                        <td class="pull-right"><strong>UUID </strong>
+	                        </td>
+	                        <td><%= @remision.uuid %> (Folio Fiscal)</td>
+	                    </tr>
+	                    <tr>
+	                        <td class="pull-right"><strong>XML </strong>
+	                        </td>
+	                        <td><%= link_to "Descargar XML", @remision.xml_url, :target => "_blank" %></td>
+	                    </tr>
+	                    <tr>
+	                        <td class="pull-right"><strong>PDF </strong>
+	                        </td>
+	                        <td><%= link_to "Descargar PDF", @remision.pdf_url, :target => "_blank" %></td>
+	                    </tr>
+					<% end %>
                 </tbody>
             </table>
         </div>
@@ -120,52 +144,55 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-8 well invoice-thank">
-            	<h5 style="text-align:center;">Thank You!</h5>
-
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-3"> <strong>Phone:</strong>  <a href="tel:555-555-5555">555-555-5555</a>
-
-        </div>
-        <div class="col-md-3"> <strong>Email:</strong>  <a href="mailto:hello@5marks.co">hello@bootply.com</a>
-
-        </div>
-        <div class="col-md-3"> <strong>Website:</strong>  <a href="http://5marks.co">http://bootply.com</a>
-
+        <div class="col-md-12 well invoice-thank">
+            	<h5 style="text-align:center;">Tel. <%= @remision.sucursal.telefono %> | E-mail. <%= @remision.sucursal.email %></h5>
         </div>
     </div>
 </div>
 
-
-<hr />
-<dl class="dl-horizontal">
-  <dt>Cliente:</dt>
-  <dd><%= @remision.cliente %></dd>
-
-  <dt>Condicionesdepago:</dt>
-  <dd><%= @remision.condicionesdepago %></dd>
-
-  <dt>Formasdepago:</dt>
-  <dd><%= @remision.formasdepago %></dd>
-
-  <dt>Metodosdepago:</dt>
-  <dd><%= @remision.metodosdepago %></dd>
-
-  <dt>Subtotal:</dt>
-  <dd><%= @remision.subtotal %></dd>
-
-  <dt>Descuento:</dt>
-  <dd><%= @remision.descuento %></dd>
-
-  <dt>Total:</dt>
-  <dd><%= @remision.total %></dd>
-
-  <dt>Totalimpuestosretenidos:</dt>
-  <dd><%= @remision.totalimpuestosretenidos %></dd>
-
-  <dt>Totalimpuestostrasladados:</dt>
-  <dd><%= @remision.totalimpuestostrasladados %></dd>
-
-</dl>
+<!-- Modal -->
+<% unless @remision.facturada %>
+	<%= form_tag(facturar_remision_path(:id => @remision.id), method: "post") do %>
+	<div class="modal fade" id="facturarModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	        <h4 class="modal-title" id="myModalLabel">Facturar Remisión</h4>
+	      </div>
+	      <div class="modal-body">
+			  <div class="row">
+			  
+					  <div class="form-group">
+					    <%= label_tag :serie, "Serie de Facturacion" %>
+						<%= select_tag(:serie, [['No Hay Series', -1]], :class => "hide") %>
+					  </div>
+			  
+			  </div>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+	        <button type="submit" class="btn btn-primary">Facturar</button>
+	      </div>
+	    </div><!-- /.modal-content -->
+	  </div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+	<% end %>
+<% end %>
+<script>
+$(document).ready(function() {
+	$.ajax({
+		   type: 'get',
+		   async: true,
+	       url: "/remisiones/<%= @remision.id %>/series.json"
+	    }).success(function(data) {
+			for (var j = 0; j < data.length; j++){                 
+                //console.log(data[j].nombre + "--" + data[j].id);
+				$("#serie").html("");
+                $("#serie").append("<option value='" +data[j].id+ "'>" +data[j].nombre+ "</option>");
+				$("#serie").removeClass("hide");
+            }
+	    });
+	
+});
+</script>

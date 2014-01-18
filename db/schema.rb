@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140115004116) do
+ActiveRecord::Schema.define(version: 20140117212235) do
 
   create_table "clientes", force: true do |t|
     t.string   "rfc"
@@ -78,6 +78,8 @@ ActiveRecord::Schema.define(version: 20140115004116) do
     t.string   "codigoPostal"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "af_user"
+    t.string   "af_url"
   end
 
   create_table "formasdepagos", force: true do |t|
@@ -149,6 +151,12 @@ ActiveRecord::Schema.define(version: 20140115004116) do
     t.datetime "updated_at"
     t.integer  "empresa_id"
     t.integer  "sucursal_id"
+    t.boolean  "facturada"
+    t.string   "uuid"
+    t.string   "af_id"
+    t.string   "seriefolio"
+    t.text     "pdf_url"
+    t.text     "xml_url"
   end
 
   add_index "remisiones", ["cliente_id"], name: "index_remisiones_on_cliente_id"
@@ -178,6 +186,7 @@ ActiveRecord::Schema.define(version: 20140115004116) do
     t.datetime "updated_at"
     t.integer  "empresa_id"
     t.integer  "consecutivo"
+    t.string   "af_sucursal"
   end
 
   add_index "sucursales", ["empresa_id"], name: "index_sucursales_on_empresa_id"
