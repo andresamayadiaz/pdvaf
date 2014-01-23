@@ -30,7 +30,7 @@ class RemisionesController < ApplicationController
       :version => "3.2",
       :tipoCambio => 1,
       :moneda => "MXN",
-      :decimales => 2,
+      :decimales => 3,
       :descuento_porcentual => @remision.descuento.to_f,
       :Receptor => {
         :rfc => @remision.cliente.rfc.to_s,

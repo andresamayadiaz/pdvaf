@@ -55,13 +55,13 @@ function calcTotales(){
 	
 	total = (isNaN(subtotal_desc) ? 0 : subtotal_desc) + (isNaN(ivatrasladado) ? 0 : ivatrasladado) + (isNaN(iepstrasladado) ? 0 : iepstrasladado) - (isNaN(ivaretenido) ? 0 : ivaretenido) - (isNaN(isrretenido) ? 0 : isrretenido);
 	
-	$("#subtotal").html(formatMoney(subtotal,2,',', '.'));
-	$("#totdescuento").html(formatMoney(descuento,2,',', '.'));
-	$("#totivatrasladado").html(formatMoney(ivatrasladado,2,',', '.'));
-	$("#totiepstrasladado").html(formatMoney(iepstrasladado,2,',', '.'));
-	$("#totivaretenido").html(formatMoney(ivaretenido,2,',', '.'));
-	$("#totisrretenido").html(formatMoney(isrretenido,2,',', '.'));
-	$("#total").html(formatMoney(total,2,',', '.'));
+	$("#subtotal").html(formatMoney(subtotal,3,',', '.'));
+	$("#totdescuento").html(formatMoney(descuento,3,',', '.'));
+	$("#totivatrasladado").html(formatMoney(ivatrasladado,3,',', '.'));
+	$("#totiepstrasladado").html(formatMoney(iepstrasladado,3,',', '.'));
+	$("#totivaretenido").html(formatMoney(ivaretenido,3,',', '.'));
+	$("#totisrretenido").html(formatMoney(isrretenido,3,',', '.'));
+	$("#total").html(formatMoney(total,3,',', '.'));
 	
 }
 
@@ -72,7 +72,7 @@ function calcImporte(linea){
 	var importe = (cantidad * valorunitario);
 	
 	//$("#importe"+linea).html(formatMoney(importe,2,',', '.'));
-	$("#importe"+linea).html(importe.toFixed(2));
+	$("#importe"+linea).html(importe.toFixed(3));
 	calcTotales();
 }
 
