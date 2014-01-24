@@ -10,6 +10,16 @@
 	  <% end %>
   </div>
   <h1>Clientes</h1>
+  <div class="row">
+	  <div class="col-md-6">
+		  <%= form_tag clientes_path, :method => 'get' do |f| %>
+		 	 <%= label_tag 'RFC o Nombre:', nil, class: ''  %>
+			 <%= text_field_tag 'q', params[:q] %>
+			  <%= hidden_field_tag 'search'  %>
+			 <%= button_tag "Buscar", class: 'btn btn-default' %>
+		  <% end %>
+	  </div>
+  </div>
 </div>
 
 <div class="table-responsive">

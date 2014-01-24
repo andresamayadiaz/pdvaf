@@ -10,9 +10,16 @@ class ClientesController < ApplicationController
   # GET /clientes
   # GET /clientes.json
   def index
-    @clientes = current_user.empresa.clientes.page params[:page]
+    
+    if params[:search]
+      keyword = params[:q]
+      @clientes = current_user.empresa.clientes.where("rfc LIKE ? OR nombre LIKE ?", "%#{keyword}%", "%#{keyword}%").page params[:page]
+    else
+      @clientes = current_user.empresa.clientes.page params[:page]
+    end
+    
   end
-
+  
   # GET /clientes/1
   # GET /clientes/1.json
   def show
