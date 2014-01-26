@@ -3,12 +3,12 @@
 en:
   devise:
     confirmations:
-      confirmed: "Your account was successfully confirmed."
+      confirmed: "Su cuenta se ha confirmado exitosamente."
       send_instructions: "You will receive an email with instructions about how to confirm your account in a few minutes."
       send_paranoid_instructions: "If your email address exists in our database, you will receive an email with instructions about how to confirm your account in a few minutes."
     failure:
       already_authenticated: "You are already signed in."
-      inactive: "Your account is not activated yet."
+      inactive: "Su cuenta no ha sido activada."
       invalid: "Invalid email or password."
       locked: "Your account is locked."
       last_attempt: "You have one more attempt before your account will be locked."
@@ -18,9 +18,9 @@ en:
       unconfirmed: "You have to confirm your account before continuing."
     mailer:
       confirmation_instructions:
-        subject: "Confirmation instructions"
+        subject: "Instrucciones de Confirmacion"
       reset_password_instructions:
-        subject: "Reset password instructions"
+        subject: "Instrucciones para Cambio de Password"
       unlock_instructions:
         subject: "Unlock Instructions"
     omniauth_callbacks:

@@ -16,9 +16,9 @@
 		<div class="col-md-5">
 			<address>
 		        <strong><%= current_user.empresa.razonsocial %></strong><br>
-		        <%= current_user.empresa.rfc %> <%= current_user.empresa.calle %> <%= current_user.empresa.noExterior %><br>
-		        <%= current_user.empresa.colonia %> <%= current_user.empresa.municipio %> <%= current_user.empresa.estado %><br>
-				<%= current_user.empresa.pais %> <%= current_user.empresa.codigoPostal %><br>
+		        <%= current_user.empresa.rfc %> <%= current_user.empresa.calle %> <%= current_user.empresa.noExterior unless current_user.empresa.noExterior.blank? %><br>
+		        <%= current_user.empresa.colonia unless current_user.empresa.colonia.blank? %> <%= current_user.empresa.municipio %> <%= current_user.empresa.estado unless current_user.empresa.estado.blank? %><br>
+				<%= current_user.empresa.pais unless current_user.empresa.pais.blank? %> <%= current_user.empresa.codigoPostal unless current_user.empresa.codigoPostal.blank? %><br>
 				<strong>Sucursal: <%= current_user.sucursal.nombre %></strong>
     		</address>
 		</div>
@@ -26,7 +26,7 @@
 			<table class="invoice-head">
 				<tbody>
 					<tr>
-						<td class="pull-right"><strong>Cliente </strong></td>
+						<td class="pull-right"><strong>Cliente </strong><button class="btn btn-info btn-xs" data-toggle="modal" data-target="#clienteModal">Nuevo</button><button type="button" class="btn btn-default btn-xs" onClick="todosClientes();">Todos</button></td>
 						<td><%= collection_select(:remision, :cliente_id, @clientes, :id, :nombre, {:prompt => false}, :class => "form-control") %></td>
 					</tr>
 					<tr>
@@ -36,6 +36,10 @@
 					<tr>
 						<td class="pull-right"><strong>Metodo de Pago </strong></td>
 						<td><%= collection_select(:remision, :metodosdepago_id, @metodosdepago, :id, :nombre, {:prompt => false}, :class => "form-control") %></td>
+					</tr>
+					<tr>
+						<td class="pull-right"><strong>Condicion de Pago </strong></td>
+						<td><%= collection_select(:remision, :condicionesdepago_id, @condicionesdepago, :id, :nombre, {:prompt => false}, :class => "form-control") %></td>
 					</tr>
 				</tbody>
 			</table>
@@ -124,6 +128,71 @@
         </div>
     </div>
 </div>
+<!-- Cliente Modal -->
+<div class="modal fade" id="clienteModal" tabindex="-1" role="dialog" aria-labelledby="clienteModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="clienteModalLabel">Nuevo Cliente</h4>
+      </div>
+      <div class="modal-body">
+        <%= render 'clientes/formModal' %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+        <!-- <button type="button" class="btn btn-primary">Guardar</button> -->
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 <script>
-init();
+  $("#clienteModal").on("ajax:success", function(event, data, status, response) {
+    selectCliente(response.responseJSON.rfc);
+    $("#clienteModal").modal('hide');
+  });
+  
+  $("#clienteModal").on("ajax:error", function(event, response, error) {
+    obj = response.responseJSON;
+    str = '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><h4>Errores:</h4><ul>';
+    for (key in obj){
+      str += "<li>"+key+" "+obj[key]+"</li>";
+    }
+    str += '</ul></div>';
+    $(".modal-dialog").prepend(str);
+  });
+  
+  function selectCliente(rfc){
+      
+    $.ajax({
+      type: "GET",
+      url: '<%= clientes_path %>',
+      data: { search: true, q: rfc },
+      dataType: "json"
+    }).done(function( msg ) {
+      str = "";
+      for(key in msg){
+        str += "<option value='"+msg[key].id+"'>"+msg[key].nombre+"</option>";
+      }
+      $("#remision_cliente_id").html(str);
+    });
+      
+  }
+  
+  function todosClientes(){
+    $.ajax({
+      type: "GET",
+      url: '<%= clientes_path %>',
+      data: { searchall: true},
+      dataType: "json"
+    }).done(function( msg ) {
+      str = "";
+      for(key in msg){
+        str += "<option value='"+msg[key].id+"'>"+msg[key].nombre+"</option>";
+      }
+      $("#remision_cliente_id").html(str);
+    });
+  }
+  
+  init();
 </script>

@@ -1,0 +1,74 @@
+<%= form_for(Cliente.new, :id => 'clienteModalForm', :remote => true, :format => :json, :html => { :class => "form-horizontal" }) do |f| %>
+
+  <div class="form-group">
+    <%= f.label :rfc, :class => "col-lg-2 control-label" %>
+    <div class="col-lg-10">
+      <%= f.text_field :rfc, :class => "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :nombre, :class => "col-lg-2 control-label" %>
+    <div class="col-lg-10">
+      <%= f.text_area :nombre, :class => "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :email, :class => "col-lg-2 control-label" %>
+    <div class="col-lg-10">
+      <%= f.text_field :email, :class => "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :noExterior, :class => "col-lg-2 control-label" %>
+    <div class="col-lg-10">
+      <%= f.text_field :noExterior, :class => "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :noInterior, :class => "col-lg-2 control-label" %>
+    <div class="col-lg-10">
+      <%= f.text_field :noInterior, :class => "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :calle, :class => "col-lg-2 control-label" %>
+    <div class="col-lg-10">
+      <%= f.text_field :calle, :class => "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :colonia, :class => "col-lg-2 control-label" %>
+    <div class="col-lg-10">
+      <%= f.text_field :colonia, :class => "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :municipio, :class => "col-lg-2 control-label" %>
+    <div class="col-lg-10">
+      <%= f.text_field :municipio, :class => "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :estado, :class => "col-lg-2 control-label" %>
+    <div class="col-lg-10">
+      <%= f.text_field :estado, :class => "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :pais, :class => "col-lg-2 control-label" %>
+    <div class="col-lg-10">
+      <%= f.text_field :pais, :class => "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :codigoPostal, :class => "col-lg-2 control-label" %>
+    <div class="col-lg-10">
+      <%= f.text_field :codigoPostal, :class => "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-lg-offset-2 col-lg-10">
+      <%= f.submit :class => "btn btn-primary" %>
+    </div>
+  </div>
+<% end %>

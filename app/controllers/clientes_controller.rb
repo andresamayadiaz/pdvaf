@@ -14,6 +14,8 @@ class ClientesController < ApplicationController
     if params[:search]
       keyword = params[:q]
       @clientes = current_user.empresa.clientes.where("rfc LIKE ? OR nombre LIKE ?", "%#{keyword}%", "%#{keyword}%").page params[:page]
+    elsif params[:searchall]
+      @clientes = current_user.empresa.clientes.all
     else
       @clientes = current_user.empresa.clientes.page params[:page]
     end

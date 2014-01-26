@@ -1,7 +1,7 @@
 class RemisionesController < ApplicationController
   before_filter :authenticate_user!
   before_action :set_remision, only: [:show, :edit, :update, :destroy, :facturar, :series]
-
+  
   # GET /remisiones/1/facturar
   def facturar
     
@@ -23,7 +23,7 @@ class RemisionesController < ApplicationController
     comp = { 
       :serie => params[:serie],
       :tipoDeComprobante => "ingreso",
-      :condicionesDePago => "CONTADO",
+      :condicionesDePago => @remision.condicionesdepago.nombre.to_s,
       :formaDePago => @remision.formasdepago.nombre.to_s,
       :metodoDePago => @remision.metodosdepago.nombre.to_s,
       :numerocta => "NO IDENTIFICADO",
@@ -88,7 +88,7 @@ class RemisionesController < ApplicationController
     af = Autofactura::Autofactura.new({ :user => current_user.empresa.af_user, :sucursal => @remision.sucursal.af_sucursal })
     @series = af.series
     respond_to do |format|
-        format.html { redirect_to @remision, notice: 'No se puede acceder el metodo.' }
+        format.html { redirect_to @remision, notice: 'No se puede acceder al metodo.' }
         format.json { render :json => @series }
       end
     
@@ -118,6 +118,7 @@ class RemisionesController < ApplicationController
     @clientes = current_user.empresa.clientes.load
     @formasdepago = current_user.empresa.formasdepagos.load
     @metodosdepago = current_user.empresa.metodosdepagos.load
+    @condicionesdepago = current_user.empresa.condicionesdepagos.load
   end
 
   # GET /remisiones/1/edit
@@ -143,6 +144,7 @@ class RemisionesController < ApplicationController
           @clientes = current_user.empresa.clientes.load
           @formasdepago = current_user.empresa.formasdepagos.load
           @metodosdepago = current_user.empresa.metodosdepagos.load
+          @condicionesdepago = current_user.empresa.condicionesdepagos.load
           render action: 'new' 
         }
         format.json { render json: @remision.errors, status: :unprocessable_entity }

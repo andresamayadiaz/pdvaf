@@ -4,6 +4,7 @@ class Producto < ActiveRecord::Base
   
   validates :codigobarras, uniqueness: { scope: :empresa,
       message: "El Codigo de Barras no puede Duplicarse" }
+  validates :nombre, :codigobarras, :precio, :unidad, :empresa, presence: true
   
   default_scope { order('nombre ASC') }
   

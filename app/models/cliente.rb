@@ -5,6 +5,28 @@ class Cliente < ActiveRecord::Base
   
   default_scope { order('nombre ASC') }
   
+  validates :rfc, uniqueness: { scope: :empresa,
+      message: "El RFC Ya Existe." }
+  validates :rfc, :nombre, :noExterior, :calle, :colonia, :municipio, :estado, :pais, :codigoPostal, :empresa, presence: true
+  
+  def direccion_completa
+    direccion = self.calle unless self.calle.blank? 
+    direccion += ", " 
+    direccion += self.noExterior unless self.noExterior.blank? 
+    direccion += " " 
+    direccion += self.noInterior unless self.noInterior.blank? 
+    direccion += ", " 
+    direccion += self.colonia unless self.colonia.blank? 
+    direccion += ", " 
+    direccion += self.municipio unless self.municipio.blank? 
+    direccion += ", " 
+    direccion += self.estado unless self.estado.blank? 
+    direccion += ", " 
+    direccion += self.pais unless self.pais.blank? 
+    direccion += ", " 
+    direccion += self.codigoPostal unless self.codigoPostal.blank? 
+  end
+  
   def self.import(file, empresa)
     spreadsheet = open_spreadsheet(file)
     header = spreadsheet.row(1)

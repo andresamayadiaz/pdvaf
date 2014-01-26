@@ -12,7 +12,7 @@ class ProductosController < ApplicationController
   def index
     
      if params[:term]
-       @productos = current_user.empresa.productos.order("nombre ASC").find(:all, :conditions => "productos.codigobarras LIKE '%#{params[:term]}%' OR productos.nombre LIKE '%#{params[:term]}%'")
+       @productos = current_user.empresa.productos.where("codigobarras LIKE '%#{params[:term]}%' OR nombre LIKE '%#{params[:term]}%'").page params[:page]
      else
        @productos = current_user.empresa.productos.page params[:page]
      end

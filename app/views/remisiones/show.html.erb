@@ -17,9 +17,9 @@
         <div class="col-md-5">
 			<address>
 		        <strong><%= current_user.empresa.razonsocial %></strong><br>
-		        <%= current_user.empresa.rfc %> <%= current_user.empresa.calle %> <%= current_user.empresa.noExterior %><br>
-		        <%= current_user.empresa.colonia %> <%= current_user.empresa.municipio %> <%= current_user.empresa.estado %><br>
-				<%= current_user.empresa.pais %> <%= current_user.empresa.codigoPostal %><br>
+		        <%= current_user.empresa.rfc %> <%= current_user.empresa.calle %> <%= current_user.empresa.noExterior unless current_user.empresa.noExterior.blank? %><br>
+		        <%= current_user.empresa.colonia unless current_user.empresa.colonia.blank? %> <%= current_user.empresa.municipio %> <%= current_user.empresa.estado unless current_user.empresa.estado.blank? %><br>
+				<%= current_user.empresa.pais unless current_user.empresa.pais.blank? %> <%= current_user.empresa.codigoPostal unless current_user.empresa.codigoPostal.blank? %><br>
 				<strong>Sucursal: <%= @remision.sucursal.nombre %></strong>
     		</address>
         </div>
@@ -34,7 +34,7 @@
                     <tr>
                         <td class="pull-right"><strong>Dirección </strong>
                         </td>
-                        <td><%= @remision.cliente.calle + ", " + @remision.cliente.noExterior + " " + @remision.cliente.noInterior + ", " + @remision.cliente.colonia + ", " + @remision.cliente.municipio + ", " + @remision.cliente.estado + ", " + @remision.cliente.pais + ", " + @remision.cliente.codigoPostal %></td>
+                        <td><%= @remision.cliente.direccion_completa %></td>
                     </tr>
                     <tr>
                         <td class="pull-right"><strong>Fecha </strong>
