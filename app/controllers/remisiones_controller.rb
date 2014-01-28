@@ -50,34 +50,37 @@ class RemisionesController < ApplicationController
      }
      comp[:Conceptos] = conceptos
      logger.debug "---------------------------------------"
-     logger.debug "COMPROBANTE"
+     logger.debug "COMPROBANTE POR ENVIAR A AUTOFACTURA.COM"
      logger.debug "---------------------------------------"
      logger.debug comp.to_json
      logger.debug "---------------------------------------"
-     logger.debug "AUTOFACTURA"
+     logger.debug "FIN DEL COMPROBANTE"
      logger.debug "---------------------------------------"
      comprobante = Autofactura::Comprobante.new( comp )
      resp = af.emitir(comprobante)
-     logger.debug resp.body
      # TODO 
      # Validar exito, si si poner @remision.facturada = true y datos extra
-     response = JSON.parse resp.body
-     if response['exito']
+     unless resp.nil?
+       response = JSON.parse resp.body
+       if response['exito']
        
-       @remision.facturada = true
-       @remision.uuid = response['uuid']
-       @remision.af_id = response['id']
-       @remision.seriefolio = response['Folio']
-       @remision.pdf_url = 'http://app.autofactura.com/cfdis/cfdipdf/' + response['id']
-       @remision.xml_url = response['url']
-       @remision.save
+         @remision.facturada = true
+         @remision.uuid = response['uuid']
+         @remision.af_id = response['id']
+         @remision.seriefolio = response['Folio']
+         @remision.pdf_url = 'http://app.autofactura.com/cfdis/cfdipdf/' + response['id']
+         @remision.xml_url = response['url']
+         @remision.save
        
-       redirect_to @remision, notice: 'Remision Facturada.'
+         redirect_to @remision, notice: 'Remision Facturada.'
        
-     else
+       else
        
-       redirect_to @remision, error: 'Remision No Facturada. ' + response['mensaje']
+         redirect_to @remision, alert: 'Remision No Facturada. ' + response['mensaje']
               
+       end
+     else
+       redirect_to @remision, alert: 'Remision No Facturada. Verificar Configuracion de AutoFactura.com.'
      end
 
   end
@@ -119,6 +122,21 @@ class RemisionesController < ApplicationController
     @formasdepago = current_user.empresa.formasdepagos.load
     @metodosdepago = current_user.empresa.metodosdepagos.load
     @condicionesdepago = current_user.empresa.condicionesdepagos.load
+    
+    # Validate
+    if @clientes.size <= 0
+      redirect_to clientes_path, alert: 'Debes tener al menos un cliente.'
+    end
+    if @formasdepago.size <= 0
+      redirect_to formasdepagos_path, alert: 'Debes tener al menos una Forma de Pago.'
+    end
+    if @metodosdepago.size <= 0
+      redirect_to metodosdepagos_path, alert: 'Debes tener al menos un Metodo de Pago.'
+    end
+    if @condicionesdepago.size <= 0
+      redirect_to condicionesdepagos_path, alert: 'Debes tener al menos una Condicion de Pago.'
+    end
+    
   end
 
   # GET /remisiones/1/edit
@@ -133,13 +151,20 @@ class RemisionesController < ApplicationController
     @remision.calc_totales
     
     @remision.empresa = current_user.empresa
-    @remision.sucursal = current_user.sucursal
+    sucursal = Sucursal.find(current_user.sucursal)
+    sucursal.lock!
+    @remision.sucursal = sucursal
+    @remision.consecutivo = sucursal.consecutivo
+    sucursal.consecutivo += 1
     
     respond_to do |format|
       if @remision.save
+        sucursal.save!
         format.html { redirect_to @remision, notice: 'Remision was successfully created.' }
         format.json { render action: 'show', status: :created, location: @remision }
       else
+        sucursal.consecutivo -= 1
+        sucursal.save!
         format.html { 
           @clientes = current_user.empresa.clientes.load
           @formasdepago = current_user.empresa.formasdepagos.load

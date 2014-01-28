@@ -33,7 +33,13 @@ class ProductosController < ApplicationController
   # GET /productos/new
   def new
     @producto = current_user.empresa.productos.new
-    @unidades = current_user.empresa.unidades.all
+    @unidades = current_user.empresa.unidades.load
+    
+    # Validate
+    if @unidades.size <= 0
+      redirect_to unidades_path, alert: 'Debes tener al menos una Unidad.'
+    end
+    
   end
 
   # GET /productos/1/edit

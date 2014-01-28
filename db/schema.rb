@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140117212235) do
+ActiveRecord::Schema.define(version: 20140128025218) do
 
   create_table "clientes", force: true do |t|
     t.string   "rfc"
@@ -157,6 +157,7 @@ ActiveRecord::Schema.define(version: 20140117212235) do
     t.string   "seriefolio"
     t.text     "pdf_url"
     t.text     "xml_url"
+    t.integer  "consecutivo"
   end
 
   add_index "remisiones", ["cliente_id"], name: "index_remisiones_on_cliente_id"

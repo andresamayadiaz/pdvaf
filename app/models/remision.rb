@@ -11,9 +11,10 @@ class Remision < ActiveRecord::Base
   
   default_scope { order('created_at DESC') }
   
-  before_save :set_defaults
+  before_create :set_defaults
   
   def set_defaults
+    # Establecer como No Facturada
     self.facturada ||= false
     return true
   end
@@ -45,7 +46,7 @@ class Remision < ActiveRecord::Base
       end
       unless concepto.ivatrasladado.nil?
         totivatras = (concepto.importe * concepto.ivatrasladado / 100.00)
-        self.totalimpuestostrasladados = totivatras
+        self.totalimpuestostrasladados += totivatras
       end
       unless concepto.iepstrasladado.nil?
         totiepstras = (concepto.importe * concepto.iepstrasladado / 100.00)
@@ -53,7 +54,7 @@ class Remision < ActiveRecord::Base
       end
       unless concepto.ivaretenido.nil?
         totivaret = (concepto.importe * concepto.ivaretenido / 100.00)
-        self.totalimpuestosretenidos = totivaret
+        self.totalimpuestosretenidos += totivaret
       end
       unless concepto.isrretenido.nil?
         totisrret = (concepto.importe * concepto.isrretenido / 100.00)
