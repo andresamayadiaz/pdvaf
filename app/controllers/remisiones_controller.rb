@@ -112,7 +112,17 @@ class RemisionesController < ApplicationController
 
   # GET /remisiones/1
   # GET /remisiones/1.json
+  # GET /remisiones/1.pdf
   def show
+    
+    respond_to do |format|
+      format.html
+      format.json { render :json => @remision }
+      format.pdf do
+        render :layout => false
+      end
+    end
+    
   end
 
   # GET /remisiones/new

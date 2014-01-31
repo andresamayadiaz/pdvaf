@@ -40,3 +40,7 @@ gem 'roo'
 # AutoFactura.com
 gem 'autofactura', :git => 'git://github.com/andresamayadiaz/autofactura.git'
 #gem 'autofactura', :path => "/Users/andresamayadiaz/rails/autofactura"
+
+# Reportes PDF
+gem 'prawn', :git => "https://github.com/prawnpdf/prawn.git"
+gem 'prawn-rails'
