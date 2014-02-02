@@ -11,8 +11,10 @@ class ProductosController < ApplicationController
   # GET /productos.json
   def index
     
-     if params[:term]
-       @productos = current_user.empresa.productos.where("codigobarras LIKE '%#{params[:term]}%' OR nombre LIKE '%#{params[:term]}%'").page params[:page]
+     if params[:term] && !params[:codbarras]
+       @productos = current_user.empresa.productos.where("nombre LIKE '%#{params[:term]}%'").page params[:page]
+     elsif params[:term] && params[:codbarras]
+         @productos = current_user.empresa.productos.where("codigobarras LIKE '%#{params[:term]}%'").page params[:page]
      else
        @productos = current_user.empresa.productos.page params[:page]
      end
@@ -24,6 +26,8 @@ class ProductosController < ApplicationController
     end
     
   end
+  
+  def 
 
   # GET /productos/1
   # GET /productos/1.json

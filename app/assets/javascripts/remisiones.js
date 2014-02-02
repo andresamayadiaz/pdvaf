@@ -87,6 +87,7 @@ function autoComp(){
 			var linea = $(this).attr("linea");
 		
 			$("#cantidad"+linea).val("1");
+			$("#codigo"+linea).val(ui.item.codigobarras);
 			$("#valorunitario"+linea).val(ui.item.precio);
 			$("#unidad"+linea).val(ui.item.unidad.nombre);
 			$("#ivatrasladado"+linea).val(ui.item.ivatrasladado);
@@ -97,6 +98,29 @@ function autoComp(){
 			calcImporte(linea);
 		}
 	});
+	
+	$( ".codigo" ).autocomplete({
+	  source: "/productos.json?codbarras=true",
+	  minLength: 3,
+	  select: function( event, ui ) {
+			event.preventDefault();
+			this.value = ui.item.codigobarras;
+		
+			var linea = $(this).attr("linea");
+		
+			$("#cantidad"+linea).val("1");
+			$("#descripcion"+linea).val(ui.item.nombre);
+			$("#valorunitario"+linea).val(ui.item.precio);
+			$("#unidad"+linea).val(ui.item.unidad.nombre);
+			$("#ivatrasladado"+linea).val(ui.item.ivatrasladado);
+			$("#iepstrasladado"+linea).val(ui.item.iepstrasladado);
+			$("#ivaretenido"+linea).val(ui.item.ivaretenido);
+			$("#isrretenido"+linea).val(ui.item.isrretenido);
+			$("#cantidad"+linea).focus();
+			calcImporte(linea);
+		}
+	});
+	
 }
 
 function removerLinea(linea){
@@ -107,11 +131,11 @@ function removerLinea(linea){
 function agregarLinea(){
 	
 	var nvalinea = '<tr>'+
-          		'<td class="col-md-1"><div class="btn btn-danger" onclick="removerLinea(this)"><span class="glyphicon glyphicon-remove"></span></button></td>'+
+          		'<td class="col-md-1"><strong>Codigo</strong><input class="codigo form-control" linea="'+lineas+'" id="codigo'+lineas+'" name="remision[conceptos_attributes][][codigo]" type="text"><br /><div class="btn btn-danger" onclick="removerLinea(this)"><span class="glyphicon glyphicon-remove"></span></div></td>'+
   				'<td class="col-md-6"><textarea class="concepto form-control" linea="'+lineas+'" id="descripcion'+lineas+'" name="remision[conceptos_attributes][][descripcion]" placeholder="Producto o Descripcion"></textarea></td>'+
   				'<td class="col-md-2"><input onkeyUp="calcImporte('+lineas+');" class="valorunitario form-control text-right" id="valorunitario'+lineas+'" name="remision[conceptos_attributes][][valorunitario]" type="text"></td>'+
           	  	'<td class="col-md-1"><input onkeyUp="calcImporte('+lineas+');" class="cantidad form-control text-right" id="cantidad'+lineas+'" name="remision[conceptos_attributes][][cantidad]" type="text"></td>'+
-  				'<td class="col-md-2"><input class="unidad form-control" id="unidad'+lineas+'" name="remision[conceptos_attributes][][unidad]" type="text"></td>'+
+  				'<td class="col-md-1"><input class="unidad form-control" id="unidad'+lineas+'" name="remision[conceptos_attributes][][unidad]" type="text"></td>'+
 				'<td class="col-md-2"><input onkeyUp="calcImporte('+lineas+');" class="ivatrasladado form-control text-right" id="ivatrasladado'+lineas+'" name="remision[conceptos_attributes][][ivatrasladado]" type="text"></td>'+
 				'<td class="hidden oculto col-md-2"><input onkeyUp="calcImporte('+lineas+');" class="iepstrasladado form-control text-right" id="iepstrasladado'+lineas+'" name="remision[conceptos_attributes][][iepstrasladado]" type="text"></td>'+
 				'<td class="hidden oculto col-md-2"><input onkeyUp="calcImporte('+lineas+');" class="ivaretenido form-control text-right" id="ivaretenido'+lineas+'" name="remision[conceptos_attributes][][ivaretenido]" type="text"></td>'+

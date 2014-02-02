@@ -3,13 +3,18 @@
     <span class="glyphicon glyphicon-list-alt"></span>
     Atras
   <% end %>
+  <%= link_to remision_path(@remision.id, :format => :pdf), :class => 'btn btn-info' do %>
+    <span class="glyphicon glyphicon-print"></span>
+    Imprimir
+  <% end %>
   <!-- Button trigger modal -->
   <% unless @remision.facturada %>
 	  <a class="btn btn-primary" data-toggle="modal" data-target="#facturarModal">
+      <span class="glyphicon glyphicon-file"></span>
 	    Facturar
 	  </a>
   <% end %>
-  <h1>Remisión #<%= @remision.id %></h1>
+  <h1>Remisión #<%= @remision.consecutivo %></h1>
 </div>
 
 <div class="container">
@@ -108,7 +113,7 @@
                         <td colspan="4">&nbsp;</td>
                         <td colspan="2"><strong>Subtotal</strong>
                         </td>
-                        <td class="text-right"><strong><%= number_to_currency(@remision.subtotal) %></strong>
+                        <td class="text-right"><strong><%= number_to_currency(@remision.subtotal, precision: 3 ) %></strong>
                         </td>
                     </tr>
                     <tr>
@@ -118,25 +123,47 @@
                         <td class="text-right"><strong><%= @remision.descuento %>%</strong>
                         </td>
                     </tr>
-                    <tr>
-                        <td colspan="4">&nbsp;</td>
-                        <td colspan="2"><strong>Imptos. Trasladados</strong>
-                        </td>
-                        <td class="text-right"><strong><%= number_to_currency(@remision.totalimpuestostrasladados) %></strong>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="4">&nbsp;</td>
-                        <td colspan="2"><strong>Imptos. Retenidos</strong>
-                        </td>
-                        <td class="text-right"><strong><%= number_to_currency(@remision.totalimpuestosretenidos) %></strong>
-                        </td>
-                    </tr>
+                    <% unless @remision.ivaTrasladado == 0 %>
+                      <tr>
+                          <td colspan="4">&nbsp;</td>
+                          <td colspan="2"><strong>IVA</strong>
+                          </td>
+                          <td class="text-right"><strong><%= number_to_currency(@remision.ivaTrasladado.to_f, precision: 3 ) %></strong>
+                          </td>
+                      </tr>
+                    <% end %>
+                    <% unless @remision.iepsTrasladado == 0 %>
+                      <tr>
+                          <td colspan="4">&nbsp;</td>
+                          <td colspan="2"><strong>IEPS</strong>
+                          </td>
+                          <td class="text-right"><strong><%= number_to_currency(@remision.iepsTrasladado.to_f, precision: 3 ) %></strong>
+                          </td>
+                      </tr>
+                    <% end %>
+                    <% unless @remision.ivaRetenido == 0 %>
+                      <tr>
+                          <td colspan="4">&nbsp;</td>
+                          <td colspan="2"><strong>Ret. IVA</strong>
+                          </td>
+                          <td class="text-right"><strong><%= number_to_currency(@remision.ivaRetenido.to_f, precision: 3 ) %></strong>
+                          </td>
+                      </tr>
+                    <% end %>
+                    <% unless @remision.isrRetenido == 0 %>
+                      <tr>
+                          <td colspan="4">&nbsp;</td>
+                          <td colspan="2"><strong>Ret. ISR</strong>
+                          </td>
+                          <td class="text-right"><strong><%= number_to_currency(@remision.isrRetenido.to_f, precision: 3 ) %></strong>
+                          </td>
+                      </tr>
+                    <% end %>
                     <tr>
                         <td colspan="4">&nbsp;</td>
                         <td colspan="2"><strong>Total</strong>
                         </td>
-                        <td class="text-right"><strong><%= number_to_currency(@remision.total) %></strong>
+                        <td class="text-right"><strong><%= number_to_currency(@remision.total, precision: 3 ) %></strong>
                         </td>
                     </tr>
                 </tbody>

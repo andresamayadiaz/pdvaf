@@ -73,17 +73,16 @@ class Remision < ActiveRecord::Base
     self.conceptos.each do |concepto|
       
       concepto.calc_importe
-      
       if self.descuento.nil?
         self.descuento = 0.00
       end
+      
       unless concepto.ivatrasladado.nil?
         totivatras += (concepto.importe * concepto.ivatrasladado / 100.00)
       end
-      
     end
     
-    return (totivatras * self.descuento / 100.00)
+    return totivatras - ((totivatras * self.descuento / 100.00))
     
   end
   
@@ -105,7 +104,7 @@ class Remision < ActiveRecord::Base
       
     end
     
-    return (totiepstras * self.descuento / 100.00)
+    return totiepstras - ((totiepstras * self.descuento / 100.00))
     
   end
   
@@ -126,7 +125,7 @@ class Remision < ActiveRecord::Base
       
     end
     
-    return (totivaret * self.descuento / 100.00)
+    return totivaret - ((totivaret * self.descuento / 100.00))
     
   end
   
@@ -147,7 +146,7 @@ class Remision < ActiveRecord::Base
       
     end
     
-    return (totisrret * self.descuento / 100.00)
+    return totisrret - ((totisrret * self.descuento / 100.00))
     
   end
   

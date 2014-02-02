@@ -1,5 +1,4 @@
-# aad Enero 2014
-custom_size = [612.00, 396.00]
+# aad Feb 2014
 
 @acc = pdf
 @empresa = @remision.empresa
@@ -38,7 +37,7 @@ def header
   general = @acc.make_table [
     [@acc.make_cell(:content => "REMISION",
       :size => 8, :font_style => :bold, :align => :center, :padding => 2, :border_top_width => 0)],
-      [@acc.make_cell(:content => "#{@remision.id}",
+      [@acc.make_cell(:content => "#{@remision.consecutivo rescue 'ID: '+@remision.id}",
         :size => 8, :align => :center, :padding => 2)],
     
     [@acc.make_cell(:content => "FECHA",
@@ -110,37 +109,37 @@ def footer
       
       [@acc.make_cell(:content => "SUBTOTAL:",
           :size => 9, :width => 120, :padding => 0),
-        @acc.make_cell(:content => "#{number_to_currency(@remision.subtotal)}",
+        @acc.make_cell(:content => "#{number_to_currency(@remision.subtotal, precision: 3 )}",
           :size => 9, :width => 120, :padding => 0, :align => :right)
       ],
       [@acc.make_cell(:content => "DESCUENTO:",
           :size => 9, :width => 120, :padding => 0),
-        @acc.make_cell(:content => "#{number_with_precision(@remision.descuento, precision: 2)}%",
+        @acc.make_cell(:content => "#{number_with_precision(@remision.descuento, precision: 3)}%",
           :size => 9, :width => 120, :padding => 0, :align => :right)
       ],
       [@acc.make_cell(:content => "I.V.A.:",
           :size => 9, :width => 120, :padding => 0),
-        @acc.make_cell(:content => "#{number_to_currency(@remision.ivaTrasladado.to_f)}",
+        @acc.make_cell(:content => "#{number_to_currency(@remision.ivaTrasladado.to_f, precision: 3 )}",
           :size => 9, :width => 120, :padding => 0, :align => :right)
       ],
       [@acc.make_cell(:content => "I.E.P.S.:",
           :size => 9, :width => 120, :padding => 0),
-        @acc.make_cell(:content => "#{number_to_currency(@remision.iepsTrasladado.to_f)}",
+        @acc.make_cell(:content => "#{number_to_currency(@remision.iepsTrasladado.to_f, precision: 3 )}",
           :size => 9, :width => 120, :padding => 0, :align => :right)
       ],
       [@acc.make_cell(:content => "RET I.V.A.:",
           :size => 9, :width => 120, :padding => 0),
-        @acc.make_cell(:content => "#{number_to_currency(@remision.ivaRetenido.to_f)}",
+        @acc.make_cell(:content => "#{number_to_currency(@remision.ivaRetenido.to_f, precision: 3 )}",
           :size => 9, :width => 120, :padding => 0, :align => :right)
       ],
       [@acc.make_cell(:content => "RET I.S.R.:",
           :size => 9, :width => 120, :padding => 0),
-        @acc.make_cell(:content => "#{number_to_currency(@remision.isrRetenido.to_f)}",
+        @acc.make_cell(:content => "#{number_to_currency(@remision.isrRetenido.to_f, precision: 3 )}",
           :size => 9, :width => 120, :padding => 0, :align => :right)
       ],
       [@acc.make_cell(:content => "TOTAL:",
           :size => 9, :width => 120, :padding => 0),
-        @acc.make_cell(:content => "#{number_to_currency(@remision.total)}",
+        @acc.make_cell(:content => "#{number_to_currency(@remision.total, precision: 3 )}",
           :size => 9, :width => 120, :padding => 0, :align => :right)
       ],
     ], :width => 500
@@ -200,7 +199,7 @@ table_tmp = nil
   logger.debug "CELL SIZE: " << item_cells.size.to_s
   
   # Verifica el Tamano
-  if item_cells.size > 5
+  if item_cells.size > 10
      @acc.start_new_page
     header
     items(item_cells)
