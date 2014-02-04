@@ -85,6 +85,12 @@
     </div>
   </div>
   <div class="form-group">
+    <%= f.label :clientedefault, :class => "col-lg-2 control-label" %>
+    <div class="col-lg-10">
+      <%= collection_select(:empresa, :clientedefault, @empresa.clientes, :id, :nombre, {:prompt => false}, :class => "form-control") %>
+    </div>
+  </div>
+  <div class="form-group">
     <div class="col-lg-offset-2 col-lg-10">
       <%= f.submit :class => "btn btn-primary" %>
     </div>
