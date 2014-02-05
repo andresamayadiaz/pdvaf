@@ -8,11 +8,10 @@ pdf = Prawn::Document.new({:force_download => true, :filename => @remision.id.to
 @cliente = @remision.cliente
 @conceptosTemporal = @remision.conceptos.select {|a| a}
 
-
 # Header PDF
 def header
   
-  @acc.image open("http://app.autofactura.com/empresas/imagen/"+@empresa.af_user), :width => 100, :at => [0, 735]
+  @acc.image open(@empresa.af_logo), :width => 100, :at => [0, 735]
   
   # emisor
   emisor = @acc.make_table [

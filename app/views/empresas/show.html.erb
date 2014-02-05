@@ -47,6 +47,9 @@
   <dt>A.F. URL:</dt>
   <dd><%= @empresa.af_url %></dd>
   
+  <dt>A.F. LOGO</dt>
+  <dd><%= @empresa.af_logo %></dd>
+  
   <dt>Cliente Default:</dt>
   <dd><%= Cliente.find(@empresa.clientedefault).nombre rescue '' %></dd>
 

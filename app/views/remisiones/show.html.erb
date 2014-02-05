@@ -101,7 +101,7 @@
                     <tr>
                         <td><%= concepto.descripcion %></td>
 						<td class="text-right"><%= concepto.cantidad %></td>
-                        <td class="text-right"><%= number_to_currency(concepto.valorunitario) %></td>
+                        <td class="text-right"><%= number_to_currency(concepto.valorunitario, precision: ENV['DECIMALESDEFAULT'].to_i ) %></td>
 						<td class="text-right"><%= concepto.ivatrasladado %>%</td>
 						<td class="text-right"><%= concepto.iepstrasladado %>%</td>
 						<td class="text-right"><%= concepto.ivaretenido %>%</td>
