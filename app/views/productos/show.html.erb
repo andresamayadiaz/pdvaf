@@ -21,7 +21,7 @@
   <dd><%= @producto.unidad.nombre %></dd>
   
   <dt>Precio:</dt>
-  <dd><%= number_to_currency(@producto.precio, {:precision => 2}) %></dd>
+  <dd><%= number_to_currency(@producto.precio, {:precision => ENV['DECIMALESDEFAULT'].to_i}) %></dd>
   
   <dt>IVA Trasladado:</dt>
   <dd><%= number_to_percentage(@producto.ivatrasladado) %></dd>

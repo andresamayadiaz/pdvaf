@@ -22,25 +22,25 @@
   <table class="table table-striped table-bordered table-hover">
     <thead>
       <tr>
-            <th>Consecutivo</th>
-            <th>Cliente</th>
-            <th>Formasdepago</th>
-            <th>Metodosdepago</th>
-            <th>Subtotal</th>
-            <th>Descuento</th>
-            <th>Impuestos Trasladados</th>
-            <th>Impuestos Retenidos</th>
-            <th>Total</th>
-            <th></th>
-        	<th></th>
+        <th>Consecutivo</th>
+        <th>Fecha</th>
+        <th>Cliente</th>
+        <th>Metodosdepago</th>
+        <th>Subtotal</th>
+        <th>Descuento</th>
+        <th>Impuestos Trasladados</th>
+        <th>Impuestos Retenidos</th>
+        <th>Total</th>
+        <th></th>
+    	  <th></th>
       </tr>
     </thead>
 
     <tbody>
       <%= content_tag_for(:tr, @remisiones) do |remision| %>
             <td><%= remision.sucursal.nombre %> <%= remision.consecutivo rescue '' %></td>
+            <td><%= remision.created_at.to_s(:db) %></td>
             <td><%= remision.cliente.nombre %></td>
-            <td><%= remision.formasdepago.nombre %></td>
             <td><%= remision.metodosdepago.nombre %></td>
             <td class="text-right"><%= number_to_currency(remision.subtotal) %></td>
             <td class="text-right"><%= number_to_percentage(remision.descuento) %></td>

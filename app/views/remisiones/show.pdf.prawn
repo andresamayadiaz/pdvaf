@@ -1,14 +1,19 @@
 # aad Feb 2014
+require 'open-uri'
 
+pdf = Prawn::Document.new({:force_download => true, :filename => @remision.id.to_s+".pdf"})
 @acc = pdf
 @empresa = @remision.empresa
 @sucursal = @remision.sucursal
 @cliente = @remision.cliente
 @conceptosTemporal = @remision.conceptos.select {|a| a}
 
+
 # Header PDF
 def header
-
+  
+  @acc.image open("http://app.autofactura.com/empresas/imagen/"+@empresa.af_user), :width => 100, :at => [0, 735]
+  
   # emisor
   emisor = @acc.make_table [
     [@acc.make_cell(:content => "#{@empresa.razonsocial.upcase}",
@@ -193,7 +198,7 @@ table_tmp = nil
     @acc.make_cell(:content => item.cantidad.to_s, :size => 9, :width => 60, :border_width => 0, :padding => 1),
     @acc.make_cell(:content => item.descripcion, :size => 9, :width => 300, :border_width => 0, :padding => 1),
     @acc.make_cell(:content => item.unidad, :size => 9, :width => 80, :border_width => 0, :padding => 1),
-    @acc.make_cell(:content => number_to_currency(item.importe), :size => 9, :align => :right, :width => 60, :border_width => 0, :padding => 1),
+    @acc.make_cell(:content => number_to_currency(item.importe, precision: 3), :size => 9, :align => :right, :width => 60, :border_width => 0, :padding => 1),
   ]
   
   logger.debug "CELL SIZE: " << item_cells.size.to_s

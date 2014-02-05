@@ -3,7 +3,7 @@
     <span class="glyphicon glyphicon-list-alt"></span>
     Atras
   <% end %>
-  <%= link_to remision_path(@remision.id, :format => :pdf), :class => 'btn btn-info' do %>
+  <%= link_to remision_path(@remision.id, :format => :pdf), :class => 'btn btn-info', :target => "_blank" do %>
     <span class="glyphicon glyphicon-print"></span>
     Imprimir
   <% end %>
@@ -113,7 +113,7 @@
                         <td colspan="4">&nbsp;</td>
                         <td colspan="2"><strong>Subtotal</strong>
                         </td>
-                        <td class="text-right"><strong><%= number_to_currency(@remision.subtotal, precision: 3 ) %></strong>
+                        <td class="text-right"><strong><%= number_to_currency(@remision.subtotal, precision: ENV['DECIMALESDEFAULT'].to_i ) %></strong>
                         </td>
                     </tr>
                     <tr>
@@ -128,7 +128,7 @@
                           <td colspan="4">&nbsp;</td>
                           <td colspan="2"><strong>IVA</strong>
                           </td>
-                          <td class="text-right"><strong><%= number_to_currency(@remision.ivaTrasladado.to_f, precision: 3 ) %></strong>
+                          <td class="text-right"><strong><%= number_to_currency(@remision.ivaTrasladado.to_f, precision: ENV['DECIMALESDEFAULT'].to_i ) %></strong>
                           </td>
                       </tr>
                     <% end %>
@@ -137,7 +137,7 @@
                           <td colspan="4">&nbsp;</td>
                           <td colspan="2"><strong>IEPS</strong>
                           </td>
-                          <td class="text-right"><strong><%= number_to_currency(@remision.iepsTrasladado.to_f, precision: 3 ) %></strong>
+                          <td class="text-right"><strong><%= number_to_currency(@remision.iepsTrasladado.to_f, precision: ENV['DECIMALESDEFAULT'].to_i ) %></strong>
                           </td>
                       </tr>
                     <% end %>
@@ -146,7 +146,7 @@
                           <td colspan="4">&nbsp;</td>
                           <td colspan="2"><strong>Ret. IVA</strong>
                           </td>
-                          <td class="text-right"><strong><%= number_to_currency(@remision.ivaRetenido.to_f, precision: 3 ) %></strong>
+                          <td class="text-right"><strong><%= number_to_currency(@remision.ivaRetenido.to_f, precision: ENV['DECIMALESDEFAULT'].to_i ) %></strong>
                           </td>
                       </tr>
                     <% end %>
@@ -155,7 +155,7 @@
                           <td colspan="4">&nbsp;</td>
                           <td colspan="2"><strong>Ret. ISR</strong>
                           </td>
-                          <td class="text-right"><strong><%= number_to_currency(@remision.isrRetenido.to_f, precision: 3 ) %></strong>
+                          <td class="text-right"><strong><%= number_to_currency(@remision.isrRetenido.to_f, precision: ENV['DECIMALESDEFAULT'].to_i ) %></strong>
                           </td>
                       </tr>
                     <% end %>
@@ -163,7 +163,7 @@
                         <td colspan="4">&nbsp;</td>
                         <td colspan="2"><strong>Total</strong>
                         </td>
-                        <td class="text-right"><strong><%= number_to_currency(@remision.total, precision: 3 ) %></strong>
+                        <td class="text-right"><strong><%= number_to_currency(@remision.total, precision: ENV['DECIMALESDEFAULT'].to_i ) %></strong>
                         </td>
                     </tr>
                 </tbody>

@@ -7,7 +7,7 @@ GIT
 
 GIT
   remote: https://github.com/prawnpdf/prawn.git
-  revision: eaf19c17d6d2c268b1e9e1484a149baece6df660
+  revision: 2dae34c898755ee3c6773feaa9376cd3331732a5
   specs:
     prawn (0.15.0)
       pdf-core (~> 0.1.1)

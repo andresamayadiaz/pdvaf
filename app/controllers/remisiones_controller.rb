@@ -119,7 +119,7 @@ class RemisionesController < ApplicationController
       format.html
       format.json { render :json => @remision }
       format.pdf do
-        render :layout => false
+        render :layout => false, :force_download => true
       end
     end
     

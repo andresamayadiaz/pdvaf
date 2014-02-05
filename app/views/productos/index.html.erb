@@ -26,15 +26,15 @@
   <table class="table table-striped table-bordered table-hover">
     <thead>
       <tr>
-            <th>Nombre</th>
-            <th>Codigo Barras</th>
-            <th>Unidad</th>
+      <th>Nombre</th>
+      <th>Codigo Barras</th>
+      <th>Unidad</th>
 			<th>Precio</th>
 			<th>IVA Trasladado</th>
 			<th>IEPS Trasladado</th>
 			<th>IVA Retenido</th>
 			<th>ISR Retenido</th>
-            <th></th>
+      <th></th>
         <th></th>
         <th></th>
       </tr>
@@ -45,7 +45,7 @@
             <td><%= producto.nombre %></td>
             <td><%= producto.codigobarras %></td>
             <td><%= producto.unidad.nombre %></td>
-			<td><%= number_to_currency(producto.precio, {:precision => 2}) %></td>
+			<td><%= number_to_currency(producto.precio, {:precision => ENV['DECIMALESDEFAULT'].to_i}) %></td>
 			<td><%= number_to_percentage(producto.ivatrasladado) %></td>
 			<td><%= number_to_percentage(producto.iepstrasladado) %></td>
 			<td><%= number_to_percentage(producto.ivaretenido) %></td>

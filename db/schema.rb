@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140204222602) do
+ActiveRecord::Schema.define(version: 20140205000839) do
 
   create_table "clientes", force: true do |t|
     t.string   "rfc"
@@ -36,7 +36,7 @@ ActiveRecord::Schema.define(version: 20140204222602) do
     t.decimal  "cantidad"
     t.string   "unidad"
     t.text     "descripcion"
-    t.decimal  "valorunitario"
+    t.decimal  "valorunitario",  precision: 10, scale: 4
     t.decimal  "importe"
     t.integer  "remision_id"
     t.datetime "created_at"
@@ -127,7 +127,7 @@ ActiveRecord::Schema.define(version: 20140204222602) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "codigobarras"
-    t.decimal  "precio"
+    t.decimal  "precio",         precision: 10, scale: 4
     t.decimal  "ivatrasladado"
     t.decimal  "iepstrasladado"
     t.decimal  "ivaretenido"
@@ -143,11 +143,11 @@ ActiveRecord::Schema.define(version: 20140204222602) do
     t.integer  "condicionesdepago_id"
     t.integer  "formasdepago_id"
     t.integer  "metodosdepago_id"
-    t.decimal  "subtotal"
-    t.decimal  "descuento"
-    t.decimal  "total"
-    t.decimal  "totalimpuestosretenidos"
-    t.decimal  "totalimpuestostrasladados"
+    t.decimal  "subtotal",                  precision: 10, scale: 4
+    t.decimal  "descuento",                 precision: 10, scale: 4
+    t.decimal  "total",                     precision: 10, scale: 4
+    t.decimal  "totalimpuestosretenidos",   precision: 10, scale: 4
+    t.decimal  "totalimpuestostrasladados", precision: 10, scale: 4
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "empresa_id"
