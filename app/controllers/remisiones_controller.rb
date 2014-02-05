@@ -119,7 +119,7 @@ class RemisionesController < ApplicationController
       format.html
       format.json { render :json => @remision }
       format.pdf do
-        render :layout => false, :force_download => true
+        render :layout => false
       end
     end
     
@@ -170,7 +170,7 @@ class RemisionesController < ApplicationController
     respond_to do |format|
       if @remision.save
         sucursal.save!
-        format.html { redirect_to @remision, notice: 'Remision was successfully created.' }
+        format.html { redirect_to @remision, notice: 'La Remision ha sido creada con exito.' }
         format.json { render action: 'show', status: :created, location: @remision }
       else
         sucursal.consecutivo -= 1

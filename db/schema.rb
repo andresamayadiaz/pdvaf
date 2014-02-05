@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140205013429) do
+ActiveRecord::Schema.define(version: 20140205015416) do
 
   create_table "clientes", force: true do |t|
     t.string   "rfc"
@@ -37,7 +37,7 @@ ActiveRecord::Schema.define(version: 20140205013429) do
     t.string   "unidad"
     t.text     "descripcion"
     t.decimal  "valorunitario",  precision: 10, scale: 4
-    t.decimal  "importe"
+    t.decimal  "importe",        precision: 10, scale: 4
     t.integer  "remision_id"
     t.datetime "created_at"
     t.datetime "updated_at"
