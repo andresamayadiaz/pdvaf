@@ -101,7 +101,7 @@ function autoComp(){
 	
 	$( ".codigo" ).autocomplete({
 	  source: "/productos.json?codbarras=true",
-	  minLength: 3,
+	  minLength: 1,
 	  select: function( event, ui ) {
 			event.preventDefault();
 			this.value = ui.item.codigobarras;
