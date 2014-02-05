@@ -60,9 +60,11 @@ class RemisionesController < ApplicationController
      resp = af.emitir(comprobante)
      # TODO 
      # Validar exito, si si poner @remision.facturada = true y datos extra
+     
      unless resp.nil?
+       logger.info resp.body
        response = JSON.parse resp.body
-       if response['exito']
+       if response['exito'] == 1
        
          @remision.facturada = true
          @remision.uuid = response['uuid']
