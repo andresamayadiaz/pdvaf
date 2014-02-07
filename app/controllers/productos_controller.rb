@@ -18,7 +18,9 @@ class ProductosController < ApplicationController
      else
        @productos = current_user.empresa.productos.page params[:page]
      end
-    
+     
+     cookies[:current_page] = params[:page]
+     
      respond_to do |format|  
        format.html # index.html.erb  
        # Here is where you can specify how to handle the request for "/productos.json"
@@ -48,7 +50,12 @@ class ProductosController < ApplicationController
 
   # GET /productos/1/edit
   def edit
-    @unidades = current_user.empresa.unidades.all
+    
+    logger.debug "----------------------------"
+    logger.debug params
+    logger.debug "----------------------------"
+    
+    @unidades = current_user.empresa.unidades.load
   end
 
   # POST /productos
@@ -72,7 +79,7 @@ class ProductosController < ApplicationController
   def update
     respond_to do |format|
       if @producto.update(producto_params)
-        format.html { redirect_to @producto, notice: 'Producto was successfully updated.' }
+        format.html { redirect_to productos_url({:page => cookies[:current_page]}), notice: 'Producto was successfully updated.' }
         format.json { head :no_content }
       else
         @unidades = Unidad.all

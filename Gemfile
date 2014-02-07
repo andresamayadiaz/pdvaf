@@ -33,10 +33,13 @@ group :test do
   gem 'database_cleaner', '1.0.1'
   gem 'email_spec'
 end
-# aad
-#gem 'bootstrap-generators', :git => 'git://github.com/decioferreira/bootstrap-generators.git'
+
+# Paginado
 gem 'kaminari'
+
+# Importar de Excel, CSV
 gem 'roo'
+
 # AutoFactura.com
 gem 'autofactura', :git => 'git://github.com/andresamayadiaz/autofactura.git'
 #gem 'autofactura', :path => "/Users/andresamayadiaz/rails/autofactura"

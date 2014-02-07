@@ -51,8 +51,8 @@
 			<td><%= number_to_percentage(producto.ivaretenido) %></td>
 			<td><%= number_to_percentage(producto.isrretenido) %></td>
             <td><%= link_to 'Ver', producto %></td>
-        <td><%= link_to 'Editar', edit_producto_path(producto) %></td>
-        <td><%= link_to 'Eliminar', producto, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+	        <td><%= link_to 'Editar', edit_producto_path(producto) %></td>
+	        <td><%= link_to 'Eliminar', producto, method: :delete, data: { confirm: '¿Estas Seguro?' } %></td>
       <% end %>
     </tbody>
   </table>

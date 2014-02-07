@@ -20,6 +20,8 @@ class ClientesController < ApplicationController
       @clientes = current_user.empresa.clientes.page params[:page]
     end
     
+    cookies[:current_page] = params[:page]
+    
   end
   
   # GET /clientes/1
@@ -57,7 +59,7 @@ class ClientesController < ApplicationController
   def update
     respond_to do |format|
       if @cliente.update(cliente_params)
-        format.html { redirect_to @cliente, notice: 'Cliente was successfully updated.' }
+        format.html { redirect_to clientes_url({:page => cookies[:current_page]}), notice: 'Cliente was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }

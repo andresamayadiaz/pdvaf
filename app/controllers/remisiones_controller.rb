@@ -102,11 +102,21 @@ class RemisionesController < ApplicationController
   # GET /remisiones
   # GET /remisiones.json
   def index
+    
+    @clientes = current_user.empresa.clientes.load
+    
     if params[:search]
       desde = params[:desde] + ' 00:00:00'
       hasta = params[:hasta] + ' 23:59:59'
+      cliente = params[:cliente_id]
       #@remisiones = current_user.empresa.remisiones.find(:all, :conditions => ["created_at >= ? AND created_at <= ?",desde, hasta]).page params[:page]
-      @remisiones = current_user.empresa.remisiones.where("created_at >= ? AND created_at <= ?",desde, hasta).page params[:page]
+      if cliente.empty?
+        @remisiones = current_user.empresa.remisiones.where("created_at >= ? AND created_at <= ?",desde, hasta).page params[:page]
+        
+      else
+        @remisiones = current_user.empresa.remisiones.where("created_at >= ? AND created_at <= ? AND cliente_id = ?",desde, hasta, cliente).page params[:page]
+      end
+      
     else
       @remisiones = current_user.empresa.remisiones.page params[:page]
     end

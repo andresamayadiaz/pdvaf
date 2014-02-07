@@ -4,7 +4,7 @@ var otrosimptos = 0;
 
 function formatMoney(number, decPlaces, thouSeparator, decSeparator) {
     var n = number,
-    decPlaces = isNaN(decPlaces = Math.abs(decPlaces)) ? 2 : decPlaces,
+    decPlaces = isNaN(decPlaces = Math.abs(decPlaces)) ? 3 : decPlaces,
     decSeparator = decSeparator == undefined ? "." : decSeparator,
     thouSeparator = thouSeparator == undefined ? "," : thouSeparator,
     sign = n < 0 ? "-" : "",

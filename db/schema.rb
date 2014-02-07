@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140205015416) do
+ActiveRecord::Schema.define(version: 20140206225426) do
 
   create_table "clientes", force: true do |t|
     t.string   "rfc"
@@ -33,7 +33,7 @@ ActiveRecord::Schema.define(version: 20140205015416) do
   add_index "clientes", ["empresa_id"], name: "index_clientes_on_empresa_id"
 
   create_table "conceptos", force: true do |t|
-    t.decimal  "cantidad"
+    t.decimal  "cantidad",       precision: 10, scale: 4
     t.string   "unidad"
     t.text     "descripcion"
     t.decimal  "valorunitario",  precision: 10, scale: 4
