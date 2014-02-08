@@ -52,5 +52,14 @@
   
   <dt>Cliente Default:</dt>
   <dd><%= Cliente.find(@empresa.clientedefault).nombre rescue '' %></dd>
+  
+  <dt>Forma de Pago Default:</dt>
+  <dd><%= Formasdepago.find(@empresa.formapagodefault).nombre rescue '' %></dd>
+  
+  <dt>Metodo de Pago Default:</dt>
+  <dd><%= Metodosdepago.find(@empresa.formapagodefault).nombre rescue '' %></dd>
+  
+  <dt>Condición de Pago Default:</dt>
+  <dd><%= Condicionesdepago.find(@empresa.formapagodefault).nombre rescue '' %></dd>
 
 </dl>

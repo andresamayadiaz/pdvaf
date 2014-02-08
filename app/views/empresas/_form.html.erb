@@ -91,6 +91,24 @@
     </div>
   </div>
   <div class="form-group">
+    <%= f.label :formapagodefault, :class => "col-lg-2 control-label" %>
+    <div class="col-lg-10">
+      <%= collection_select(:empresa, :formapagodefault, @empresa.formasdepagos, :id, :nombre, {:prompt => false}, :class => "form-control") %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :metodopagodefault, :class => "col-lg-2 control-label" %>
+    <div class="col-lg-10">
+      <%= collection_select(:empresa, :metodopagodefault, @empresa.metodosdepagos, :id, :nombre, {:prompt => false}, :class => "form-control") %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :condicionpagodefault, :class => "col-lg-2 control-label" %>
+    <div class="col-lg-10">
+      <%= collection_select(:empresa, :condicionpagodefault, @empresa.condicionesdepagos, :id, :nombre, {:prompt => false}, :class => "form-control") %>
+    </div>
+  </div>
+  <div class="form-group">
     <%= f.label :af_logo, :class => "col-lg-2 control-label" %>
     <div class="col-lg-10">
       <%= f.text_field :af_logo, :class => "form-control" %>

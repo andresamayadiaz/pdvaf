@@ -31,15 +31,15 @@
 					</tr>
 					<tr>
 						<td class="pull-right"><strong>Forma de Pago </strong></td>
-						<td><%= collection_select(:remision, :formasdepago_id, @formasdepago, :id, :nombre, {:prompt => false}, :class => "form-control") %></td>
+						<td><%= collection_select(:remision, :formasdepago_id, @formasdepago, :id, :nombre, {:prompt => false, :selected => current_user.empresa.formapagodefault}, :class => "form-control") %></td>
 					</tr>
 					<tr>
 						<td class="pull-right"><strong>Metodo de Pago </strong></td>
-						<td><%= collection_select(:remision, :metodosdepago_id, @metodosdepago, :id, :nombre, {:prompt => false}, :class => "form-control") %></td>
+						<td><%= collection_select(:remision, :metodosdepago_id, @metodosdepago, :id, :nombre, {:prompt => false, :selected => current_user.empresa.metodopagodefault}, :class => "form-control") %></td>
 					</tr>
 					<tr>
 						<td class="pull-right"><strong>Condicion de Pago </strong></td>
-						<td><%= collection_select(:remision, :condicionesdepago_id, @condicionesdepago, :id, :nombre, {:prompt => false}, :class => "form-control") %></td>
+						<td><%= collection_select(:remision, :condicionesdepago_id, @condicionesdepago, :id, :nombre, {:prompt => false, :selected => current_user.empresa.condicionpagodefault}, :class => "form-control") %></td>
 					</tr>
 				</tbody>
 			</table>

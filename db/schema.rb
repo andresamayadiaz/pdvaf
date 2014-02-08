@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140206225426) do
+ActiveRecord::Schema.define(version: 20140207233950) do
 
   create_table "clientes", force: true do |t|
     t.string   "rfc"
@@ -82,6 +82,9 @@ ActiveRecord::Schema.define(version: 20140206225426) do
     t.string   "af_url"
     t.integer  "clientedefault"
     t.string   "af_logo"
+    t.integer  "formapagodefault"
+    t.integer  "metodopagodefault"
+    t.integer  "condicionpagodefault"
   end
 
   create_table "formasdepagos", force: true do |t|

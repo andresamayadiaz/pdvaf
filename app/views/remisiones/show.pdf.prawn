@@ -7,18 +7,21 @@ pdf = Prawn::Document.new({:force_download => true, :filename => @remision.id.to
 @sucursal = @remision.sucursal
 @cliente = @remision.cliente
 @conceptosTemporal = @remision.conceptos.select {|a| a}
+@letraGde = 8
+@letraMed = 6
+@letraChi = 4
 
 # Header PDF
 def header
   
-  @acc.image open(@empresa.af_logo), :width => 100, :at => [0, 735]
+  @acc.image open(@empresa.af_logo), :width => 120, :at => [0, 735]
   
   # emisor
   emisor = @acc.make_table [
     [@acc.make_cell(:content => "#{@empresa.razonsocial.upcase}",
-      :size => 10, :font_style => :bold, :padding => 2, :align => :center)],
+      :size => @letraGde, :font_style => :bold, :padding => 2, :align => :center)],
     [@acc.make_cell(:content => "#{@empresa.rfc.upcase}",
-      :size => 10, :padding => 2, :align => :center)],
+      :size => @letraGde, :padding => 2, :align => :center)],
     [@acc.make_cell(:content => 
       "#{@empresa.calle.try(:upcase)}
       #{@empresa.noExterior.try(:upcase)},
@@ -27,12 +30,12 @@ def header
       #{@empresa.codigoPostal.try(:upcase)},
       #{@empresa.municipio.try(:upcase)},
       #{@empresa.estado.try(:upcase)}".squish,
-      :size => 10, :padding => 2, :align => :center)],
+      :size => @letraGde, :padding => 2, :align => :center)],
       
       [@acc.make_cell(:content => 
         "Sucursal: #{@sucursal.nombre.try(:upcase)},
         Tel. #{@sucursal.telefono.try(:upcase)}".squish,
-      :size => 10, :padding => 2, :align => :center)]
+      :size => @letraGde, :padding => 2, :align => :center)]
       
   ], :width => 300
   emisor.cells.select {|a| a.border_width = 0 }
@@ -40,29 +43,29 @@ def header
   general = nil
   general = @acc.make_table [
     [@acc.make_cell(:content => "REMISION",
-      :size => 8, :font_style => :bold, :align => :center, :padding => 2, :border_top_width => 0)],
+      :size => @letraMed, :font_style => :bold, :align => :center, :padding => 2, :border_top_width => 0)],
       [@acc.make_cell(:content => "#{@remision.consecutivo rescue 'ID: '+@remision.id}",
-        :size => 8, :align => :center, :padding => 2)],
+        :size => @letraMed, :align => :center, :padding => 2)],
     
     [@acc.make_cell(:content => "FECHA",
-      :size => 6, :font_style => :bold, :align => :center, :padding => 2)],
+      :size => @letraChi, :font_style => :bold, :align => :center, :padding => 2)],
     [@acc.make_cell(:content => "#{@remision.created_at.to_s(:db) rescue ''}",
-      :size => 6, :align => :center, :padding => 2)],
+      :size => @letraChi, :align => :center, :padding => 2)],
     
     [@acc.make_cell(:content => "CONDICIONES DE PAGO",
-      :size => 6, :font_style => :bold, :align => :center, :padding => 2)],
+      :size => @letraChi, :font_style => :bold, :align => :center, :padding => 2)],
     [@acc.make_cell(:content => "#{@remision.condicionesdepago.nombre rescue ''}",
-      :size => 6, :align => :center, :padding => 2)],
+      :size => @letraChi, :align => :center, :padding => 2)],
     
     [@acc.make_cell(:content => "METODO DE PAGO",
-      :size => 6, :font_style => :bold, :align => :center, :padding => 2)],
+      :size => @letraChi, :font_style => :bold, :align => :center, :padding => 2)],
     [@acc.make_cell(:content => "#{@remision.metodosdepago.nombre rescue ''}",
-      :size => 6, :align => :center, :padding => 2)],
+      :size => @letraChi, :align => :center, :padding => 2)],
     
     [@acc.make_cell(:content => "FORMA DE PAGO",
-      :size => 6, :font_style => :bold, :align => :center, :padding => 2)],
+      :size => @letraChi, :font_style => :bold, :align => :center, :padding => 2)],
     [@acc.make_cell(:content => "#{@remision.formasdepago.nombre rescue ''}",
-      :size => 6, :align => :center, :padding => 2)],
+      :size => @letraChi, :align => :center, :padding => 2)],
       
   ], :width => 100
   general.cells.select {|a| a.border_right_width = 0 && a.border_left_width = 0 }
@@ -71,15 +74,13 @@ def header
   cabecera1.cells.select {|a| a.border_width = 0 }
   cabecera1.draw
   
-  @acc.move_down 5
+  @acc.move_down 0
   
   receptor = @acc.make_table [
     [@acc.make_cell(:content => "CLIENTE",
-      :size => 8, :font_style => :bold, :padding => 2)],
-    [@acc.make_cell(:content => "#{@cliente.nombre.upcase rescue ''}",
-      :size => 8, :padding => 2)],
-    [@acc.make_cell(:content => "#{@cliente.rfc.upcase rescue ''}",
-      :size => 8, :padding => 2)],
+      :size => @letraMed, :font_style => :bold, :padding => 2)],
+    [@acc.make_cell(:content => "#{@cliente.rfc.upcase rescue ''} #{@cliente.nombre.upcase rescue ''}",
+      :size => @letraMed, :padding => 2)],
     [@acc.make_cell(:content => 
       "#{@cliente.calle.upcase rescue ''}
       #{@cliente.noExterior rescue ''},
@@ -88,7 +89,7 @@ def header
       #{@cliente.codigoPostal.upcase rescue ''},
       #{@cliente.municipio.upcase rescue ''},
       #{@cliente.estado.upcase rescue ''}".squish,
-      :size => 8, :padding => 2)]
+      :size => @letraMed, :padding => 2)]
   ], :width => 500
   receptor.cells.select { |a| a.border_width = 0 }
   receptor.draw
@@ -104,58 +105,56 @@ def footer
   @acc.float do
     pie0 = @acc.make_table [
       [@acc.make_cell(:content => "",
-          :size => 9, :padding => 0, :rowspan => 8),
+          :size => @letraMed, :padding => 0, :rowspan => 8),
         @acc.make_cell(:content => "",
-          :size => 9, :width => 120, :padding => 0),
+          :size => @letraMed, :width => 120, :padding => 0),
         @acc.make_cell(:content => "",
-          :size => 9, :width => 120, :padding => 0, :align => :right)
+          :size => @letraMed, :width => 120, :padding => 0, :align => :right)
       ],
       
       [@acc.make_cell(:content => "SUBTOTAL:",
-          :size => 9, :width => 120, :padding => 0),
+          :font_style => :bold, :size => @letraMed, :width => 120, :padding => 0),
         @acc.make_cell(:content => "#{number_to_currency(@remision.subtotal, precision: 3 )}",
-          :size => 9, :width => 120, :padding => 0, :align => :right)
+          :size => @letraMed, :width => 120, :padding => 0, :align => :right)
       ],
       [@acc.make_cell(:content => "DESCUENTO:",
-          :size => 9, :width => 120, :padding => 0),
+          :font_style => :bold, :size => @letraMed, :width => 120, :padding => 0),
         @acc.make_cell(:content => "#{number_with_precision(@remision.descuento, precision: 3)}%",
-          :size => 9, :width => 120, :padding => 0, :align => :right)
+          :size => @letraMed, :width => 120, :padding => 0, :align => :right)
       ],
       [@acc.make_cell(:content => "I.V.A.:",
-          :size => 9, :width => 120, :padding => 0),
+          :font_style => :bold, :size => @letraMed, :width => 120, :padding => 0),
         @acc.make_cell(:content => "#{number_to_currency(@remision.ivaTrasladado.to_f, precision: 3 )}",
-          :size => 9, :width => 120, :padding => 0, :align => :right)
+          :size => @letraMed, :width => 120, :padding => 0, :align => :right)
       ],
       [@acc.make_cell(:content => "I.E.P.S.:",
-          :size => 9, :width => 120, :padding => 0),
+          :font_style => :bold, :size => @letraMed, :width => 120, :padding => 0),
         @acc.make_cell(:content => "#{number_to_currency(@remision.iepsTrasladado.to_f, precision: 3 )}",
-          :size => 9, :width => 120, :padding => 0, :align => :right)
+          :size => @letraMed, :width => 120, :padding => 0, :align => :right)
       ],
       [@acc.make_cell(:content => "RET I.V.A.:",
-          :size => 9, :width => 120, :padding => 0),
+          :font_style => :bold, :size => @letraMed, :width => 120, :padding => 0),
         @acc.make_cell(:content => "#{number_to_currency(@remision.ivaRetenido.to_f, precision: 3 )}",
-          :size => 9, :width => 120, :padding => 0, :align => :right)
+          :size => @letraMed, :width => 120, :padding => 0, :align => :right)
       ],
       [@acc.make_cell(:content => "RET I.S.R.:",
-          :size => 9, :width => 120, :padding => 0),
+          :font_style => :bold, :size => @letraMed, :width => 120, :padding => 0),
         @acc.make_cell(:content => "#{number_to_currency(@remision.isrRetenido.to_f, precision: 3 )}",
-          :size => 9, :width => 120, :padding => 0, :align => :right)
+          :size => @letraMed, :width => 120, :padding => 0, :align => :right)
       ],
       [@acc.make_cell(:content => "TOTAL:",
-          :size => 9, :width => 120, :padding => 0),
+          :font_style => :bold, :size => @letraMed, :width => 120, :padding => 0),
         @acc.make_cell(:content => "#{number_to_currency(@remision.total, precision: 3 )}",
-          :size => 9, :width => 120, :padding => 0, :align => :right)
+          :size => @letraMed, :width => 120, :padding => 0, :align => :right)
       ],
     ], :width => 500
     
      pie0.cells.select {|a| a.border_width = 0 }
-     @acc.move_down 160
+     @acc.move_down 150
      pie0.draw
     
   end
-  
-  
-  
+    
 end
 
 # Cuerpo
@@ -168,13 +167,13 @@ def items(item_cells)
   @acc.float do
     productos = @acc.make_table [
       [@acc.make_cell(:content => "CANTIDAD",
-        :font_style => :bold, :size => 9, :width => 60, :border_width => 0, :border_bottom_width => 1, :padding => 1),
+        :font_style => :bold, :size => @letraMed, :width => 60, :border_width => 0, :border_bottom_width => 1, :padding => 1),
       @acc.make_cell(:content => "CONCEPTO",
-        :font_style => :bold, :size => 9, :width => 300, :border_width => 0, :border_bottom_width => 1, :padding => 1),
+        :font_style => :bold, :size => @letraMed, :width => 300, :border_width => 0, :border_bottom_width => 1, :padding => 1),
       @acc.make_cell(:content => "UNIDAD DE MEDIDA",
-        :font_style => :bold, :size => 9, :width => 80, :border_width => 0, :border_bottom_width => 1, :padding => 1),
+        :font_style => :bold, :size => @letraMed, :width => 80, :border_width => 0, :border_bottom_width => 1, :padding => 1),
       @acc.make_cell(:content => "IMPORTE",
-        :font_style => :bold, :size => 9, :width => 60, :align => :right, :border_width => 0, :border_bottom_width => 1, :padding => 1)],
+        :font_style => :bold, :size => @letraMed, :width => 60, :align => :right, :border_width => 0, :border_bottom_width => 1, :padding => 1)],
       #[item_cells]
     ], :width => 500
     
@@ -190,47 +189,42 @@ def items(item_cells)
 end
 
 item_cells = Array.new
-table_tmp = nil
 
 @conceptosTemporal.delete_if do |item|
+  
   item_cells.push [
-    @acc.make_cell(:content => item.cantidad.to_s, :size => 9, :width => 60, :border_width => 0, :padding => 1),
-    @acc.make_cell(:content => item.descripcion, :size => 9, :width => 300, :border_width => 0, :padding => 1),
-    @acc.make_cell(:content => item.unidad, :size => 9, :width => 80, :border_width => 0, :padding => 1),
-    @acc.make_cell(:content => number_to_currency(item.importe, precision: 3), :size => 9, :align => :right, :width => 60, :border_width => 0, :padding => 1),
+    @acc.make_cell(:content => item.cantidad.to_s, :size => @letraMed, :width => 60, :border_width => 0, :padding => 1),
+    @acc.make_cell(:content => item.descripcion, :size => @letraMed, :width => 300, :border_width => 0, :padding => 1),
+    @acc.make_cell(:content => item.unidad, :size => @letraMed, :width => 80, :border_width => 0, :padding => 1),
+    @acc.make_cell(:content => number_to_currency(item.importe, precision: 3), :size => @letraMed, :align => :right, :width => 60, :border_width => 0, :padding => 1),
   ]
   
-  logger.debug "CELL SIZE: " << item_cells.size.to_s
-  
   # Verifica el Tamano
-  if item_cells.size > 10
-     @acc.start_new_page
+  if item_cells.size > 14
     header
     items(item_cells)
-    footer
+    #footer
     
-    table_tmp = nil
+    #logger.debug ">>>>> " + @conceptosTemporal.size.to_s
+    
+    if @conceptosTemporal.size > 1
+      @acc.start_new_page
+    end
+    
     item_cells = Array.new
     count = 0
-    
-    logger.debug "quiebre///"
-    
     true
     next
   else
-    logger.debug "TEMP CON: " << @conceptosTemporal.size.to_s
-    if @conceptosTemporal.size == 1
-      header
-      items(item_cells)
-      footer
-    end
-
+    
     true
   end
 
-  table_tmp = @acc.make_table [
-    [item_cells]
-  ], :width => 500
-
   true
 end
+
+if item_cells.size >= 1
+  header
+  items(item_cells)
+end
+footer
