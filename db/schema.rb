@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140207233950) do
+ActiveRecord::Schema.define(version: 20140210212305) do
 
   create_table "clientes", force: true do |t|
     t.string   "rfc"
@@ -41,10 +41,10 @@ ActiveRecord::Schema.define(version: 20140207233950) do
     t.integer  "remision_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.decimal  "ivatrasladado"
-    t.decimal  "iepstrasladado"
-    t.decimal  "ivaretenido"
-    t.decimal  "isrretenido"
+    t.decimal  "ivatrasladado",  precision: 10, scale: 4
+    t.decimal  "iepstrasladado", precision: 10, scale: 4
+    t.decimal  "ivaretenido",    precision: 10, scale: 4
+    t.decimal  "isrretenido",    precision: 10, scale: 4
   end
 
   add_index "conceptos", ["remision_id"], name: "index_conceptos_on_remision_id"
