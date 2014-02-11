@@ -168,10 +168,14 @@ def items(item_cells)
     productos = @acc.make_table [
       [@acc.make_cell(:content => "CANTIDAD",
         :font_style => :bold, :size => @letraMed, :width => 60, :border_width => 0, :border_bottom_width => 1, :padding => 1),
+      @acc.make_cell(:content => "P. UNIT.",
+          :font_style => :bold, :size => @letraMed, :width => 60, :align => :right, :border_width => 0, :border_bottom_width => 1, :padding => 1),
+      @acc.make_cell(:content => "",
+          :font_style => :bold, :size => @letraMed, :width => 20, :border_width => 0, :border_bottom_width => 1, :padding => 1),
       @acc.make_cell(:content => "CONCEPTO",
-        :font_style => :bold, :size => @letraMed, :width => 300, :border_width => 0, :border_bottom_width => 1, :padding => 1),
+        :font_style => :bold, :size => @letraMed, :width => 240, :border_width => 0, :border_bottom_width => 1, :padding => 1),
       @acc.make_cell(:content => "UNIDAD DE MEDIDA",
-        :font_style => :bold, :size => @letraMed, :width => 80, :border_width => 0, :border_bottom_width => 1, :padding => 1),
+        :font_style => :bold, :size => @letraMed, :width => 60, :border_width => 0, :border_bottom_width => 1, :padding => 1),
       @acc.make_cell(:content => "IMPORTE",
         :font_style => :bold, :size => @letraMed, :width => 60, :align => :right, :border_width => 0, :border_bottom_width => 1, :padding => 1)],
       #[item_cells]
@@ -194,8 +198,10 @@ item_cells = Array.new
   
   item_cells.push [
     @acc.make_cell(:content => item.cantidad.to_s, :size => @letraMed, :width => 60, :border_width => 0, :padding => 1),
-    @acc.make_cell(:content => item.descripcion, :size => @letraMed, :width => 300, :border_width => 0, :padding => 1),
-    @acc.make_cell(:content => item.unidad, :size => @letraMed, :width => 80, :border_width => 0, :padding => 1),
+    @acc.make_cell(:content => number_to_currency(item.valorunitario, precision: 3), :size => @letraMed, :align => :right, :width => 60, :border_width => 0, :padding => 1),
+    @acc.make_cell(:content => "", :size => @letraMed, :width => 20, :border_width => 0, :padding => 1),
+    @acc.make_cell(:content => item.descripcion, :size => @letraMed, :width => 240, :border_width => 0, :padding => 1),
+    @acc.make_cell(:content => item.unidad, :size => @letraMed, :width => 60, :border_width => 0, :padding => 1),
     @acc.make_cell(:content => number_to_currency(item.importe, precision: 3), :size => @letraMed, :align => :right, :width => 60, :border_width => 0, :padding => 1),
   ]
   
