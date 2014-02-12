@@ -49,7 +49,7 @@ def header
     
     [@acc.make_cell(:content => "FECHA",
       :size => @letraChi, :font_style => :bold, :align => :center, :padding => 2)],
-    [@acc.make_cell(:content => "#{@remision.created_at.to_s(:db) rescue ''}",
+    [@acc.make_cell(:content => "#{@remision.created_at.to_s(Time.zone) rescue ''}",
       :size => @letraChi, :align => :center, :padding => 2)],
     
     [@acc.make_cell(:content => "CONDICIONES DE PAGO",

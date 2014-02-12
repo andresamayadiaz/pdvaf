@@ -44,7 +44,7 @@
                     <tr>
                         <td class="pull-right"><strong>Fecha </strong>
                         </td>
-                        <td><%= @remision.created_at.to_s(:db) %></td>
+                        <td><%= @remision.created_at.to_s(Time.zone) %></td>
                     </tr>
 					<% if @remision.facturada %>
 	                    <tr>

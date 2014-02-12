@@ -40,7 +40,7 @@
     <tbody>
       <%= content_tag_for(:tr, @remisiones) do |remision| %>
             <td><%= remision.sucursal.nombre %> <%= remision.consecutivo rescue '' %></td>
-            <td><%= remision.created_at.to_s(:db) %></td>
+            <td><%= remision.created_at.to_s(Time.zone) %></td>
             <td><%= remision.cliente.nombre %></td>
             <td><%= remision.metodosdepago.nombre %></td>
             <td class="text-right"><%= number_to_currency(remision.subtotal) %></td>

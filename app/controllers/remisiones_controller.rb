@@ -49,13 +49,13 @@ class RemisionesController < ApplicationController
       :Addenda => ""
      }
      comp[:Conceptos] = conceptos
-     logger.debug "---------------------------------------"
+     logger.debug "-----------------------------------------"
      logger.debug "COMPROBANTE POR ENVIAR A AUTOFACTURA.COM"
-     logger.debug "---------------------------------------"
+     logger.debug "-----------------------------------------"
      logger.debug comp.to_json
-     logger.debug "---------------------------------------"
+     logger.debug "-----------------------------------------"
      logger.debug "FIN DEL COMPROBANTE"
-     logger.debug "---------------------------------------"
+     logger.debug "-----------------------------------------"
      comprobante = Autofactura::Comprobante.new( comp )
      resp = af.emitir(comprobante)
      # TODO 
