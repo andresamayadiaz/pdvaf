@@ -149,6 +149,28 @@ function agregarLinea(){
 	lineas++;
 }
 
+function precargarLinea(codigo, descripcion, valorunitario, cantidad, unidad, ivatrasladado, iepstrasladado, ivaretenido, isrretenido){
+	
+	var nvalinea = '<tr>'+
+          		'<td class="col-md-1"><strong>Codigo</strong><input class="codigo form-control" linea="'+lineas+'" id="codigo'+lineas+'" name="remision[conceptos_attributes][][codigo]" type="text" value="'+codigo+'"><br /><div class="btn btn-danger" onclick="removerLinea(this)"><span class="glyphicon glyphicon-remove"></span></div></td>'+
+  				'<td class="col-md-6"><textarea class="concepto form-control" linea="'+lineas+'" id="descripcion'+lineas+'" name="remision[conceptos_attributes][][descripcion]" placeholder="Producto o Descripcion">' + descripcion + '</textarea></td>'+
+  				'<td class="col-md-2"><input onkeyUp="calcImporte('+lineas+');" class="valorunitario form-control text-right" id="valorunitario'+lineas+'" name="remision[conceptos_attributes][][valorunitario]" type="text" value="'+valorunitario+'"></td>'+
+          	  	'<td class="col-md-1"><input onkeyUp="calcImporte('+lineas+');" class="cantidad form-control text-right" id="cantidad'+lineas+'" name="remision[conceptos_attributes][][cantidad]" type="text" value="'+cantidad+'"></td>'+
+  				'<td class="col-md-1"><input class="unidad form-control" id="unidad'+lineas+'" name="remision[conceptos_attributes][][unidad]" type="text" value="'+unidad+'"></td>'+
+				'<td class="col-md-2"><input onkeyUp="calcImporte('+lineas+');" class="ivatrasladado form-control text-right" id="ivatrasladado'+lineas+'" name="remision[conceptos_attributes][][ivatrasladado]" type="text" value="'+ivatrasladado+'"></td>'+
+				'<td class="hidden oculto col-md-2"><input onkeyUp="calcImporte('+lineas+');" class="iepstrasladado form-control text-right" id="iepstrasladado'+lineas+'" name="remision[conceptos_attributes][][iepstrasladado]" type="text" value="'+iepstrasladado+'"></td>'+
+				'<td class="hidden oculto col-md-2"><input onkeyUp="calcImporte('+lineas+');" class="ivaretenido form-control text-right" id="ivaretenido'+lineas+'" name="remision[conceptos_attributes][][ivaretenido]" type="text" value="'+ivaretenido+'"></td>'+
+				'<td class="hidden oculto col-md-2"><input onkeyUp="calcImporte('+lineas+');" class="isrretenido form-control text-right" id="isrretenido'+lineas+'" name="remision[conceptos_attributes][][isrretenido]" type="text" value="'+isrretenido+'"></td>'+
+				'<td class="visible">&nbsp;</td>'+
+          	  	'<td class="col-lg-2"><p id="importe'+lineas+'" name="remision[conceptos_attributes][][importe]" class="importe lead text-right">$0.00</p></td>'+
+			'</tr>';
+	
+	$("#conceptos").append(nvalinea);
+	autoComp();
+	calcImporte(lineas);
+	lineas++;
+}
+
 function init(){
 	
 	$.ui.autocomplete.prototype._renderItem = function (ul, item) {

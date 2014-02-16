@@ -10,8 +10,10 @@ Pdvaf::Application.routes.draw do
   resources :sucursales
 
   resources :conceptos
-
-  resources :remisiones
+  
+  resources :remisiones do
+    member { get :copiar }
+  end
 
   resources :condicionesdepagos
 

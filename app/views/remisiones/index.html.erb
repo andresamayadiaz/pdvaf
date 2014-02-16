@@ -26,14 +26,14 @@
         <th>Consecutivo</th>
         <th>Fecha</th>
         <th>Cliente</th>
-        <th>Metodosdepago</th>
+        <th>Metodo Pago</th>
         <th>Subtotal</th>
         <th>Descuento</th>
         <th>Impuestos Trasladados</th>
         <th>Impuestos Retenidos</th>
         <th>Total</th>
         <th></th>
-    	  <th></th>
+    	<th></th>
       </tr>
     </thead>
 
@@ -48,8 +48,27 @@
             <td class="text-right"><%= number_to_currency(remision.totalimpuestostrasladados) %></td>
             <td class="text-right"><%= number_to_currency(remision.totalimpuestosretenidos) %></td>
             <td class="text-right"><%= number_to_currency(remision.total) %></td>
-            <td class="text-right"><%= link_to 'Ver', remision, :class => "btn btn-info" %></td>
-        	<td><%= link_to 'Eliminar', remision, :class => "btn btn-danger", method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <td>
+				<%= link_to 'Ver', remision, :class => "btn btn-info" %>
+			</td>
+        	<td>
+				<div class="btn-group">
+				  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+				    Acciones <span class="caret"></span>
+				  </button>
+				  <ul class="dropdown-menu" role="menu">
+				    <li><%= link_to 'Copiar Remsiion', copiar_remision_path(remision.id) %></li>
+				    <li><a href="#">Cancelar (Proximamente)</a></li>
+					<% if remision.facturada %>
+				    	<li class="divider"></li>
+						<li><a href="#">CFDi <%= remision.seriefolio %></a></li>
+				    	<li><%= link_to "Descargar XML", remision.xml_url, :target => "_blank" %></li>
+						<li><%= link_to "Descargar PDF", remision.pdf_url, :target => "_blank" %></li>
+					<% end %>
+				  </ul>
+				</div>
+				<% link_to 'Eliminar', remision, :class => "btn btn-danger", method: :delete, data: { confirm: 'Are you sure?' } %>
+			</td>
       <% end %>
     </tbody>
   </table>

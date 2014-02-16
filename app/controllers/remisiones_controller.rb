@@ -1,6 +1,6 @@
 class RemisionesController < ApplicationController
   before_filter :authenticate_user!
-  before_action :set_remision, only: [:show, :edit, :update, :destroy, :facturar, :series]
+  before_action :set_remision, only: [:show, :edit, :update, :destroy, :facturar, :series, :copiar]
   
   # GET /remisiones/1/facturar
   def facturar
@@ -164,6 +164,18 @@ class RemisionesController < ApplicationController
 
   # GET /remisiones/1/edit
   def edit
+    
+  end
+  
+  # Get /remisiones/1/copy
+  def copiar
+    
+    @clientes = current_user.empresa.clientes.load
+    @formasdepago = current_user.empresa.formasdepagos.load
+    @metodosdepago = current_user.empresa.metodosdepagos.load
+    @condicionesdepago = current_user.empresa.condicionesdepagos.load
+    @copiaremision = current_user.empresa.remisiones.new
+    
   end
 
   # POST /remisiones

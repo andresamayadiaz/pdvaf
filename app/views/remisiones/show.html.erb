@@ -79,7 +79,6 @@
     <div class="row">
         <div class="col-md-12">
             	<h2>Conceptos</h2>
-
         </div>
     </div>
     <div class="row">
@@ -88,7 +87,7 @@
                 <thead>
                     <tr>
                         <th>Description</th>
-						<th>Cantidad</th>
+						<th>Cantidad [Unidad]</th>
                         <th>P. Unit.</th>
                         <th>IVA Tras.</th>
 						<th>IEPS Tras.</th>
@@ -100,7 +99,7 @@
                 <% @remision.conceptos.each do |concepto| %>
                     <tr>
                         <td><%= concepto.descripcion %></td>
-						<td class="text-right"><%= concepto.cantidad %></td>
+						<td class="text-right"><%= concepto.cantidad %> [<%= concepto.unidad %>]</td>
                         <td class="text-right"><%= number_to_currency(concepto.valorunitario, precision: ENV['DECIMALESDEFAULT'].to_i ) %></td>
 						<td class="text-right"><%= concepto.ivatrasladado %>%</td>
 						<td class="text-right"><%= concepto.iepstrasladado %>%</td>

@@ -1,0 +1,211 @@
+<%= form_for(@copiaremision, :html => { :class => "form-horizontal" }) do |f| %>
+  <% if @copiaremision.errors.any? %>
+    <div class="alert alert-danger alert-dismissable">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      <h4><%= pluralize(@copiaremision.errors.count, "error") %> prohibited this remision from being saved:</h4>
+      <ul>
+	      <% @copiaremision.errors.full_messages.each do |msg| %>
+	        <li><%= msg %></li>
+	      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+<div class="container">
+	<div class="row">
+		<div class="col-md-5">
+			<address>
+		        <strong><%= current_user.empresa.razonsocial %></strong><br>
+		        <%= current_user.empresa.rfc %> <%= current_user.empresa.calle %> <%= current_user.empresa.noExterior unless current_user.empresa.noExterior.blank? %><br>
+		        <%= current_user.empresa.colonia unless current_user.empresa.colonia.blank? %> <%= current_user.empresa.municipio %> <%= current_user.empresa.estado unless current_user.empresa.estado.blank? %><br>
+				<%= current_user.empresa.pais unless current_user.empresa.pais.blank? %> <%= current_user.empresa.codigoPostal unless current_user.empresa.codigoPostal.blank? %><br>
+				<strong>Sucursal: <%= current_user.sucursal.nombre %></strong>
+    		</address>
+		</div>
+		<div class="col-md-6 well">
+			<table class="invoice-head">
+				<tbody>
+					<tr>
+						<td class="pull-right"><strong>Cliente </strong><button class="btn btn-info btn-xs" data-toggle="modal" data-target="#clienteModal">Nuevo</button><button type="button" class="btn btn-default btn-xs" onClick="todosClientes();">Todos</button></td>
+						<td><%= collection_select(:remision, :cliente_id, @clientes, :id, :nombre, {:prompt => false, :selected => @remision.cliente.id}, :class => "form-control") %></td>
+					</tr>
+					<tr>
+						<td class="pull-right"><strong>Forma de Pago </strong></td>
+						<td><%= collection_select(:remision, :formasdepago_id, @formasdepago, :id, :nombre, {:prompt => false, :selected => @remision.formasdepago.id}, :class => "form-control") %></td>
+					</tr>
+					<tr>
+						<td class="pull-right"><strong>Metodo de Pago </strong></td>
+						<td><%= collection_select(:remision, :metodosdepago_id, @metodosdepago, :id, :nombre, {:prompt => false, :selected => @remision.metodosdepago.id}, :class => "form-control") %></td>
+					</tr>
+					<tr>
+						<td class="pull-right"><strong>Condicion de Pago </strong></td>
+						<td><%= collection_select(:remision, :condicionesdepago_id, @condicionesdepago, :id, :nombre, {:prompt => false, :selected => @remision.condicionesdepago.id}, :class => "form-control") %></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<h2>Conceptos</h2>
+		</div>
+	</div>
+	<div class="row">
+  	<div class="col-md-12 invoice-body">
+  		<table class="table table-bordered table-striped">
+			<thead>
+				<tr>
+		          <th><div id="agregar" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span></div></th>
+		          <th>Descripción</th>
+		          <th>P. Unit. ($)</th>
+		          <th>Cantidad</th>
+		          <th>Unidad</th>
+				  <th>IVA Traslad. (%)</th>
+				  <th class="visible"><div id="otrosimptos" class="btn btn-info">Ver Otros Impuestos</div></th>
+				  <th class="hidden oculto">IEPS Traslad. (%)</th>
+				  <th class="hidden oculto">IVA Reten. (%)</th>
+				  <th class="hidden oculto">ISR Reten. (%)</th>
+				  <th>Importe ($)</th>
+		  		</tr>
+			</thead>
+			<tbody id="conceptos">
+				
+			</tbody>
+		</table>
+	</div>
+	</div>
+	<div class="row">
+  	<div class="col-md-4 col-md-offset-8">
+		<table class="table table-striped">
+	      <tbody id="totales">
+	        <tr>
+				<td>&nbsp;</td>
+	          <td><strong>SubTotal</strong></td>
+	          <td><p id="subtotal" class="lead text-right">$0.00</strong></td>
+	        </tr>
+	        <tr>
+	  		  <td><strong>Descuento</strong></td>
+	          <td><div class="col-md-6"><%= text_field_tag "descuento", '0', {:class => "form-control text-right", :onkeyUp => "calcTotales();"} %></div>%</td>
+	          <td><p id="totdescuento" class="lead text-right">$0.00</strong></td>
+	        </tr>
+	        <tr>
+				<td>&nbsp;</td>
+	          <td><strong>IVA Trasladado</strong></td>
+	          <td><p id="totivatrasladado" class="lead text-right">$0.00</strong></td>
+	        </tr>
+	        <tr class="hidden oculto">
+				<td>&nbsp;</td>
+	          <td><strong>IEPS Trasladado</strong></td>
+	          <td><p id="totiepstrasladado" class="lead text-right">$0.00</strong></td>
+	        </tr>
+	        <tr class="hidden oculto">
+				<td>&nbsp;</td>
+	          <td><strong>IVA Retenido</strong></td>
+	          <td><p id="totivaretenido" class="lead text-right">$0.00</strong></td>
+	        </tr>
+	        <tr class="hidden oculto">
+				<td>&nbsp;</td>
+	          <td><strong>ISR Retenido</strong></td>
+	          <td><p id="totisrretenido" class="lead text-right">$0.00</strong></td>
+	        </tr>
+	        <tr>
+	          <td>&nbsp;</td>
+	  				<td><strong>Total</strong></td>
+	  				<td><p id="total" class="lead text-right">$0.00</strong></td>
+	  			</tr>
+	      </tbody>
+		</table>
+  	</div>
+	</div>
+    <div class="form-group">
+      <div class="col-lg-offset-2 col-lg-10">
+        <%= f.submit "Crear Remision", :class => "btn btn-primary pull-right" %>
+      </div>
+    </div>
+<% end %>
+    <div class="row">
+        <div class="col-md-12 well invoice-thank">
+            	<h5 style="text-align:center;">Tel. <%= current_user.sucursal.telefono %> | E-mail. <%= current_user.sucursal.email %></h5>
+        </div>
+    </div>
+</div>
+<!-- Cliente Modal -->
+<div class="modal fade" id="clienteModal" tabindex="-1" role="dialog" aria-labelledby="clienteModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="clienteModalLabel">Nuevo Cliente</h4>
+      </div>
+      <div class="modal-body">
+        <%= render 'clientes/formModal' %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+        <!-- <button type="button" class="btn btn-primary">Guardar</button> -->
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<script>
+  $("#clienteModal").on("ajax:success", function(event, data, status, response) {
+    selectCliente(response.responseJSON.rfc);
+    $("#clienteModal").modal('hide');
+  });
+  
+  $("#clienteModal").on("ajax:error", function(event, response, error) {
+    obj = response.responseJSON;
+    str = '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><h4>Errores:</h4><ul>';
+    for (key in obj){
+      str += "<li>"+key+" "+obj[key]+"</li>";
+    }
+    str += '</ul></div>';
+    $(".modal-dialog").prepend(str);
+  });
+  
+  function selectCliente(rfc){
+      
+    $.ajax({
+      type: "GET",
+      url: '<%= clientes_path %>',
+      data: { search: true, q: rfc },
+      dataType: "json"
+    }).done(function( msg ) {
+      str = "";
+      for(key in msg){
+        str += "<option value='"+msg[key].id+"'>"+msg[key].nombre+"</option>";
+      }
+      $("#remision_cliente_id").html(str);
+    });
+      
+  }
+  
+  function todosClientes(){
+    $.ajax({
+      type: "GET",
+      url: '<%= clientes_path %>',
+      data: { searchall: true},
+      dataType: "json"
+    }).done(function( msg ) {
+      str = "";
+      for(key in msg){
+        str += "<option value='"+msg[key].id+"'>"+msg[key].nombre+"</option>";
+      }
+      $("#remision_cliente_id").html(str);
+    });
+  }
+  
+  $(document).ready(function() {
+
+	  // remove actual line
+	  $("#conceptos").html("");
+  
+		<% @remision.conceptos.each do |concepto| %>
+			// codigo, descripcion, valorunitario, cantidad, unidad, ivatrasladado, iepstrasladado, ivaretenido, isrretenido
+			precargarLinea("", "<%= concepto.descripcion.to_s %>", <%= concepto.valorunitario %>, <%= concepto.cantidad %>, "<%= concepto.unidad.to_s %>", <%= concepto.ivatrasladado %>, <%= concepto.iepstrasladado %>, <%= concepto.ivaretenido %>, <%= concepto.isrretenido %>);
+
+		<% end %>
+	
+  });
+    
+</script>
