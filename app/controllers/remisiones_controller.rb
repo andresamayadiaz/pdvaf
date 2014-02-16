@@ -167,7 +167,7 @@ class RemisionesController < ApplicationController
     
   end
   
-  # Get /remisiones/1/copy
+  # Get /remisiones/1/copiar
   def copiar
     
     @clientes = current_user.empresa.clientes.load
