@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140218024514) do
+ActiveRecord::Schema.define(version: 20140218043803) do
 
   create_table "clientes", force: true do |t|
     t.string   "rfc"
@@ -28,6 +28,7 @@ ActiveRecord::Schema.define(version: 20140218024514) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "empresa_id"
+    t.string   "telefono"
   end
 
   add_index "clientes", ["empresa_id"], name: "index_clientes_on_empresa_id"
