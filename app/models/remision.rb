@@ -6,6 +6,7 @@ class Remision < ActiveRecord::Base
   belongs_to :empresa
   belongs_to :sucursal
   has_many :conceptos, dependent: :destroy
+  belongs_to :clientefactura, :class_name => 'Cliente', :foreign_key => 'clientefactura_id'
   
   accepts_nested_attributes_for :conceptos
   

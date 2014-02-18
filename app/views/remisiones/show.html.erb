@@ -52,6 +52,11 @@
 	                        <td><strong>CFDi</strong></td>
 	                    </tr>
 	                    <tr>
+	                        <td class="pull-right"><strong>Cliente Factura </strong>
+	                        </td>
+	                        <td><%= link_to @remision.clientefactura.nombre, cliente_path(@remision.clientefactura) %></td>
+	                    </tr>
+	                    <tr>
 	                        <td class="pull-right"><strong>Folio </strong>
 	                        </td>
 	                        <td><%= @remision.seriefolio %></td>
@@ -191,7 +196,16 @@
 			  
 					  <div class="form-group">
 					    <%= label_tag :serie, "Serie de Facturacion" %>
-						<%= select_tag(:serie, [['No Hay Series', -1]], :class => "hide") %>
+						<%= select_tag(:serie, options_for_select([['No Hay Series', -1]]), :class => "hide") %>
+					  </div>
+			  
+			  </div>
+			  <div class="row">
+			  
+					  <div class="form-group">
+					    <%= label_tag :cliente, "Cliente de la Factura" %>
+						<% collection_select(nil, :cliente_id, current_user.empresa.clientes.load, :id, :nombre, {:prompt => false, :selected => @remision.cliente.id}, :class => "form-control") %>
+						<%= select_tag(:cliente_id, options_from_collection_for_select(current_user.empresa.clientes.load, :id, :nombre, :selected => @remision.cliente.id), :class=> "form-control") %>
 					  </div>
 			  
 			  </div>

@@ -5,7 +5,12 @@ class RemisionesController < ApplicationController
   # GET /remisiones/1/facturar
   def facturar
     
-    af = Autofactura::Autofactura.new({ :user => current_user.empresa.af_user, :sucursal => @remision.sucursal.af_sucursal })
+    clienteFactura = Cliente.find(params[:cliente_id])
+    if clienteFactura.blank?
+      redirect_to @remision, alert: 'Cliente a Facturar Invalido, Favor de Verificar'
+    end
+    
+    af = Autofactura::Autofactura.new({ :url=> current_user.empresa.af_url, :user => current_user.empresa.af_user, :sucursal => @remision.sucursal.af_sucursal })
     conceptos = Array.new
     @remision.conceptos.each do |concepto|
       
@@ -33,17 +38,17 @@ class RemisionesController < ApplicationController
       :decimales => 3,
       :descuento_porcentual => @remision.descuento.to_f,
       :Receptor => {
-        :rfc => @remision.cliente.rfc.to_s,
-        :nombre => @remision.cliente.nombre.to_s,
-        :email => @remision.cliente.email.to_s,
+        :rfc => clienteFactura.rfc.to_s,
+        :nombre => clienteFactura.nombre.to_s,
+        :email => clienteFactura.email.to_s,
         :Domicilio => {
-          :noExterior => @remision.cliente.noExterior.to_s,
-          :calle => @remision.cliente.calle.to_s,
-          :colonia => @remision.cliente.colonia.to_s,
-          :municipio => @remision.cliente.municipio.to_s,
-          :estado => @remision.cliente.estado.to_s,
-          :pais => @remision.cliente.pais.to_s,
-          :codigoPostal => @remision.cliente.codigoPostal.to_s
+          :noExterior => clienteFactura.noExterior.to_s,
+          :calle => clienteFactura.calle.to_s,
+          :colonia => clienteFactura.colonia.to_s,
+          :municipio => clienteFactura.municipio.to_s,
+          :estado => clienteFactura.estado.to_s,
+          :pais => clienteFactura.pais.to_s,
+          :codigoPostal => clienteFactura.codigoPostal.to_s
         } # Fin Domicilio
       }, # Fin Receptor
       :Addenda => ""
@@ -66,8 +71,9 @@ class RemisionesController < ApplicationController
        logger.info resp.body
        response = JSON.parse resp.body
        if response['exito'] == 1
-       
+         
          @remision.facturada = true
+         @remision.clientefactura = clienteFactura
          @remision.uuid = response['uuid']
          @remision.af_id = response['id']
          @remision.seriefolio = response['Folio']
