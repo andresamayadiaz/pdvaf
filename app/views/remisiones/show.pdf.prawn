@@ -7,9 +7,15 @@ pdf = Prawn::Document.new({:force_download => true, :filename => @remision.id.to
 @sucursal = @remision.sucursal
 @cliente = @remision.cliente
 @conceptosTemporal = @remision.conceptos.select {|a| a}
-@letraGde = 8
-@letraMed = 6
-@letraChi = 5
+@letraGde = 9
+@letraMed = 8
+@letraChi = 6
+
+@acc.repeat :all do
+
+  
+  
+end
 
 # Header PDF
 def header
@@ -96,13 +102,33 @@ def header
   
   @acc.move_down 5
   
+  productos = @acc.make_table [
+    [@acc.make_cell(:content => "CANTIDAD",
+      :font_style => :bold, :size => @letraMed, :width => 60, :border_width => 0, :border_bottom_width => 1, :padding => 1),
+    @acc.make_cell(:content => "UNIDAD DE MEDIDA",
+        :font_style => :bold, :size => @letraMed, :width => 60, :border_width => 0, :border_bottom_width => 1, :padding => 1),
+    @acc.make_cell(:content => "",
+        :font_style => :bold, :size => @letraMed, :width => 20, :border_width => 0, :border_bottom_width => 1, :padding => 1),
+    @acc.make_cell(:content => "CONCEPTO",
+        :font_style => :bold, :size => @letraMed, :width => 240, :border_width => 0, :border_bottom_width => 1, :padding => 1),
+    @acc.make_cell(:content => "P. UNIT.",
+        :font_style => :bold, :size => @letraMed, :width => 60, :align => :right, :border_width => 0, :border_bottom_width => 1, :padding => 1),
+    @acc.make_cell(:content => "IMPORTE",
+      :font_style => :bold, :size => @letraMed, :width => 60, :align => :right, :border_width => 0, :border_bottom_width => 1, :padding => 1)],
+    #[item_cells]
+  ], :width => 500
+  
+  productos.draw
+  
 end
 
 # Footer PDF
 def footer
   
+  @acc.move_down 5
+  
   # Totales
-  @acc.float do
+  #@acc.float do
     pie0 = @acc.make_table [
       [@acc.make_cell(:content => "",
           :size => @letraMed, :padding => 0, :rowspan => 8),
@@ -150,11 +176,21 @@ def footer
     ], :width => 500
     
      pie0.cells.select {|a| a.border_width = 0 }
-     @acc.move_down 515
+     #@acc.move_down 500
      pie0.draw
     
+  #end
+  
+end
+
+def footerpaginas
+  
+  @acc.bounding_box [@acc.bounds.left, @acc.bounds.bottom + 25], :width  => @acc.bounds.width do
+    @acc.stroke_horizontal_rule
+    @acc.move_down(5)
+    @acc.text "Pag. #{@acc.page_count}", :size => @letraMed, :align => :center
   end
-    
+  
 end
 
 # Cuerpo
@@ -164,24 +200,8 @@ def items(item_cells)
     ], :width => 500
   productos1.cells.select {|a| a.border_width = 0}
 
-  @acc.float do
-    productos = @acc.make_table [
-      [@acc.make_cell(:content => "CANTIDAD",
-        :font_style => :bold, :size => @letraMed, :width => 60, :border_width => 0, :border_bottom_width => 1, :padding => 1),
-      @acc.make_cell(:content => "UNIDAD DE MEDIDA",
-          :font_style => :bold, :size => @letraMed, :width => 60, :border_width => 0, :border_bottom_width => 1, :padding => 1),
-      @acc.make_cell(:content => "",
-          :font_style => :bold, :size => @letraMed, :width => 20, :border_width => 0, :border_bottom_width => 1, :padding => 1),
-      @acc.make_cell(:content => "CONCEPTO",
-          :font_style => :bold, :size => @letraMed, :width => 240, :border_width => 0, :border_bottom_width => 1, :padding => 1),
-      @acc.make_cell(:content => "P. UNIT.",
-          :font_style => :bold, :size => @letraMed, :width => 60, :align => :right, :border_width => 0, :border_bottom_width => 1, :padding => 1),
-      @acc.make_cell(:content => "IMPORTE",
-        :font_style => :bold, :size => @letraMed, :width => 60, :align => :right, :border_width => 0, :border_bottom_width => 1, :padding => 1)],
-      #[item_cells]
-    ], :width => 500
+  #@acc.float do
     
-    productos.draw
     productos1.draw
     # si es mayor a 238 hay que hacer una nueva pagina
     #if productos.height > 237
@@ -189,12 +209,16 @@ def items(item_cells)
     #  items
     #  footer
     #end
-  end
+  #end
 end
 
 item_cells = Array.new
+count = 0
 
-@conceptosTemporal.delete_if do |item|
+header
+@conceptosTemporal.each_with_index do |item, index|
+  
+  count += 1
   
   item_cells.push [
     @acc.make_cell(:content => item.cantidad.to_s, :size => @letraMed, :width => 60, :border_width => 0, :padding => 1),
@@ -205,32 +229,19 @@ item_cells = Array.new
     @acc.make_cell(:content => number_to_currency(item.importe, precision: 3), :size => @letraMed, :align => :right, :width => 60, :border_width => 0, :padding => 1)
   ]
   
-  # Verifica el Tamano
-  if item_cells.size > 54
-    header
-    items(item_cells)
-    #footer
-    
-    #logger.debug ">>>>> " + @conceptosTemporal.size.to_s
-    
-    if @conceptosTemporal.size > 1
-      @acc.start_new_page
-    end
-    
-    item_cells = Array.new
-    count = 0
-    true
-    next
-  else
-    
-    true
-  end
-
-  true
-end
-
-if item_cells.size >= 1
-  header
   items(item_cells)
+  item_cells = Array.new
+  
+  if count > 40
+    
+    count = 0
+    footerpaginas
+    @acc.start_new_page
+    header
+    
+  end
+  
 end
+
 footer
+footerpaginas
