@@ -1,0 +1,16 @@
+<table border="1">
+  <tr>
+    <th>Folio</th>
+    <th>Fecha</th>
+    <th>Cliente</th>
+    <th>Total</th>
+  </tr>
+  <% @remisiones.each do |remision| %>
+  <tr>
+    <td><%= remision.id %></td>
+    <td><%= remision.created_at.to_s(Time.zone) %></td>
+    <td><%= remision.cliente.nombre %></td>
+    <td><%= number_to_currency(remision.total) %></td>
+  </tr>
+  <% end %>
+</table>

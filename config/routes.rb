@@ -13,6 +13,7 @@ Pdvaf::Application.routes.draw do
   
   resources :remisiones do
     member { get :copiar }
+    collection { get :rptventas }
   end
 
   resources :condicionesdepagos

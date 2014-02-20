@@ -106,6 +106,23 @@ class RemisionesController < ApplicationController
     
   end
 
+  # GET /remisiones/rptventas
+  def rptventas 
+    
+    if params[:search]
+      
+      desde = params[:desde] + ' 00:00:00'
+      hasta = params[:hasta] + ' 23:59:59'
+      
+      @remisiones = current_user.empresa.remisiones.where("created_at >= ? AND created_at <= ?",desde, hasta).all
+      respond_to do |format|
+        format.xls
+      end
+      
+    end
+    
+  end
+
   # GET /remisiones
   # GET /remisiones.json
   def index
