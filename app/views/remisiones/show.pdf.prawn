@@ -9,7 +9,7 @@ pdf = Prawn::Document.new({:force_download => true, :filename => @remision.id.to
 @conceptosTemporal = @remision.conceptos.select {|a| a}
 @letraGde = 8
 @letraMed = 6
-@letraChi = 4
+@letraChi = 5
 
 # Header PDF
 def header
@@ -150,7 +150,7 @@ def footer
     ], :width => 500
     
      pie0.cells.select {|a| a.border_width = 0 }
-     @acc.move_down 150
+     @acc.move_down 515
      pie0.draw
     
   end
@@ -206,7 +206,7 @@ item_cells = Array.new
   ]
   
   # Verifica el Tamano
-  if item_cells.size > 14
+  if item_cells.size > 54
     header
     items(item_cells)
     #footer
