@@ -118,9 +118,9 @@ class RemisionesController < ApplicationController
       @sucursal = params[:sucursal]
       
       if @sucursal.empty?
-        @remisiones = current_user.empresa.remisiones.where("created_at >= ? AND created_at <= ?", @desde, @hasta).all
+        @remisiones = current_user.empresa.remisiones.where("created_at >= ? AND created_at <= ?", @desde, @hasta).order(sucursal_id: :asc, created_at: :desc)
       else
-        @remisiones = current_user.empresa.remisiones.where("created_at >= ? AND created_at <= ? AND sucursal_id = ?", @desde, @hasta, @sucursal).all
+        @remisiones = current_user.empresa.remisiones.where("created_at >= ? AND created_at <= ? AND sucursal_id = ?", @desde, @hasta, @sucursal).order(sucursal_id: :asc, created_at: :desc)
       end
       
       respond_to do |format|
