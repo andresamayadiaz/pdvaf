@@ -12,7 +12,7 @@
   			 <%= text_field_tag 'hasta', params[:hasta], class: 'datepicker' %>
 			 <%= collection_select('', :sucursal, @sucursales, :id, :nombre, {:prompt => false, :include_blank => 'Todas las Sucursales', :selected => params[:sucursal]}, :class => "form-control") %>
   			 <%= hidden_field_tag 'search'  %>
-  			 <%= button_tag 'Buscar', class: 'btn btn-default' %>
+  			 <%= button_tag 'Generar', class: 'btn btn-default' %>
   		  <% end %>
 		</div>
 	</div>

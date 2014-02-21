@@ -22,6 +22,7 @@
     <th>Fecha</th>
     <th>Cliente</th>
 	<th>Facturada</th>
+	<th>Metodo de Pago</th>
 	<th>Subtotal</th>
 	<th>Descuento</th>
 	<th>Imptos. Trasladados</th>
@@ -36,6 +37,7 @@
     <td><%= remision.created_at.to_s(Time.zone) %></td>
     <td><%= remision.cliente.nombre %></td>
 	<td><%= remision.facturada ? "Si" : "No" %></td>
+	<td><%= remision.metodosdepago.nombre %></td>
 	<td><%= number_to_currency(remision.subtotal) %></td>
 	<td><%= number_to_currency(remision.descuento) %></td>
 	<td><%= number_to_currency(remision.totalimpuestostrasladados) %></td>
@@ -44,7 +46,7 @@
   </tr>
   <% end %>
   <tr>
-	  <th colspan="9" align="right">TOTAL</th>
+	  <th colspan="10" align="right">TOTAL</th>
 	  <th align="right"><%= number_to_currency(@total) %></th>
   </tr>
 </table>
