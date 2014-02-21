@@ -109,12 +109,20 @@ class RemisionesController < ApplicationController
   # GET /remisiones/rptventas
   def rptventas 
     
+    @sucursales = current_user.empresa.sucursales.load
+    
     if params[:search]
       
-      desde = params[:desde] + ' 00:00:00'
-      hasta = params[:hasta] + ' 23:59:59'
+      @desde = params[:desde] + ' 00:00:00'
+      @hasta = params[:hasta] + ' 23:59:59'
+      @sucursal = params[:sucursal]
       
-      @remisiones = current_user.empresa.remisiones.where("created_at >= ? AND created_at <= ?",desde, hasta).all
+      if @sucursal.empty?
+        @remisiones = current_user.empresa.remisiones.where("created_at >= ? AND created_at <= ?", @desde, @hasta).all
+      else
+        @remisiones = current_user.empresa.remisiones.where("created_at >= ? AND created_at <= ? AND sucursal_id = ?", @desde, @hasta, @sucursal).all
+      end
+      
       respond_to do |format|
         format.xls
       end

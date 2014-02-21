@@ -1,16 +1,48 @@
 <table border="1">
   <tr>
+    <th>Reporte de Ventas</th>
+    <th>Desde</th>
+    <th>Hasta</th>
+    <th>Generado</th>
+  </tr>
+  <tr>
+    <td></td>
+    <td><%= @desde %></td>
+    <td><%= @hasta %></td>
+    <td><%= Time.zone.now %></td>
+  </tr>
+</table>
+
+<% @total = 0 %>
+
+<table border="1">
+  <tr>
+	<th>Sucursal</th>
     <th>Folio</th>
     <th>Fecha</th>
     <th>Cliente</th>
+	<th>Subtotal</th>
+	<th>Descuento</th>
+	<th>Imptos. Trasladados</th>
+	<th>Imptos. Retenidos</th>
     <th>Total</th>
   </tr>
   <% @remisiones.each do |remision| %>
+  	<% @total += remision.total %>
   <tr>
-    <td><%= remision.id %></td>
+	<td><%= remision.sucursal.nombre %></td>
+    <td><%= remision.consecutivo rescue '' %></td>
     <td><%= remision.created_at.to_s(Time.zone) %></td>
     <td><%= remision.cliente.nombre %></td>
+	<td><%= number_to_currency(remision.subtotal) %></td>
+	<td><%= number_to_currency(remision.descuento) %></td>
+	<td><%= number_to_currency(remision.totalimpuestostrasladados) %></td>
+	<td><%= number_to_currency(remision.totalimpuestosretenidos) %></td>
     <td><%= number_to_currency(remision.total) %></td>
   </tr>
   <% end %>
+  <tr>
+	  <th colspan="8" align="right">TOTAL</th>
+	  <th align="right"><%= number_to_currency(@total) %></th>
+  </tr>
 </table>
