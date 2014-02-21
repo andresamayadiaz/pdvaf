@@ -21,6 +21,7 @@
     <th>Folio</th>
     <th>Fecha</th>
     <th>Cliente</th>
+	<th>Facturada</th>
 	<th>Subtotal</th>
 	<th>Descuento</th>
 	<th>Imptos. Trasladados</th>
@@ -34,6 +35,7 @@
     <td><%= remision.consecutivo rescue '' %></td>
     <td><%= remision.created_at.to_s(Time.zone) %></td>
     <td><%= remision.cliente.nombre %></td>
+	<td><%= remision.facturada ? "Si" : "No" %></td>
 	<td><%= number_to_currency(remision.subtotal) %></td>
 	<td><%= number_to_currency(remision.descuento) %></td>
 	<td><%= number_to_currency(remision.totalimpuestostrasladados) %></td>
