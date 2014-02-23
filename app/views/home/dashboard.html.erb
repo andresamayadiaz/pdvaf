@@ -4,15 +4,24 @@
 	
 	<script type="text/javascript">
 	var distribucionventas = <%= @distribucion_ventas.map {|k, v| v} %>
+	var values = <%= raw @distribucion_ventas.map.with_index {|s, index| Sucursal.find(s[0]).nombre } %>
+	var titles = new Array();
+	
+	for(var i=0; i<values.length; i++) {
+
+	    titles.push([distribucionventas[i],values[i]]);
+
+	}
+	
 	$('#distribucionventas').sparkline(distribucionventas, 
 	{
 		type: 'pie', 
 		width: '200px', 
 		height: '200px',
-		tooltipFormat: '<span style="color: {{color}}">&#9679;</span> {{offset:names[1]}} ({{percent.1}}%)',
+		tooltipFormat: '<span style="color: {{color}}">&#9679;</span> {{offset:names}} ({{percent.1}}%)',
 		tooltipValueLookups: {
 	        'names': 
-			<%= raw @distribucion_ventas.map.with_index {|s, index| {index=>Sucursal.find(s[0]).nombre} }.to_json %>
+			titles
 		}
 	});
 	</script>
