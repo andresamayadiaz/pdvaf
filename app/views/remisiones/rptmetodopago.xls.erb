@@ -1,0 +1,39 @@
+<table border="1">
+  <tr>
+    <th>Reporte por Metodo de Pago</th>
+    <th>Desde</th>
+    <th>Hasta</th>
+    <th>Generado</th>
+  </tr>
+  <tr>
+    <td></td>
+    <td><%= @desde %></td>
+    <td><%= @hasta %></td>
+    <td><%= Time.zone.now %></td>
+  </tr>
+</table>
+
+<table border="1">
+  <tr>
+	  <th></th>
+	  <% @metodosdepago.each do |metodo| %>	  
+	  	<th><%= metodo.nombre %></th>
+	  <%  end %>
+  </tr>
+  
+  <% @fechas.each do |fecha| %>
+  
+	  <tr>
+		  <th><%= fecha %></th>
+  
+		  <% @metodosdepago.each do |metodo| %>
+  
+		  	<% tot = @h.select{|val| val["#{fecha}@#{metodo.id}"]}[0]["#{fecha}@#{metodo.id}"] rescue 0 %>
+		  	<td><%= number_to_currency(tot) %></td>
+  
+		  <% end %>
+	  </tr>
+  
+  <% end %>
+  
+</table>

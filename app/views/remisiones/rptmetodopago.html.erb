@@ -1,16 +1,16 @@
 <div class="page-header">
-	<h1>Reporte de Ventas</h1>
+	<h1>Reporte de Metodos de Pago</h1>
 </div>
 
 <div class="container">
     <div class="row">
         <div class="col-md-5">
-  		  <%= form_tag rptventas_remisiones_path(format: "xls"), :method => 'get' do |f| %>
+  		  <%= form_tag rptmetodopago_remisiones_path(format: "xls"), :method => 'get' do |f| %>
   		 	 <%= label_tag 'Desde:', nil, class: ''  %>
   			 <%= text_field_tag 'desde', params[:desde], class: 'datepicker' %>
   			 <%= label_tag 'Hasta:', nil, class: ''  %>
   			 <%= text_field_tag 'hasta', params[:hasta], class: 'datepicker' %>
-			 <%= collection_select('', :sucursal, @sucursales, :id, :nombre, {:prompt => false, :include_blank => 'Todas las Sucursales', :selected => params[:sucursal]}, :class => "form-control") %>
+			 <%= collection_select('', :sucursal, @sucursales, :id, :nombre, {:prompt => false, :selected => params[:sucursal]}, :class => "form-control") %>
   			 <%= hidden_field_tag 'search'  %>
   			 <%= button_tag 'Generar', class: 'btn btn-default' %>
   		  <% end %>

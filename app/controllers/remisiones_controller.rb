@@ -109,6 +109,8 @@ class RemisionesController < ApplicationController
   # GET /remisiones/rptventas
   def rptventas 
     
+    authorize! :rptventas, current_user
+    
     @sucursales = current_user.empresa.sucursales.load
     
     if params[:search]
@@ -118,10 +120,40 @@ class RemisionesController < ApplicationController
       @sucursal = params[:sucursal]
       
       if @sucursal.empty?
-        @remisiones = current_user.empresa.remisiones.where("created_at >= ? AND created_at <= ?", @desde, @hasta).order(sucursal_id: :asc, created_at: :desc)
+        @remisiones = current_user.empresa.remisiones.where("convert_tz(created_at, '+00:00', '-06:00'') >= ? AND convert_tz(created_at, '+00:00', '-06:00'') <= ?", @desde, @hasta).order(sucursal_id: :asc, created_at: :desc)
       else
-        @remisiones = current_user.empresa.remisiones.where("created_at >= ? AND created_at <= ? AND sucursal_id = ?", @desde, @hasta, @sucursal).order(sucursal_id: :asc, created_at: :desc)
+        @remisiones = current_user.empresa.remisiones.where("convert_tz(created_at, '+00:00', '-06:00'') >= ? AND convert_tz(created_at, '+00:00', '-06:00'') <= ? AND sucursal_id = ?", @desde, @hasta, @sucursal).order(sucursal_id: :asc, created_at: :desc)
       end
+      
+      respond_to do |format|
+        format.xls
+      end
+      
+    end
+    
+  end
+  
+  # GET /remisiones/rptmetodopago
+  def rptmetodopago
+    
+    authorize! :rptmetodopago, current_user
+    
+    @sucursales = current_user.empresa.sucursales.load
+    
+    if params[:search]
+      
+      @desde = params[:desde] + ' 00:00:00'
+      @hasta = params[:hasta] + ' 23:59:59'
+      @sucursal = params[:sucursal]
+      
+      @fechas = (Date.parse(@desde)..Date.parse(@hasta)).map{|date| date.strftime('%Y-%m-%d')}
+      @metodosdepago = current_user.empresa.metodosdepagos.load
+      
+      @ventas = current_user.empresa.remisiones.select(['DATE(convert_tz(created_at, "+00:00", "-06:00")) AS fecha', 'metodosdepago_id', 'sum(total) AS total']).where("created_at >= ? AND created_at <= ?", @desde, @hasta).group(['DATE(convert_tz(created_at, "+00:00", "-06:00"))', 'metodosdepago_id']).order('created_at ASC')
+      
+      j = JSON.parse(@ventas.to_json)
+      #@h = j.map {|c| [ [c['fecha'], Metodosdepago.find(c['metodosdepago_id']).nombre]=>c['total'] ]}
+      @h = j.map {|c| { c['fecha'].to_s+"@"+c['metodosdepago_id'].to_s=>c['total'] } }
       
       respond_to do |format|
         format.xls

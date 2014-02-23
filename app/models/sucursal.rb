@@ -3,6 +3,7 @@ class Sucursal < ActiveRecord::Base
   belongs_to :empresa
   
   has_many :users
+  has_many :remisiones
   
   default_scope { order('nombre ASC') }
   

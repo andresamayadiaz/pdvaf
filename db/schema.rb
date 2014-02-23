@@ -31,7 +31,7 @@ ActiveRecord::Schema.define(version: 20140218043803) do
     t.string   "telefono"
   end
 
-  add_index "clientes", ["empresa_id"], name: "index_clientes_on_empresa_id"
+  add_index "clientes", ["empresa_id"], name: "index_clientes_on_empresa_id", using: :btree
 
   create_table "conceptos", force: true do |t|
     t.decimal  "cantidad",       precision: 10, scale: 4
@@ -48,7 +48,7 @@ ActiveRecord::Schema.define(version: 20140218043803) do
     t.decimal  "isrretenido",    precision: 10, scale: 4
   end
 
-  add_index "conceptos", ["remision_id"], name: "index_conceptos_on_remision_id"
+  add_index "conceptos", ["remision_id"], name: "index_conceptos_on_remision_id", using: :btree
 
   create_table "condicionesdepagos", force: true do |t|
     t.string   "nombre"
@@ -57,7 +57,7 @@ ActiveRecord::Schema.define(version: 20140218043803) do
     t.integer  "empresa_id"
   end
 
-  add_index "condicionesdepagos", ["empresa_id"], name: "index_condicionesdepagos_on_empresa_id"
+  add_index "condicionesdepagos", ["empresa_id"], name: "index_condicionesdepagos_on_empresa_id", using: :btree
 
   create_table "configuraciones", force: true do |t|
     t.string   "nombre"
@@ -95,7 +95,7 @@ ActiveRecord::Schema.define(version: 20140218043803) do
     t.integer  "empresa_id"
   end
 
-  add_index "formasdepagos", ["empresa_id"], name: "index_formasdepagos_on_empresa_id"
+  add_index "formasdepagos", ["empresa_id"], name: "index_formasdepagos_on_empresa_id", using: :btree
 
   create_table "metodosdepagos", force: true do |t|
     t.string   "nombre"
@@ -104,27 +104,15 @@ ActiveRecord::Schema.define(version: 20140218043803) do
     t.integer  "empresa_id"
   end
 
-  add_index "metodosdepagos", ["empresa_id"], name: "index_metodosdepagos_on_empresa_id"
+  add_index "metodosdepagos", ["empresa_id"], name: "index_metodosdepagos_on_empresa_id", using: :btree
 
   create_table "monedas", force: true do |t|
     t.string   "nombre"
     t.string   "codigo"
-    t.decimal  "tipocambio"
+    t.decimal  "tipocambio", precision: 10, scale: 0
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  create_table "precios", force: true do |t|
-    t.integer  "producto_id"
-    t.integer  "moneda_id"
-    t.decimal  "precio"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "precios", ["moneda_id"], name: "index_precios_on_moneda_id"
-  add_index "precios", ["producto_id", "moneda_id"], name: "index_precios_on_producto_id_and_moneda_id", unique: true
-  add_index "precios", ["producto_id"], name: "index_precios_on_producto_id"
 
   create_table "productos", force: true do |t|
     t.text     "nombre"
@@ -133,15 +121,15 @@ ActiveRecord::Schema.define(version: 20140218043803) do
     t.datetime "updated_at"
     t.string   "codigobarras"
     t.decimal  "precio",         precision: 10, scale: 4
-    t.decimal  "ivatrasladado"
-    t.decimal  "iepstrasladado"
-    t.decimal  "ivaretenido"
-    t.decimal  "isrretenido"
+    t.decimal  "ivatrasladado",  precision: 10, scale: 0
+    t.decimal  "iepstrasladado", precision: 10, scale: 0
+    t.decimal  "ivaretenido",    precision: 10, scale: 0
+    t.decimal  "isrretenido",    precision: 10, scale: 0
     t.integer  "empresa_id"
   end
 
-  add_index "productos", ["empresa_id"], name: "index_productos_on_empresa_id"
-  add_index "productos", ["unidad_id"], name: "index_productos_on_unidad_id"
+  add_index "productos", ["empresa_id"], name: "index_productos_on_empresa_id", using: :btree
+  add_index "productos", ["unidad_id"], name: "index_productos_on_unidad_id", using: :btree
 
   create_table "remisiones", force: true do |t|
     t.integer  "cliente_id"
@@ -167,12 +155,12 @@ ActiveRecord::Schema.define(version: 20140218043803) do
     t.integer  "clientefactura_id"
   end
 
-  add_index "remisiones", ["cliente_id"], name: "index_remisiones_on_cliente_id"
-  add_index "remisiones", ["condicionesdepago_id"], name: "index_remisiones_on_condicionesdepago_id"
-  add_index "remisiones", ["empresa_id"], name: "index_remisiones_on_empresa_id"
-  add_index "remisiones", ["formasdepago_id"], name: "index_remisiones_on_formasdepago_id"
-  add_index "remisiones", ["metodosdepago_id"], name: "index_remisiones_on_metodosdepago_id"
-  add_index "remisiones", ["sucursal_id"], name: "index_remisiones_on_sucursal_id"
+  add_index "remisiones", ["cliente_id"], name: "index_remisiones_on_cliente_id", using: :btree
+  add_index "remisiones", ["condicionesdepago_id"], name: "index_remisiones_on_condicionesdepago_id", using: :btree
+  add_index "remisiones", ["empresa_id"], name: "index_remisiones_on_empresa_id", using: :btree
+  add_index "remisiones", ["formasdepago_id"], name: "index_remisiones_on_formasdepago_id", using: :btree
+  add_index "remisiones", ["metodosdepago_id"], name: "index_remisiones_on_metodosdepago_id", using: :btree
+  add_index "remisiones", ["sucursal_id"], name: "index_remisiones_on_sucursal_id", using: :btree
 
   create_table "roles", force: true do |t|
     t.string   "name"
@@ -182,8 +170,8 @@ ActiveRecord::Schema.define(version: 20140218043803) do
     t.datetime "updated_at"
   end
 
-  add_index "roles", ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id"
-  add_index "roles", ["name"], name: "index_roles_on_name"
+  add_index "roles", ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id", using: :btree
+  add_index "roles", ["name"], name: "index_roles_on_name", using: :btree
 
   create_table "sucursales", force: true do |t|
     t.string   "nombre"
@@ -197,7 +185,7 @@ ActiveRecord::Schema.define(version: 20140218043803) do
     t.string   "af_sucursal"
   end
 
-  add_index "sucursales", ["empresa_id"], name: "index_sucursales_on_empresa_id"
+  add_index "sucursales", ["empresa_id"], name: "index_sucursales_on_empresa_id", using: :btree
 
   create_table "unidades", force: true do |t|
     t.string   "nombre"
@@ -206,7 +194,7 @@ ActiveRecord::Schema.define(version: 20140218043803) do
     t.integer  "empresa_id"
   end
 
-  add_index "unidades", ["empresa_id"], name: "index_unidades_on_empresa_id"
+  add_index "unidades", ["empresa_id"], name: "index_unidades_on_empresa_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
@@ -230,16 +218,16 @@ ActiveRecord::Schema.define(version: 20140218043803) do
     t.integer  "sucursal_id"
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true
-  add_index "users", ["empresa_id"], name: "index_users_on_empresa_id"
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
-  add_index "users", ["sucursal_id"], name: "index_users_on_sucursal_id"
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["empresa_id"], name: "index_users_on_empresa_id", using: :btree
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+  add_index "users", ["sucursal_id"], name: "index_users_on_sucursal_id", using: :btree
 
   create_table "users_roles", id: false, force: true do |t|
     t.integer "user_id"
     t.integer "role_id"
   end
 
-  add_index "users_roles", ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id"
+  add_index "users_roles", ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id", using: :btree
 
 end

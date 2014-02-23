@@ -4,6 +4,7 @@ Pdvaf::Application.routes.draw do
   post '/empresas/createuser', to: 'empresas#createuser'
   post '/remisiones/:id/facturar', to: 'remisiones#facturar', :as => 'facturar_remision'
   get '/remisiones/:id/series', to: 'remisiones#series'
+  get '/dashboard', to: 'home#dashboard'
   
   resources :empresas
 
@@ -14,6 +15,7 @@ Pdvaf::Application.routes.draw do
   resources :remisiones do
     member { get :copiar }
     collection { get :rptventas }
+    collection { get :rptmetodopago }
   end
 
   resources :condicionesdepagos

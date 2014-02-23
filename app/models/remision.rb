@@ -10,7 +10,7 @@ class Remision < ActiveRecord::Base
   
   accepts_nested_attributes_for :conceptos
   
-  default_scope { order('created_at DESC') }
+  default_scope { order('remisiones.created_at DESC') }
   
   before_create :set_defaults
   
