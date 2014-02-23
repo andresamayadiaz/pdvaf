@@ -9,10 +9,10 @@
 		type: 'pie', 
 		width: '200px', 
 		height: '200px',
-		tooltipFormat: '<span style="color: {{color}}">&#9679;</span> {{offset:offset}} ({{percent.1}}%)',
+		tooltipFormat: '<span style="color: {{color}}">&#9679;</span> {{offset:names[1]}} ({{percent.1}}%)',
 		tooltipValueLookups: {
-	        'offset': 
-	            <%= raw @distribucion_ventas.map.with_index {|s, index| { index => Sucursal.find(s[0]).nombre} }[0].to_json %>
+	        'names': 
+			<%= raw @distribucion_ventas.map.with_index {|s, index| {index=>Sucursal.find(s[0]).nombre} }.to_json %>
 		}
 	});
 	</script>
