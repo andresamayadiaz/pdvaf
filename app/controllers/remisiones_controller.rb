@@ -43,6 +43,7 @@ class RemisionesController < ApplicationController
         :email => clienteFactura.email.to_s,
         :Domicilio => {
           :noExterior => clienteFactura.noExterior.to_s,
+          :noInterior => clienteFactura.noInterior.to_s,
           :calle => clienteFactura.calle.to_s,
           :colonia => clienteFactura.colonia.to_s,
           :municipio => clienteFactura.municipio.to_s,
