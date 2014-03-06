@@ -10,29 +10,42 @@
   <h1>Ver Producto</h1>
 </div>
 
-<dl class="dl-horizontal">
-  <dt>Nombre:</dt>
-  <dd><%= @producto.nombre %></dd>
+<div class="row">
+	<div class="col-lg-8">
+		<dl class="dl-horizontal">
+		  <dt>Nombre:</dt>
+		  <dd><%= @producto.nombre %></dd>
   
-  <dt>Codigo Barras:</dt>
-  <dd><%= @producto.codigobarras %></dd>
+		  <dt>Codigo Barras:</dt>
+		  <dd><%= @producto.codigobarras %></dd>
 
-  <dt>Unidad:</dt>
-  <dd><%= @producto.unidad.nombre %></dd>
+		  <dt>Unidad:</dt>
+		  <dd><%= @producto.unidad.nombre %></dd>
   
-  <dt>Precio:</dt>
-  <dd><%= number_to_currency(@producto.precio, {:precision => ENV['DECIMALESDEFAULT'].to_i}) %></dd>
+		  <dt>Precio:</dt>
+		  <dd><%= number_to_currency(@producto.precio, {:precision => ENV['DECIMALESDEFAULT'].to_i}) %></dd>
   
-  <dt>IVA Trasladado:</dt>
-  <dd><%= number_to_percentage(@producto.ivatrasladado) %></dd>
+		  <dt>IVA Trasladado:</dt>
+		  <dd><%= number_to_percentage(@producto.ivatrasladado) %></dd>
   
-  <dt>IEPS Trasladado:</dt>
-  <dd><%= number_to_percentage(@producto.iepstrasladado) %></dd>
+		  <dt>IEPS Trasladado:</dt>
+		  <dd><%= number_to_percentage(@producto.iepstrasladado) %></dd>
   
-  <dt>IVA Retenido:</dt>
-  <dd><%= number_to_percentage(@producto.ivaretenido) %></dd>
+		  <dt>IVA Retenido:</dt>
+		  <dd><%= number_to_percentage(@producto.ivaretenido) %></dd>
 
-  <dt>ISR Retenido:</dt>
-  <dd><%= number_to_percentage(@producto.isrretenido) %></dd>
+		  <dt>ISR Retenido:</dt>
+		  <dd><%= number_to_percentage(@producto.isrretenido) %></dd>
 
-</dl>
+		</dl>
+	</div>
+	<div class="col-lg-4">
+		<h3>Precios</h3>
+		<dl class="dl-horizontal">
+		<% @producto.precios.each do |precio| %>
+  		  <dt><%= precio.listadeprecio.nombre.to_s %></dt>
+  		  <dd><%= number_to_currency(precio.precio, {:precision => ENV['DECIMALESDEFAULT'].to_i}) %></dd>
+		<% end %>
+		</dl>
+	</div>
+</div>

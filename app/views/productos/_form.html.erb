@@ -74,7 +74,16 @@
       </div>
     </div>
     <div class="col-lg-4">
-		&nbsp;
+		<h3>Precios</h3>
+		<% @listadeprecios.each do |lista| %>
+	        <div class="form-group">
+	          <%= lista.nombre.to_s %>
+	          <div class="col-lg-10"> <!-- remision[conceptos_attributes][][valorunitario] -->
+				<%= hidden_field_tag 'producto[precios_attributes][][listadeprecio_id]', lista.id %>
+	            <%= text_field_tag 'producto[precios_attributes][][precio]', 0.0 %>
+	          </div>
+	        </div>
+		<% end %>
     </div>
   </div>
   

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140218043803) do
+ActiveRecord::Schema.define(version: 20140305232933) do
 
   create_table "clientes", force: true do |t|
     t.string   "rfc"
@@ -97,6 +97,16 @@ ActiveRecord::Schema.define(version: 20140218043803) do
 
   add_index "formasdepagos", ["empresa_id"], name: "index_formasdepagos_on_empresa_id", using: :btree
 
+  create_table "listadeprecios", force: true do |t|
+    t.string   "nombre"
+    t.text     "descripcion"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "empresa_id"
+  end
+
+  add_index "listadeprecios", ["empresa_id"], name: "index_listadeprecios_on_empresa_id", using: :btree
+
   create_table "metodosdepagos", force: true do |t|
     t.string   "nombre"
     t.datetime "created_at"
@@ -110,6 +120,14 @@ ActiveRecord::Schema.define(version: 20140218043803) do
     t.string   "nombre"
     t.string   "codigo"
     t.decimal  "tipocambio", precision: 10, scale: 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "precios", force: true do |t|
+    t.integer  "listadeprecio_id"
+    t.integer  "producto_id"
+    t.decimal  "precio",           precision: 10, scale: 4
     t.datetime "created_at"
     t.datetime "updated_at"
   end

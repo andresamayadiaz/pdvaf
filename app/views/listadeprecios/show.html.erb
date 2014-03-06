@@ -1,0 +1,20 @@
+<div class="page-header">
+  <%= link_to listadeprecios_path, :class => 'btn btn-default' do %>
+    <span class="glyphicon glyphicon-list-alt"></span>
+    Atras
+  <% end %>
+  <%= link_to edit_listadeprecio_path(@listadeprecio), :class => 'btn btn-primary' do %>
+    <span class="glyphicon glyphicon-pencil"></span>
+    Editar
+  <% end %>
+  <h1>Ver Lista de Precios</h1>
+</div>
+
+<dl class="dl-horizontal">
+  <dt>Nombre:</dt>
+  <dd><%= @listadeprecio.nombre %></dd>
+
+  <dt>Descripcion:</dt>
+  <dd><%= @listadeprecio.descripcion %></dd>
+
+</dl>

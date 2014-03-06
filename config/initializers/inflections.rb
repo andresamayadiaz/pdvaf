@@ -24,5 +24,7 @@ ActiveSupport::Inflector.inflections do |inflect|
   inflect.irregular 'remision', 'remisiones'
   inflect.irregular 'sucursal', 'sucursales'
   inflect.irregular 'empresa', 'empresas'
+  inflect.irregular 'listadeprecio', 'listadeprecios'
+  inflect.irregular 'precio', 'precios'
   
 end

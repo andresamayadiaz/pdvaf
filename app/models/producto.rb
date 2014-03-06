@@ -2,6 +2,10 @@ class Producto < ActiveRecord::Base
   belongs_to :unidad
   belongs_to :empresa
   
+  has_many :precios, dependent: :destroy
+  
+  accepts_nested_attributes_for :precios
+  
   validates :codigobarras, uniqueness: { scope: :empresa,
       message: "El Codigo de Barras no puede Duplicarse" }
   validates :nombre, :codigobarras, :precio, :unidad, :empresa, presence: true

@@ -40,6 +40,7 @@ class ProductosController < ApplicationController
   def new
     @producto = current_user.empresa.productos.new
     @unidades = current_user.empresa.unidades.load
+    @listadeprecios = current_user.empresa.listadeprecios.load
     
     # Validate
     if @unidades.size <= 0
@@ -47,7 +48,7 @@ class ProductosController < ApplicationController
     end
     
   end
-
+  
   # GET /productos/1/edit
   def edit
     
@@ -56,18 +57,22 @@ class ProductosController < ApplicationController
     logger.debug "----------------------------"
     
     @unidades = current_user.empresa.unidades.load
+    @listadeprecios = current_user.empresa.listadeprecios.load
+    
   end
-
+  
   # POST /productos
   # POST /productos.json
   def create
     @producto = current_user.empresa.productos.new(producto_params)
-
+    
     respond_to do |format|
       if @producto.save
         format.html { redirect_to @producto, notice: 'Producto was successfully created.' }
         format.json { render action: 'show', status: :created, location: @producto }
       else
+        @unidades = current_user.empresa.unidades.load
+        @listadeprecios = current_user.empresa.listadeprecios.load
         format.html { render action: 'new' }
         format.json { render json: @producto.errors, status: :unprocessable_entity }
       end
@@ -82,7 +87,8 @@ class ProductosController < ApplicationController
         format.html { redirect_to productos_url({:page => cookies[:current_page]}), notice: 'Producto was successfully updated.' }
         format.json { head :no_content }
       else
-        @unidades = Unidad.all
+        @unidades = current_user.empresa.unidades.load
+        @listadeprecios = current_user.empresa.listadeprecios.load
         format.html { render action: 'edit' }
         format.json { render json: @producto.errors, status: :unprocessable_entity }
       end
@@ -107,6 +113,6 @@ class ProductosController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def producto_params
-      params.require(:producto).permit(:nombre, :unidad_id, :codigobarras, :precio, :ivatrasladado, :iepstrasladado, :ivaretenido, :isrretenido)
+      params.require(:producto).permit(:nombre, :unidad_id, :codigobarras, :precio, :ivatrasladado, :iepstrasladado, :ivaretenido, :isrretenido, precios_attributes: [:id, :listadeprecio_id, :precio])
     end
 end

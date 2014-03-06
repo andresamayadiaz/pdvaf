@@ -9,6 +9,7 @@ class Empresa < ActiveRecord::Base
   has_many :unidades, dependent: :destroy
   has_many :productos, dependent: :destroy
   has_many :clientes, dependent: :destroy
+  has_many :listadeprecios, dependent: :destroy
   
   validates :rfc, uniqueness: true
   

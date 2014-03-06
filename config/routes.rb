@@ -1,5 +1,7 @@
 Pdvaf::Application.routes.draw do
   
+  resources :listadeprecios
+
   get '/empresas/newuser', to: 'empresas#newuser'
   post '/empresas/createuser', to: 'empresas#createuser'
   post '/remisiones/:id/facturar', to: 'remisiones#facturar', :as => 'facturar_remision'
