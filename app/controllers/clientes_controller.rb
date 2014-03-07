@@ -31,11 +31,17 @@ class ClientesController < ApplicationController
 
   # GET /clientes/new
   def new
+    
     @cliente = current_user.empresa.clientes.new
+    @listadeprecios = current_user.empresa.listadeprecios.load
+    
   end
 
   # GET /clientes/1/edit
   def edit
+    
+    @listadeprecios = current_user.empresa.listadeprecios.load
+    
   end
 
   # POST /clientes
@@ -62,6 +68,7 @@ class ClientesController < ApplicationController
         format.html { redirect_to clientes_url({:page => cookies[:current_page]}), notice: 'Cliente was successfully updated.' }
         format.json { head :no_content }
       else
+        @listadeprecios = current_user.empresa.listadeprecios.load
         format.html { render action: 'edit' }
         format.json { render json: @cliente.errors, status: :unprocessable_entity }
       end
@@ -86,6 +93,6 @@ class ClientesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def cliente_params
-      params.require(:cliente).permit(:rfc, :nombre, :email, :noExterior, :noInterior, :calle, :colonia, :municipio, :estado, :pais, :codigoPostal, :telefono)
+      params.require(:cliente).permit(:rfc, :nombre, :email, :noExterior, :noInterior, :calle, :colonia, :municipio, :estado, :pais, :codigoPostal, :telefono, :listadeprecio_id)
     end
 end

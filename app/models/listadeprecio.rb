@@ -4,6 +4,8 @@ class Listadeprecio < ActiveRecord::Base
   
   has_many :precios, dependent: :destroy
   
+  has_many :clientes
+  
   default_scope { order('nombre ASC') }
   
   validates :nombre, presence: true

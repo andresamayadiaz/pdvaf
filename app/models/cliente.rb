@@ -2,6 +2,7 @@ class Cliente < ActiveRecord::Base
   has_many :remisiones, dependent: :destroy
   
   belongs_to :empresa
+  belongs_to :listadeprecio
   
   default_scope { order('nombre ASC') }
   

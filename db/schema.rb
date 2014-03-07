@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140305232933) do
+ActiveRecord::Schema.define(version: 20140307201153) do
 
   create_table "clientes", force: true do |t|
     t.string   "rfc"
@@ -29,9 +29,13 @@ ActiveRecord::Schema.define(version: 20140305232933) do
     t.datetime "updated_at"
     t.integer  "empresa_id"
     t.string   "telefono"
+    t.integer  "listadeprecios_id"
+    t.integer  "listadeprecio_id"
   end
 
   add_index "clientes", ["empresa_id"], name: "index_clientes_on_empresa_id", using: :btree
+  add_index "clientes", ["listadeprecio_id"], name: "index_clientes_on_listadeprecio_id", using: :btree
+  add_index "clientes", ["listadeprecios_id"], name: "index_clientes_on_listadeprecios_id", using: :btree
 
   create_table "conceptos", force: true do |t|
     t.decimal  "cantidad",       precision: 10, scale: 4

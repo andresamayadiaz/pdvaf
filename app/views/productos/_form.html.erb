@@ -79,8 +79,20 @@
 	        <div class="form-group">
 	          <%= lista.nombre.to_s %>
 	          <div class="col-lg-10"> <!-- remision[conceptos_attributes][][valorunitario] -->
-				<%= hidden_field_tag 'producto[precios_attributes][][listadeprecio_id]', lista.id %>
-	            <%= text_field_tag 'producto[precios_attributes][][precio]', 0.0 %>
+				<% prec = Precio.where(:listadeprecio_id => lista.id, :producto_id => @producto.id ).first %>
+				<% if prec %>
+					
+					<%= hidden_field_tag 'producto[precios_attributes][][id]', prec.id %>
+					<%= hidden_field_tag 'producto[precios_attributes][][listadeprecio_id]', lista.id %>
+		            <%= text_field_tag 'producto[precios_attributes][][precio]', prec.precio %>
+					
+				<% else %>
+					
+					<%= hidden_field_tag 'producto[precios_attributes][][listadeprecio_id]', lista.id %>
+		            <%= text_field_tag 'producto[precios_attributes][][precio]', 0.0 %>
+					
+				<% end %>
+				
 	          </div>
 	        </div>
 		<% end %>
