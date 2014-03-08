@@ -7,7 +7,7 @@ class Producto < ActiveRecord::Base
   accepts_nested_attributes_for :precios
   
   validates :codigobarras, uniqueness: { scope: :empresa,
-      message: "El Codigo de Barras no puede Duplicarse" }
+      message: "El Codigo de Barras no puede duplicarse" }
   validates :nombre, :codigobarras, :precio, :unidad, :empresa, presence: true
   
   default_scope { order('nombre ASC') }

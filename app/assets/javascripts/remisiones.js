@@ -95,6 +95,14 @@ function autoComp(){
 			$("#ivaretenido"+linea).val(ui.item.ivaretenido);
 			$("#isrretenido"+linea).val(ui.item.isrretenido);
 			$("#cantidad"+linea).focus();
+			
+			str = "";
+			prec = ui.item.precios;
+	        for(key in prec){
+	          str += "<option value='"+prec[key].id+"'>"+prec[key].precio+"</option>";
+	        }
+	        $("#vunitselect"+linea).html(str);
+			
 			calcImporte(linea);
 		}
 	});
@@ -117,6 +125,14 @@ function autoComp(){
 			$("#ivaretenido"+linea).val(ui.item.ivaretenido);
 			$("#isrretenido"+linea).val(ui.item.isrretenido);
 			$("#cantidad"+linea).focus();
+			
+			str = "";
+			prec = ui.item.precios;
+	        for(key in prec){
+	          str += "<option value='"+prec[key].id+"'>"+prec[key].precio+"</option>";
+	        }
+	        $("#vunitselect"+linea).html(str);
+			
 			calcImporte(linea);
 		}
 	});
@@ -133,7 +149,7 @@ function agregarLinea(){
 	var nvalinea = '<tr>'+
           		'<td class="col-md-1"><strong>Codigo</strong><input class="codigo form-control" linea="'+lineas+'" id="codigo'+lineas+'" name="remision[conceptos_attributes][][codigo]" type="text"><br /><div class="btn btn-danger" onclick="removerLinea(this)"><span class="glyphicon glyphicon-remove"></span></div></td>'+
   				'<td class="col-md-6"><textarea class="concepto form-control" linea="'+lineas+'" id="descripcion'+lineas+'" name="remision[conceptos_attributes][][descripcion]" placeholder="Producto o Descripcion"></textarea></td>'+
-  				'<td class="col-md-2"><input onkeyUp="calcImporte('+lineas+');" class="valorunitario form-control text-right" id="valorunitario'+lineas+'" name="remision[conceptos_attributes][][valorunitario]" type="text"></td>'+
+  				'<td class="col-md-2"><input onkeyUp="calcImporte('+lineas+');" class="valorunitario form-control text-right" id="valorunitario'+lineas+'" name="remision[conceptos_attributes][][valorunitario]" type="text"><select id="vunitselect'+lineas+'"></select></td>'+
           	  	'<td class="col-md-1"><input onkeyUp="calcImporte('+lineas+');" class="cantidad form-control text-right" id="cantidad'+lineas+'" name="remision[conceptos_attributes][][cantidad]" type="text"></td>'+
   				'<td class="col-md-1"><input class="unidad form-control" id="unidad'+lineas+'" name="remision[conceptos_attributes][][unidad]" type="text"></td>'+
 				'<td class="col-md-2"><input onkeyUp="calcImporte('+lineas+');" class="ivatrasladado form-control text-right" id="ivatrasladado'+lineas+'" name="remision[conceptos_attributes][][ivatrasladado]" type="text"></td>'+
@@ -154,7 +170,7 @@ function precargarLinea(codigo, descripcion, valorunitario, cantidad, unidad, iv
 	var nvalinea = '<tr>'+
           		'<td class="col-md-1"><strong>Codigo</strong><input class="codigo form-control" linea="'+lineas+'" id="codigo'+lineas+'" name="remision[conceptos_attributes][][codigo]" type="text" value="'+codigo+'"><br /><div class="btn btn-danger" onclick="removerLinea(this)"><span class="glyphicon glyphicon-remove"></span></div></td>'+
   				'<td class="col-md-6"><textarea class="concepto form-control" linea="'+lineas+'" id="descripcion'+lineas+'" name="remision[conceptos_attributes][][descripcion]" placeholder="Producto o Descripcion">' + descripcion + '</textarea></td>'+
-  				'<td class="col-md-2"><input onkeyUp="calcImporte('+lineas+');" class="valorunitario form-control text-right" id="valorunitario'+lineas+'" name="remision[conceptos_attributes][][valorunitario]" type="text" value="'+valorunitario+'"></td>'+
+  				'<td class="col-md-2"><input onkeyUp="calcImporte('+lineas+');" class="valorunitario form-control text-right" id="valorunitario'+lineas+'" name="remision[conceptos_attributes][][valorunitario]" type="text" value="'+valorunitario+'"><select id="vunitselect'+lineas+'"></select></td>'+
           	  	'<td class="col-md-1"><input onkeyUp="calcImporte('+lineas+');" class="cantidad form-control text-right" id="cantidad'+lineas+'" name="remision[conceptos_attributes][][cantidad]" type="text" value="'+cantidad+'"></td>'+
   				'<td class="col-md-1"><input class="unidad form-control" id="unidad'+lineas+'" name="remision[conceptos_attributes][][unidad]" type="text" value="'+unidad+'"></td>'+
 				'<td class="col-md-2"><input onkeyUp="calcImporte('+lineas+');" class="ivatrasladado form-control text-right" id="ivatrasladado'+lineas+'" name="remision[conceptos_attributes][][ivatrasladado]" type="text" value="'+ivatrasladado+'"></td>'+

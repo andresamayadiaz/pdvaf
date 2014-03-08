@@ -4,7 +4,10 @@ class ListadepreciosController < ApplicationController
   # GET /listadeprecios
   # GET /listadeprecios.json
   def index
-    @listadeprecios = current_user.empresa.listadeprecios.all
+    
+    @listadeprecios = current_user.empresa.listadeprecios.page params[:page]
+    cookies[:current_page] = params[:page]
+    
   end
 
   # GET /listadeprecios/1
@@ -43,7 +46,7 @@ class ListadepreciosController < ApplicationController
     respond_to do |format|
       @listadeprecio.empresa = current_user.empresa
       if @listadeprecio.update(listadeprecio_params)
-        format.html { redirect_to @listadeprecio, notice: 'Listadeprecio was successfully updated.' }
+        format.html { redirect_to listadeprecios_url({:page => cookies[:current_page]}), notice: 'Listadeprecio was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -57,7 +60,7 @@ class ListadepreciosController < ApplicationController
   def destroy
     @listadeprecio.destroy
     respond_to do |format|
-      format.html { redirect_to listadeprecios_url }
+      format.html { redirect_to listadeprecios_url({:page => cookies[:current_page]}) }
       format.json { head :no_content }
     end
   end

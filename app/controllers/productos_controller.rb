@@ -24,7 +24,7 @@ class ProductosController < ApplicationController
      respond_to do |format|  
        format.html # index.html.erb  
        # Here is where you can specify how to handle the request for "/productos.json"
-       format.json { render :json => @productos.to_json(:include => :unidad) }
+       format.json { render :json => @productos.to_json(:include => [:unidad, :precios]) }
     end
     
   end
