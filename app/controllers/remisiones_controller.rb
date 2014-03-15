@@ -106,7 +106,7 @@ class RemisionesController < ApplicationController
       end
     
   end
-
+  
   # GET /remisiones/rptventas
   def rptventas 
     
@@ -145,12 +145,12 @@ class RemisionesController < ApplicationController
       
       @desde = params[:desde] + ' 00:00:00'
       @hasta = params[:hasta] + ' 23:59:59'
-      @sucursal = params[:sucursal]
+      @sucursal = current_user.empresa.sucursales.find(params[:sucursal])
       
       @fechas = (Date.parse(@desde)..Date.parse(@hasta)).map{|date| date.strftime('%Y-%m-%d')}
       @metodosdepago = current_user.empresa.metodosdepagos.load
       
-      @ventas = current_user.empresa.remisiones.select(['DATE(convert_tz(created_at, "+00:00", "-06:00")) AS fecha', 'metodosdepago_id', 'sum(total) AS total']).where("created_at between ? AND ?", @desde.to_time, @hasta.to_time).group(['DATE(convert_tz(created_at, "+00:00", "-06:00"))', 'metodosdepago_id']).order('created_at ASC')
+      @ventas = @sucursal.remisiones.select(['DATE(convert_tz(created_at, "+00:00", "-06:00")) AS fecha', 'metodosdepago_id', 'sum(total) AS total']).where("created_at between ? AND ?", @desde.to_time, @hasta.to_time).group(['DATE(convert_tz(created_at, "+00:00", "-06:00"))', 'metodosdepago_id']).order('created_at ASC')
       
       j = JSON.parse(@ventas.to_json)
       #@h = j.map {|c| [ [c['fecha'], Metodosdepago.find(c['metodosdepago_id']).nombre]=>c['total'] ]}

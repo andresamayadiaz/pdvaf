@@ -4,12 +4,14 @@
     <th>Desde</th>
     <th>Hasta</th>
     <th>Generado</th>
+	<th>Sucursal</th>
   </tr>
   <tr>
     <td></td>
     <td><%= @desde %></td>
     <td><%= @hasta %></td>
     <td><%= Time.zone.now %></td>
+	<td><%= @sucursal.nombre %></td>
   </tr>
 </table>
 
