@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140307201153) do
+ActiveRecord::Schema.define(version: 20140316143610) do
 
   create_table "clientes", force: true do |t|
     t.string   "rfc"
@@ -175,6 +175,8 @@ ActiveRecord::Schema.define(version: 20140307201153) do
     t.text     "xml_url"
     t.integer  "consecutivo"
     t.integer  "clientefactura_id"
+    t.boolean  "cancelada",                                          default: true
+    t.datetime "fechacancelacion"
   end
 
   add_index "remisiones", ["cliente_id"], name: "index_remisiones_on_cliente_id", using: :btree

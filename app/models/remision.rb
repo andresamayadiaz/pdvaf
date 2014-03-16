@@ -28,6 +28,12 @@ class Remision < ActiveRecord::Base
     end
   end
   
+  # Establecer como Cancelada
+  def cancelar
+    
+    
+  end
+  
   # Calcular los totales de la Remision
   def calc_totales
     
