@@ -17,6 +17,7 @@
 
 <table border="1">
   <tr>
+	<th>Cancelada</th>
 	<th>Sucursal</th>
     <th>Folio</th>
     <th>Fecha</th>
@@ -32,6 +33,7 @@
   <% @remisiones.each do |remision| %>
   	<% @total += remision.total %>
   <tr>
+	<td><%= remision.cancelada ? "SI" : "NO" %></td>
 	<td><%= remision.sucursal.nombre %></td>
     <td><%= remision.consecutivo rescue '' %></td>
     <td><%= remision.created_at.to_s(Time.zone) %></td>

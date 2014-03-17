@@ -31,6 +31,11 @@ class Remision < ActiveRecord::Base
   # Establecer como Cancelada
   def cancelar
     
+    return true if self.cancelada
+    
+    self.cancelada = true
+    self.fechacancelacion = Time.now
+    self.save!
     
   end
   

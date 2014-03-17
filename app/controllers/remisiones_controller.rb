@@ -288,17 +288,17 @@ class RemisionesController < ApplicationController
       end
     end
   end
-
+  
   # DELETE /remisiones/1
   # DELETE /remisiones/1.json
   def destroy
-    @remision.destroy
+    @remision.cancelar
     respond_to do |format|
-      format.html { redirect_to remisiones_url, notice: 'Remision Eliminada.' }
+      format.html { redirect_to remisiones_url, notice: 'Remision Cancelada.' }
       format.json { head :no_content }
     end
   end
-
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_remision

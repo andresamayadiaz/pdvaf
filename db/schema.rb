@@ -175,7 +175,7 @@ ActiveRecord::Schema.define(version: 20140316143610) do
     t.text     "xml_url"
     t.integer  "consecutivo"
     t.integer  "clientefactura_id"
-    t.boolean  "cancelada",                                          default: true
+    t.boolean  "cancelada",                                          default: false
     t.datetime "fechacancelacion"
   end
 

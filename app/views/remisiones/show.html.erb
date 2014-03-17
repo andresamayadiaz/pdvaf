@@ -14,7 +14,15 @@
 	    Facturar
 	  </a>
   <% end %>
-  <h1>Remisión #<%= @remision.consecutivo %></h1>
+  <h1>
+	  Remisión #<%= @remision.consecutivo %>
+	  <% if @remision.cancelada %>
+	  	<div class="alert alert-danger">
+			Fecha Cancelacion <%= @remision.fechacancelacion.to_s(Time.zone) %></div>
+	  <% else %>
+	  	Remisión #<%= @remision.consecutivo %>
+	  <% end %>	  
+  </h1>
 </div>
 
 <div class="container">

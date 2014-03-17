@@ -47,10 +47,20 @@ def header
   emisor.cells.select {|a| a.border_width = 0 }
   
   general = nil
+  
+  if @remision.cancelada
+    title = "REMISION CANCELADA" if @remision.cancelada
+    id = @remision.consecutivo rescue 'ID: '+@remision.id 
+    id = id.to_s + " [" + @remision.fechacancelacion.to_s(Time.zone) + "]"
+  else
+    title = "REMISION"
+    id = @remision.consecutivo rescue 'ID: '+@remision.id
+  end
+  
   general = @acc.make_table [
-    [@acc.make_cell(:content => "REMISION",
+    [@acc.make_cell(:content => title.to_s,
       :size => @letraMed, :font_style => :bold, :align => :center, :padding => 2, :border_top_width => 0)],
-      [@acc.make_cell(:content => "#{@remision.consecutivo rescue 'ID: '+@remision.id}",
+      [@acc.make_cell(:content => id.to_s,
         :size => @letraMed, :align => :center, :padding => 2)],
     
     [@acc.make_cell(:content => "FECHA",
