@@ -9,10 +9,12 @@
   <% end %>
   <!-- Button trigger modal -->
   <% unless @remision.facturada %>
+  	<% unless @remision.cancelada %>
 	  <a class="btn btn-primary" data-toggle="modal" data-target="#facturarModal">
       <span class="glyphicon glyphicon-file"></span>
 	    Facturar
 	  </a>
+	<% end %>
   <% end %>
   <h1>
 	  Remisión #<%= @remision.consecutivo %>
