@@ -133,6 +133,33 @@ class RemisionesController < ApplicationController
     
   end
   
+  # GET /remisiones/rptventasporproducto
+  def rptventasporproducto
+    
+    authorize! :rptventasporproducto, current_user
+    
+    @sucursales = current_user.empresa.sucursales.load
+    
+    if params[:search]
+      
+      @desde = params[:desde] + " 00:00:00"
+      @hasta = params[:hasta] + " 23:59:59"
+      @sucursal = params[:sucursal]
+      
+      if @sucursal.empty?
+        @remisiones = current_user.empresa.remisiones.where("created_at between ?  AND ?", @desde.to_time, @hasta.to_time).order(sucursal_id: :asc, created_at: :desc)
+      else
+        @remisiones = current_user.empresa.remisiones.where("created_at between ?  AND ? AND sucursal_id = ?", @desde.to_time, @hasta.to_time, @sucursal).order(sucursal_id: :asc, created_at: :desc)
+      end
+      
+      respond_to do |format|
+        format.xls
+      end
+      
+    end
+    
+  end
+  
   # GET /remisiones/rptmetodopago
   def rptmetodopago
     

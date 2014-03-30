@@ -1,0 +1,54 @@
+<table border="1">
+  <tr>
+    <th>Reporte de Ventas Por Producto</th>
+    <th>Desde</th>
+    <th>Hasta</th>
+    <th>Generado</th>
+  </tr>
+  <tr>
+    <td></td>
+    <td><%= @desde %></td>
+    <td><%= @hasta %></td>
+    <td><%= Time.zone.now %></td>
+  </tr>
+</table>
+
+<table border="1">
+  <tr>
+	<th>Cancelada</th>
+	<th>Sucursal</th>
+	<th>Folio</th>
+	<th>Fecha</th>
+	<th>Descripcion</th>
+	<th>Unidad</th>
+    <th>Cantidad</th>
+    <th>Valor Unitario</th>
+    <th>Importe</th>
+	<th>IVA Trasladado</th>
+	<th>IEPS Trasladado</th>
+	<th>IVA Retenido</th>
+	<th>ISR Retenido</th>
+  </tr>
+  <% @remisiones.each do |remision| %>
+  	
+	  	<% remision.conceptos.each do |concepto| %>
+		  	<tr>
+				<td><%= remision.cancelada ? "SI" : "NO" %></td>
+				<td><%= remision.sucursal.nombre %></td>
+			    <td><%= remision.consecutivo rescue '' %></td>
+			    <td><%= remision.created_at.to_s(Time.zone) %></td>
+				<!-- CONCEPTOS -->
+				<td><%= concepto.descripcion %></td>
+			    <td><%= concepto.unidad %></td>
+				<td align="right"><%= concepto.cantidad %></td>
+				<td align="right"><%= number_to_currency(concepto.valorunitario) %></td>
+				<td align="right"><%= number_to_currency(concepto.importe) %></td>
+				<td align="right"><%= number_to_percentage(concepto.ivatrasladado) %></td>
+				<td align="right"><%= number_to_percentage(concepto.iepstrasladado) %></td>
+				<td align="right"><%= number_to_percentage(concepto.ivaretenido) %></td>
+				<td align="right"><%= number_to_percentage(concepto.isrretenido) %></td>  
+			</tr>
+		<% end %>
+		
+  <% end %>
+</table>

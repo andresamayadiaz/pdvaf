@@ -17,6 +17,7 @@ Pdvaf::Application.routes.draw do
   resources :remisiones do
     member { get :copiar }
     collection { get :rptventas }
+    collection { get :rptventasporproducto }
     collection { get :rptmetodopago }
   end
 
