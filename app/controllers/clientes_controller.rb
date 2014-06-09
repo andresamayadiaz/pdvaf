@@ -48,6 +48,7 @@ class ClientesController < ApplicationController
   # POST /clientes.json
   def create
     @cliente = current_user.empresa.clientes.new(cliente_params)
+    @listadeprecios = current_user.empresa.listadeprecios.load
 
     respond_to do |format|
       if @cliente.save
@@ -59,7 +60,7 @@ class ClientesController < ApplicationController
       end
     end
   end
-
+  
   # PATCH/PUT /clientes/1
   # PATCH/PUT /clientes/1.json
   def update
