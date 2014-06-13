@@ -21,8 +21,6 @@
 	  <% if @remision.cancelada %>
 	  	<div class="alert alert-danger">
 			Fecha Cancelacion <%= @remision.fechacancelacion.to_s(Time.zone) %></div>
-	  <% else %>
-	  	Remisión #<%= @remision.consecutivo %>
 	  <% end %>	  
   </h1>
 </div>
