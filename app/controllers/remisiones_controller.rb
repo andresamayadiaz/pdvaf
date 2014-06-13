@@ -49,7 +49,8 @@ class RemisionesController < ApplicationController
           :municipio => clienteFactura.municipio.to_s,
           :estado => clienteFactura.estado.to_s,
           :pais => clienteFactura.pais.to_s,
-          :codigoPostal => clienteFactura.codigoPostal.to_s
+          :codigoPostal => clienteFactura.codigoPostal.to_s,
+          :referencia => params[:referencia]
         } # Fin Domicilio
       }, # Fin Receptor
       :Addenda => ""
