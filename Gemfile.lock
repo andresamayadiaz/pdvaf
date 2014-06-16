@@ -247,7 +247,7 @@ DEPENDENCIES
   jquery-ui-rails
   kaminari
   mysql2
-  prawn!
+  prawn (< 1.0.0)!
   prawn-rails
   quiet_assets
   rails (= 4.0.0)
