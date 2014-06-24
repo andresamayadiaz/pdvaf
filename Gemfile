@@ -46,5 +46,6 @@ gem 'autofactura', :git => 'git://github.com/andresamayadiaz/autofactura.git'
 #gem 'autofactura', :path => "/Users/andresamayadiaz/rails/autofactura"
 
 # Reportes PDF
-gem 'prawn', '<1.0.0',:git => "https://github.com/prawnpdf/prawn.git"
+#gem 'prawn', '<1.0.0',:git => "https://github.com/prawnpdf/prawn.git"
+gem 'prawn', '~> 0.15.0'
 gem 'prawn-rails'

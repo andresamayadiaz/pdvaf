@@ -1,6 +1,19 @@
 class RemisionesController < ApplicationController
   before_filter :authenticate_user!
-  before_action :set_remision, only: [:show, :edit, :update, :destroy, :facturar, :series, :copiar]
+  before_action :set_remision, only: [:show, :edit, :update, :destroy, :facturar, :series, :copiar, :ticket]
+  
+  # GET /remisiones/1/ticket
+  def ticket
+    
+    response = emite_ticket
+    
+    if response['exito'] == 1
+      redirect_to @remision, notice: 'Ticket de Autofacturacion Generado. [' + response['codigof'] + ']'
+    else
+      redirect_to @remision, alert: 'Ticket No Emitido. ' + response['mensaje']   
+    end
+    
+  end
   
   # GET /remisiones/1/facturar
   def facturar
@@ -286,8 +299,17 @@ class RemisionesController < ApplicationController
     respond_to do |format|
       if @remision.save
         sucursal.save!
+        
+        # Emitir Ticket Automatico?
+        if current_user.empresa.ticket
+          
+          emite_ticket
+          
+        end
+        
         format.html { redirect_to @remision, notice: 'La Remision ha sido creada con exito.' }
         format.json { render action: 'show', status: :created, location: @remision }
+        
       else
         sucursal.consecutivo -= 1
         sucursal.save!
@@ -328,6 +350,71 @@ class RemisionesController < ApplicationController
   end
   
   private
+  
+  def emite_ticket
+    
+    af = Autofactura::Autofactura.new({ :url=> current_user.empresa.af_url, :user => current_user.empresa.af_user, :sucursal => @remision.sucursal.af_sucursal })
+    articulos = Array.new
+    
+    @remision.conceptos.each do |concepto|
+      
+      articulos.push ({
+          :cantidades => concepto.cantidad.to_f,
+          :unidades => concepto.unidad.to_s,
+          :nombre => concepto.descripcion.to_s,
+          :precios => concepto.valorunitario.to_f,
+          :ivaret => concepto.ivaretenido.to_f,
+          :iepstrans => concepto.iepstrasladado.to_f,
+          :ivatrans => concepto.ivatrasladado.to_f,
+          :isret => concepto.isrretenido.to_f})
+      
+    end
+    
+    nota = {
+      :Ingreso => {
+        :sucursal => @remision.sucursal.af_sucursal,
+        :formaDePago => @remision.formasdepago.nombre.to_s,
+        :metodoDePago => @remision.metodosdepago.nombre.to_s,
+        :moneda => "MXN",
+        :tipoCambio => "1.00",
+        :descuento => @remision.descuento.to_f
+      },
+      :Articulos => articulos,
+      :decimales => 3
+    }
+    
+    logger.debug "-----------------------------------------"
+    logger.debug "TICKET POR ENVIAR A AUTOFACTURA.COM"
+    logger.debug "-----------------------------------------"
+    logger.debug nota.to_json
+    logger.debug "-----------------------------------------"
+    logger.debug "FIN DEL TICKET"
+    logger.debug "-----------------------------------------"
+    
+    emision_ticket = Autofactura::Nota.new( nota )
+    resp = af.ticket(emision_ticket)
+    
+    unless resp.nil?
+      logger.info resp.body
+      response = JSON.parse resp.body
+      if response['exito'] == 1
+        
+        @remision.autoticket = true
+        @remision.ticket = response['codigof']
+        @remision.save
+        
+        return response
+      else
+        
+        return response     
+      end
+    else
+      
+      return false
+    end
+    
+  end
+  
     # Use callbacks to share common setup or constraints between actions.
     def set_remision
       @remision = current_user.empresa.remisiones.find(params[:id])

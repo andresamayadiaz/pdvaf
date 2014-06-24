@@ -189,12 +189,28 @@ def footer
      #@acc.move_down 500
      pie0.draw
     
+     if @remision.autoticket
+       
+       @acc.move_down 5
+       
+       receptor = @acc.make_table [
+         [@acc.make_cell(:content => 
+           "Para obtener su comprobante fiscal digital (Factura) de la presente nota, favor de ingresar a http:///www.autofactura.com en el apartado Ticket e ingrese el siguiente folio: #{@remision.ticket}".squish,
+           :size => @letraMed, :padding => 2)]
+       ], :width => 500
+       receptor.cells.select { |a| a.border_width = 0 }
+       receptor.draw
+  
+       @acc.move_down 3
+       
+     end
+    
   #end
   
 end
 
 def footerpaginas
-  
+    
   @acc.bounding_box [@acc.bounds.left, @acc.bounds.bottom + 25], :width  => @acc.bounds.width do
     @acc.stroke_horizontal_rule
     @acc.move_down(5)

@@ -18,6 +18,9 @@
   <% end %>
   <h1>
 	  Remisión #<%= @remision.consecutivo %>
+	  <% if @remision.autoticket %>
+	  	[ticket: <%= @remision.ticket %>]
+	  <% end %>
 	  <% if @remision.cancelada %>
 	  	<div class="alert alert-danger">
 			Fecha Cancelacion <%= @remision.fechacancelacion.to_s(Time.zone) %></div>

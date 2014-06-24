@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140316143610) do
+ActiveRecord::Schema.define(version: 20140624172357) do
 
   create_table "clientes", force: true do |t|
     t.string   "rfc"
@@ -90,6 +90,7 @@ ActiveRecord::Schema.define(version: 20140316143610) do
     t.integer  "formapagodefault"
     t.integer  "metodopagodefault"
     t.integer  "condicionpagodefault"
+    t.boolean  "ticket"
   end
 
   create_table "formasdepagos", force: true do |t|
@@ -177,6 +178,8 @@ ActiveRecord::Schema.define(version: 20140316143610) do
     t.integer  "clientefactura_id"
     t.boolean  "cancelada",                                          default: false
     t.datetime "fechacancelacion"
+    t.string   "ticket"
+    t.boolean  "autoticket",                                         default: false
   end
 
   add_index "remisiones", ["cliente_id"], name: "index_remisiones_on_cliente_id", using: :btree

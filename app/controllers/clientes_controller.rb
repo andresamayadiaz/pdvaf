@@ -6,7 +6,7 @@ class ClientesController < ApplicationController
     Cliente.import(params[:file], current_user.empresa)
     redirect_to clientes_url, notice: "Clientes Importados."
   end
-
+  
   # GET /clientes
   # GET /clientes.json
   def index
