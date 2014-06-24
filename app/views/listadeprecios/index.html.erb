@@ -3,6 +3,12 @@
     <span class="glyphicon glyphicon-plus"></span>
     Nueva Lista de Precios
   <% end %>
+  <div class="pull-right">
+	  <%= form_tag import_listadeprecios_path, :multipart => true do %>
+	    <%= file_field_tag :file %>
+	    <%= submit_tag "Importar" %>
+	  <% end %>
+  </div>
   <h1>Lista de Precios</h1>
 </div>
 

@@ -17,10 +17,18 @@ class Producto < ActiveRecord::Base
     header = spreadsheet.row(1)
     (2..spreadsheet.last_row).each do |i|
       row = Hash[[header, spreadsheet.row(i)].transpose]
-      producto = find_by_id(row["id"]) || new
+      producto = find_by_codigobarras(row["codigobarras"]) || new
       producto.attributes = row.to_hash.slice(*Producto.attribute_names())
       producto.empresa = empresa
-      producto.unidad = Unidad.first
+      # Validar si la unidad ya existe de lo contrario crear una nueva
+      un = Unidad.where(nombre: row['unidad']).first
+      if un == nil
+        un = Unidad.new
+        un.nombre = row['unidad']
+        un.empresa = empresa
+        un.save
+      end
+      producto.unidad = un
       producto.save!
     end
   end

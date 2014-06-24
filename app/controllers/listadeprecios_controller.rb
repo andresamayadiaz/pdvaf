@@ -1,6 +1,11 @@
 class ListadepreciosController < ApplicationController
   before_action :set_listadeprecio, only: [:show, :edit, :update, :destroy]
 
+  def import
+    Listadeprecio.import(params[:file], current_user.empresa)
+    redirect_to listadeprecios_url, notice: "Listas Importados."
+  end
+
   # GET /listadeprecios
   # GET /listadeprecios.json
   def index

@@ -1,6 +1,8 @@
 Pdvaf::Application.routes.draw do
   
-  resources :listadeprecios
+  resources :listadeprecios do
+    collection { post :import }
+  end
 
   get '/empresas/newuser', to: 'empresas#newuser'
   post '/empresas/createuser', to: 'empresas#createuser'
