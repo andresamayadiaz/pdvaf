@@ -140,6 +140,8 @@ class RemisionesController < ApplicationController
       end
       
       respond_to do |format|
+        response.headers["Content-Type"] = "text/html"
+        response.header["Content-Disposition"] = "attachment; filename=RptVentas.xls"
         format.xls
       end
       
@@ -167,6 +169,8 @@ class RemisionesController < ApplicationController
       end
       
       respond_to do |format|
+        response.headers["Content-Type"] = "text/html"
+        response.header["Content-Disposition"] = "attachment; filename=RptVentasPorProducto.xls"
         format.xls
       end
       
@@ -197,6 +201,8 @@ class RemisionesController < ApplicationController
       @h = j.map {|c| { c['fecha'].to_s+"@"+c['metodosdepago_id'].to_s=>c['total'] } }
       
       respond_to do |format|
+        response.headers["Content-Type"] = "text/html"
+        response.header["Content-Disposition"] = "attachment; filename=RptVentasMetodoPago.xls"
         format.xls
       end
       
@@ -216,14 +222,30 @@ class RemisionesController < ApplicationController
       cliente = params[:cliente_id]
       #@remisiones = current_user.empresa.remisiones.find(:all, :conditions => ["created_at >= ? AND created_at <= ?",desde, hasta]).page params[:page]
       if cliente.empty?
-        @remisiones = current_user.empresa.remisiones.where("created_at between ? AND ?",desde.to_time, hasta.to_time).page params[:page]
+        
+        if current_user.has_role? :gerente
+          @remisiones = current_user.empresa.remisiones.where("created_at between ? AND ?",desde.to_time, hasta.to_time).page params[:page]
+        else
+          @remisiones = current_user.sucursal.remisiones.where("created_at between ? AND ?",desde.to_time, hasta.to_time).page params[:page]
+        end
         
       else
-        @remisiones = current_user.empresa.remisiones.where("created_at between ? AND ? AND cliente_id = ?",desde.to_time, hasta.to_time, cliente).page params[:page]
+        
+        if current_user.has_role? :gerente
+          @remisiones = current_user.empresa.remisiones.where("created_at between ? AND ? AND cliente_id = ?",desde.to_time, hasta.to_time, cliente).page params[:page]
+        else
+          @remisiones = current_user.sucursal.remisiones.where("created_at between ? AND ? AND cliente_id = ?",desde.to_time, hasta.to_time, cliente).page params[:page]
+        end
+      
       end
       
     else
-      @remisiones = current_user.empresa.remisiones.page params[:page]
+      
+      if current_user.has_role? :gerente
+        @remisiones = current_user.empresa.remisiones.page params[:page]
+      else
+        @remisiones = current_user.sucursal.remisiones.page params[:page]
+      end
     end
   end
 

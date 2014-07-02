@@ -1,0 +1,93 @@
+<?xml version="1.0"?>
+<ss:Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <ss:Styles>
+      <ss:Style ss:ID="1">
+          <ss:Font ss:Bold="1"/>
+      </ss:Style>
+	  <ss:Style ss:ID="s23" ss:Name="Currency">
+	     <NumberFormat ss:Format="_(&quot;$&quot;* #,##0.00_);_(&quot;$&quot;* \(#,##0.00\);_(&quot;$&quot;* &quot;-&quot;??_);_(@_)"/>
+	  </ss:Style>
+  </ss:Styles>
+  <ss:Worksheet ss:Name="Sheet1">
+    <ss:Table>
+      <ss:Row ss:StyleID="1">
+        <ss:Cell><ss:Data ss:Type="String">Reporte de Ventas</ss:Data></ss:Cell>
+        <ss:Cell><ss:Data ss:Type="String">Desde</ss:Data></ss:Cell>
+        <ss:Cell><ss:Data ss:Type="String">Hasta</ss:Data></ss:Cell>
+        <ss:Cell><ss:Data ss:Type="String">Generado</ss:Data></ss:Cell>
+		<ss:Cell><ss:Data ss:Type="String"> </ss:Data></ss:Cell>
+		<ss:Cell><ss:Data ss:Type="String"> </ss:Data></ss:Cell>
+		<ss:Cell><ss:Data ss:Type="String"> </ss:Data></ss:Cell>
+		<ss:Cell><ss:Data ss:Type="String"> </ss:Data></ss:Cell>
+		<ss:Cell><ss:Data ss:Type="String"> </ss:Data></ss:Cell>
+		<ss:Cell><ss:Data ss:Type="String"> </ss:Data></ss:Cell>
+		<ss:Cell><ss:Data ss:Type="String"> </ss:Data></ss:Cell>
+		<ss:Cell><ss:Data ss:Type="String"> </ss:Data></ss:Cell>
+      </ss:Row>
+      <ss:Row>
+        <ss:Cell><ss:Data ss:Type="String"></ss:Data></ss:Cell>
+        <ss:Cell><ss:Data ss:Type="String"><%= @desde %></ss:Data></ss:Cell>
+        <ss:Cell><ss:Data ss:Type="String"><%= @hasta %></ss:Data></ss:Cell>
+        <ss:Cell><ss:Data ss:Type="String"><%= Time.zone.now %></ss:Data></ss:Cell>
+		<ss:Cell><ss:Data ss:Type="String"> </ss:Data></ss:Cell>
+		<ss:Cell><ss:Data ss:Type="String"> </ss:Data></ss:Cell>
+		<ss:Cell><ss:Data ss:Type="String"> </ss:Data></ss:Cell>
+		<ss:Cell><ss:Data ss:Type="String"> </ss:Data></ss:Cell>
+		<ss:Cell><ss:Data ss:Type="String"> </ss:Data></ss:Cell>
+		<ss:Cell><ss:Data ss:Type="String"> </ss:Data></ss:Cell>
+		<ss:Cell><ss:Data ss:Type="String"> </ss:Data></ss:Cell>
+		<ss:Cell><ss:Data ss:Type="String"> </ss:Data></ss:Cell>
+      </ss:Row>
+      <ss:Row ss:StyleID="1">
+		<ss:Cell><ss:Data ss:Type="String">Cancelada</ss:Data></ss:Cell>
+		<ss:Cell><ss:Data ss:Type="String">Sucursal</ss:Data></ss:Cell>
+		<ss:Cell><ss:Data ss:Type="String">Folio</ss:Data></ss:Cell>
+		<ss:Cell><ss:Data ss:Type="String">Fecha</ss:Data></ss:Cell>
+		<ss:Cell><ss:Data ss:Type="String">Cliente</ss:Data></ss:Cell>
+		<ss:Cell><ss:Data ss:Type="String">Facturada</ss:Data></ss:Cell>
+		<ss:Cell><ss:Data ss:Type="String">Metodo de Pago</ss:Data></ss:Cell>
+		<ss:Cell><ss:Data ss:Type="String">Subtotal</ss:Data></ss:Cell>
+		<ss:Cell><ss:Data ss:Type="String">Descuento</ss:Data></ss:Cell>
+		<ss:Cell><ss:Data ss:Type="String">Imptos. Trasladados</ss:Data></ss:Cell>
+		<ss:Cell><ss:Data ss:Type="String">Imptos. Retenidos</ss:Data></ss:Cell>
+		<ss:Cell><ss:Data ss:Type="String">Total</ss:Data></ss:Cell>
+      </ss:Row>
+  		<% total = 0 %>
+    	<% @remisiones.each do |remision| %>
+    		<% total += remision.total %>
+        <ss:Row>
+          <ss:Cell><ss:Data ss:Type="String"><%= remision.cancelada ? "SI" : "NO" %></ss:Data></ss:Cell>
+          <ss:Cell><ss:Data ss:Type="String"><%= remision.sucursal.nombre %></ss:Data></ss:Cell>
+          <ss:Cell><ss:Data ss:Type="String"><%= remision.consecutivo rescue '' %></ss:Data></ss:Cell>
+          <ss:Cell><ss:Data ss:Type="String"><%= remision.created_at.to_s(Time.zone) %></ss:Data></ss:Cell>
+  			<ss:Cell><ss:Data ss:Type="String"><%= remision.cliente.nombre %></ss:Data></ss:Cell>
+  			<ss:Cell><ss:Data ss:Type="String"><%= remision.facturada ? "SI" : "NO" %></ss:Data></ss:Cell>
+  			<ss:Cell><ss:Data ss:Type="String"><%= remision.metodosdepago.nombre %></ss:Data></ss:Cell>
+  			<ss:Cell ss:StyleID="s23"><ss:Data ss:Type="Number"><%= number_to_currency(remision.subtotal, unit: "") %></ss:Data></ss:Cell>
+  			<ss:Cell ss:StyleID="s23"><ss:Data ss:Type="Number"><%= number_to_currency(remision.descuento, unit: "") %></ss:Data></ss:Cell>
+  			<ss:Cell ss:StyleID="s23"><ss:Data ss:Type="Number"><%= number_to_currency(remision.totalimpuestostrasladados, unit: "") %></ss:Data></ss:Cell>
+  			<ss:Cell ss:StyleID="s23"><ss:Data ss:Type="Number"><%= number_to_currency(remision.totalimpuestosretenidos, unit: "") %></ss:Data></ss:Cell>
+  			<ss:Cell ss:StyleID="s23"><ss:Data ss:Type="Number"><%= number_to_currency(remision.total, unit: "") %></ss:Data></ss:Cell>
+        </ss:Row>
+      <% end %>
+          <ss:Row>
+            <ss:Cell><ss:Data ss:Type="String">TOTAL</ss:Data></ss:Cell>
+            <ss:Cell><ss:Data ss:Type="String"> </ss:Data></ss:Cell>
+            <ss:Cell><ss:Data ss:Type="String"> </ss:Data></ss:Cell>
+            <ss:Cell><ss:Data ss:Type="String"> </ss:Data></ss:Cell>
+    		  <ss:Cell><ss:Data ss:Type="String"> </ss:Data></ss:Cell>
+    		  <ss:Cell><ss:Data ss:Type="String"> </ss:Data></ss:Cell>
+    		  <ss:Cell><ss:Data ss:Type="String"> </ss:Data></ss:Cell>
+    		  <ss:Cell><ss:Data ss:Type="String"> </ss:Data></ss:Cell>
+    		  <ss:Cell><ss:Data ss:Type="String"> </ss:Data></ss:Cell>
+    		  <ss:Cell><ss:Data ss:Type="String"> </ss:Data></ss:Cell>
+    		  <ss:Cell><ss:Data ss:Type="String"> </ss:Data></ss:Cell>
+    		  <ss:Cell ss:StyleID="s23"><ss:Data ss:Type="Number"><%= number_to_currency(total, unit: "") %></ss:Data></ss:Cell>
+  		</ss:Row>
+    </ss:Table>
+  </ss:Worksheet>
+</ss:Workbook>
