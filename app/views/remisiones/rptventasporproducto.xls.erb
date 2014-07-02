@@ -19,6 +19,7 @@
 	<th>Sucursal</th>
 	<th>Folio</th>
 	<th>Fecha</th>
+	<th>Codigo</th>
 	<th>Descripcion</th>
 	<th>Unidad</th>
     <th>Cantidad</th>
@@ -38,6 +39,7 @@
 			    <td><%= remision.consecutivo rescue '' %></td>
 			    <td><%= remision.created_at.to_s(Time.zone) %></td>
 				<!-- CONCEPTOS -->
+				<td><%= concepto.codigo %></td>
 				<td><%= concepto.descripcion %></td>
 			    <td><%= concepto.unidad %></td>
 				<td align="right"><%= concepto.cantidad %></td>

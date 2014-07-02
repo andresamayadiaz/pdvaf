@@ -41,7 +41,7 @@
 	    <li><%= link_to 'Perfil de Empresa', edit_empresa_path(current_user.empresa.id) %></li>
 	  <% end %>
   
-	  <li><%= link_to 'Nueva Remision', new_remision_path, :class => 'glyphicon glyphicon-plus' %></li>
+	  <li><%= link_to '+ Nueva Remision', new_remision_path, :class => '' %></li>
 	<% end %>
 </ul>
 <% if user_signed_in? %>
