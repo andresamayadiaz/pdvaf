@@ -39,7 +39,7 @@
     <td><%= remision.consecutivo rescue '' %></td>
     <td><%= remision.created_at.to_s(Time.zone) %></td>
     <td><%= remision.cliente.nombre %></td>
-	<td><%= remision.facturada ? "SI" : "NO" %></td>
+	<td><%= remision.facturada ? remision.seriefolio : "NO" %></td>
 	<td><%= remision.ticket rescue '' %></td>
 	<td><%= remision.metodosdepago.nombre %></td>
 	<td><%= number_to_currency(remision.subtotal) %></td>
@@ -50,7 +50,7 @@
   </tr>
   <% end %>
   <tr>
-	  <th colspan="11" align="right">TOTAL</th>
+	  <th colspan="12" align="right">TOTAL</th>
 	  <th align="right"><%= number_to_currency(@total) %></th>
   </tr>
 </table>

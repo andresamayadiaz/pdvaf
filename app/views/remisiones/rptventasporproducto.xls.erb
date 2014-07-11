@@ -39,7 +39,7 @@
 				<td><%= remision.cancelada ? "SI" : "NO" %></td>
 				<td><%= remision.sucursal.nombre %></td>
 			    <td><%= remision.consecutivo rescue '' %></td>
-				<td><%= remision.facturada ? "SI" : "NO" %></td>
+				<td><%= remision.facturada ? remision.seriefolio : "NO" %></td>
 			    <td><%= remision.created_at.to_s(Time.zone) %></td>
 				<!-- CONCEPTOS -->
 				<td><%= concepto.codigo %></td>
