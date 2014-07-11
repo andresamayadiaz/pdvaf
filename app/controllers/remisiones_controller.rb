@@ -436,14 +436,14 @@ class RemisionesController < ApplicationController
     end
     
   end
-  
+    
     # Use callbacks to share common setup or constraints between actions.
     def set_remision
       @remision = current_user.empresa.remisiones.find(params[:id])
     end
-
+    
     # Never trust parameters from the scary internet, only allow the white list through.
     def remision_params
-      params.require(:remision).permit(:serie, :cliente_id, :condicionesdepago_id, :formasdepago_id, :metodosdepago_id, :subtotal, :descuento, :total, :totalimpuestosretenidos, :totalimpuestostrasladados, conceptos_attributes: [:id, :codigo, :cantidad, :unidad, :descripcion, :valorunitario, :importe, :ivatrasladado, :iepstrasladado, :ivaretenido, :isrretenido])
+      params.require(:remision).permit(:serie, :cliente_id, :condicionesdepago_id, :formasdepago_id, :metodosdepago_id, :subtotal, :descuento, :total, :totalimpuestosretenidos, :totalimpuestostrasladados, conceptos_attributes: [:id, :codigo, :costo, :cantidad, :unidad, :descripcion, :valorunitario, :importe, :ivatrasladado, :iepstrasladado, :ivaretenido, :isrretenido])
     end
 end

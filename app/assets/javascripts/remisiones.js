@@ -86,8 +86,11 @@ function autoComp(){
 		
 			var linea = $(this).attr("linea");
 		
+			//console.log(ui.item);
+		
 			$("#cantidad"+linea).val("1");
 			$("#codigo"+linea).val(ui.item.codigobarras);
+			$("#costo"+linea).val(ui.item.precio);
 			$("#valorunitario"+linea).val(ui.item.precio);
 			$("#unidad"+linea).val(ui.item.unidad.nombre);
 			$("#ivatrasladado"+linea).val(ui.item.ivatrasladado);
@@ -115,9 +118,12 @@ function autoComp(){
 			this.value = ui.item.codigobarras;
 		
 			var linea = $(this).attr("linea");
+			
+			//console.log(ui.item);
 		
 			$("#cantidad"+linea).val("1");
 			$("#descripcion"+linea).val(ui.item.nombre);
+			$("#costo"+linea).val(ui.item.precio);
 			$("#valorunitario"+linea).val(ui.item.precio);
 			$("#unidad"+linea).val(ui.item.unidad.nombre);
 			$("#ivatrasladado"+linea).val(ui.item.ivatrasladado);
@@ -164,7 +170,7 @@ function setPrecio(linea){
 function agregarLinea(){
 	
 	var nvalinea = '<tr>'+
-          		'<td class="col-md-1"><strong>Codigo</strong><input class="codigo form-control" linea="'+lineas+'" id="codigo'+lineas+'" name="remision[conceptos_attributes][][codigo]" type="text"><br /><div class="btn btn-danger" onclick="removerLinea(this)"><span class="glyphicon glyphicon-remove"></span></div></td>'+
+          		'<td class="col-md-1"><strong>Codigo</strong><input class="codigo form-control" linea="'+lineas+'" id="codigo'+lineas+'" name="remision[conceptos_attributes][][codigo]" type="text"><br /><div class="btn btn-danger" onclick="removerLinea(this)"><span class="glyphicon glyphicon-remove"></span></div><input type="hidden" name="remision[conceptos_attributes][][costo]" value"" linea="'+lineas+'" id="costo'+lineas+'" /></td>'+
   				'<td class="col-md-6"><textarea class="concepto form-control" linea="'+lineas+'" id="descripcion'+lineas+'" name="remision[conceptos_attributes][][descripcion]" placeholder="Producto o Descripcion"></textarea></td>'+
   				'<td class="col-md-2"><input onkeyUp="calcImporte('+lineas+');" class="hidden valorunitario form-control text-right" id="valorunitario'+lineas+'" name="remision[conceptos_attributes][][valorunitario]" type="text"><select id="vunitselect'+lineas+'" onChange="setPrecio('+lineas+');"></select>&nbsp;<div id="btnPrecioManual'+lineas+'" class="btn btn-default btn-sm" onclick="precioManual('+lineas+');"><span class="glyphicon glyphicon-edit">Manual</span></div></td>'+
           	  	'<td class="col-md-1"><input onkeyUp="calcImporte('+lineas+');" class="cantidad form-control text-right" id="cantidad'+lineas+'" name="remision[conceptos_attributes][][cantidad]" type="text"></td>'+
@@ -186,7 +192,7 @@ function agregarLinea(){
 function precargarLinea(codigo, descripcion, valorunitario, cantidad, unidad, ivatrasladado, iepstrasladado, ivaretenido, isrretenido){
 	
 	var nvalinea = '<tr>'+
-          		'<td class="col-md-1"><strong>Codigo</strong><input class="codigo form-control" linea="'+lineas+'" id="codigo'+lineas+'" name="remision[conceptos_attributes][][codigo]" type="text" value="'+codigo+'"><br /><div class="btn btn-danger" onclick="removerLinea(this)"><span class="glyphicon glyphicon-remove"></span></div></td>'+
+          		'<td class="col-md-1"><strong>Codigo</strong><input class="codigo form-control" linea="'+lineas+'" id="codigo'+lineas+'" name="remision[conceptos_attributes][][codigo]" type="text" value="'+codigo+'"><br /><div class="btn btn-danger" onclick="removerLinea(this)"><span class="glyphicon glyphicon-remove"></span></div><input type="hidden" name="remision[conceptos_attributes][][costo]" value"" linea="'+lineas+'" id="costo'+lineas+'" /></td>'+
   				'<td class="col-md-6"><textarea class="concepto form-control" linea="'+lineas+'" id="descripcion'+lineas+'" name="remision[conceptos_attributes][][descripcion]" placeholder="Producto o Descripcion">' + descripcion + '</textarea></td>'+
   				'<td class="col-md-2"><input onkeyUp="calcImporte('+lineas+');" class="valorunitario form-control text-right" id="valorunitario'+lineas+'" name="remision[conceptos_attributes][][valorunitario]" type="text" value="'+valorunitario+'"></td>'+
           	  	'<td class="col-md-1"><input onkeyUp="calcImporte('+lineas+');" class="cantidad form-control text-right" id="cantidad'+lineas+'" name="remision[conceptos_attributes][][cantidad]" type="text" value="'+cantidad+'"></td>'+
@@ -216,9 +222,8 @@ function init(){
 
 	agregarLinea();
 	autoComp();
-
+	
 	$("#agregar").click(function(){
-		console.log("agregar");
 		agregarLinea();
 		if(otrosimptos==1){
 			mostrarOtrosImp();

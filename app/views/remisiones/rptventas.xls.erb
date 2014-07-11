@@ -23,6 +23,7 @@
     <th>Fecha</th>
     <th>Cliente</th>
 	<th>Facturada</th>
+	<th>Folio A.F.</th>
 	<th>Metodo de Pago</th>
 	<th>Subtotal</th>
 	<th>Descuento</th>
@@ -38,7 +39,8 @@
     <td><%= remision.consecutivo rescue '' %></td>
     <td><%= remision.created_at.to_s(Time.zone) %></td>
     <td><%= remision.cliente.nombre %></td>
-	<td><%= remision.facturada ? "Si" : "No" %></td>
+	<td><%= remision.facturada ? "SI" : "NO" %></td>
+	<td><%= remision.ticket rescue '' %></td>
 	<td><%= remision.metodosdepago.nombre %></td>
 	<td><%= number_to_currency(remision.subtotal) %></td>
 	<td><%= number_to_currency(remision.descuento) %></td>

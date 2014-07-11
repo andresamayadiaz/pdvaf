@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140702223032) do
+ActiveRecord::Schema.define(version: 20140711021203) do
 
   create_table "clientes", force: true do |t|
     t.string   "rfc"
@@ -51,6 +51,7 @@ ActiveRecord::Schema.define(version: 20140702223032) do
     t.decimal  "ivaretenido",    precision: 10, scale: 4
     t.decimal  "isrretenido",    precision: 10, scale: 4
     t.string   "codigo"
+    t.decimal  "costo",          precision: 10, scale: 4
   end
 
   add_index "conceptos", ["remision_id"], name: "index_conceptos_on_remision_id", using: :btree
