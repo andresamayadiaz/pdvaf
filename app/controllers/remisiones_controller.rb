@@ -260,6 +260,9 @@ class RemisionesController < ApplicationController
       format.pdf do
         render :layout => false
       end
+      format.txt do
+        render :layout => false
+      end
     end
     
   end

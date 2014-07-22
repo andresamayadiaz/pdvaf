@@ -1,0 +1,38 @@
+
+
+<%= current_user.empresa.razonsocial %>
+<%= current_user.empresa.rfc %>
+<%= current_user.empresa.calle %> <%= current_user.empresa.noExterior %> <%= current_user.empresa.noInterior %>
+<%= current_user.empresa.colonia %>
+<%= current_user.empresa.municipio %> <%= current_user.empresa.codigoPostal %>
+<%= current_user.empresa.estado %> <%= current_user.empresa.pais %>
+SUCURSAL: <%= current_user.sucursal.nombre %>
+TEL. <%= current_user.sucursal.telefono %>
+EMAIL. <%= current_user.sucursal.email %>
+=======================================
+REMISION: <%= @remision.consecutivo %>
+FECHA: <%= @remision.created_at.to_s(Time.zone) %>
+CAJERO: <%= current_user.name %>
+<% if @remision.autoticket %>
+[Folio AutoFacturacion: <%= @remision.ticket %>]
+<% end %>
+
+=======================================
+CONCEPTOS
+=======================================
+
+<% @remision.conceptos.each do |concepto| %>
+<%= concepto.cantidad %> [<%= concepto.unidad %>]
+<%= concepto.descripcion %>
+<%= number_to_currency(concepto.valorunitario, precision: ENV['DECIMALESDEFAULT'].to_i ) %>
+
+<% end %>
+
+=======================================
+SUBTOTAL: 
+DESCUENTO:
+IMPTOS: 
+TOTAL: 
+
+=======================================
+Impresion: <%= Time.zone.now %>

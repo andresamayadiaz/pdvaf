@@ -12,9 +12,7 @@ pdf = Prawn::Document.new({:force_download => true, :filename => @remision.id.to
 @letraChi = 6
 
 @acc.repeat :all do
-
-  
-  
+    
 end
 
 # Header PDF
