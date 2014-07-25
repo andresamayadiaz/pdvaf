@@ -88,6 +88,7 @@
 					
 				<% else %>
 					
+					<%= hidden_field_tag 'producto[precios_attributes][][id]', Precio.new.id %>
 					<%= hidden_field_tag 'producto[precios_attributes][][listadeprecio_id]', lista.id %>
 		            <%= text_field_tag 'producto[precios_attributes][][precio]', 0.0 %>
 					

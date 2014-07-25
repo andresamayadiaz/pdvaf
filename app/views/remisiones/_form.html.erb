@@ -27,7 +27,9 @@
 				<tbody>
 					<tr>
 						<td class="pull-right"><strong>Cliente </strong><button class="btn btn-info btn-xs" data-toggle="modal" data-target="#clienteModal">Nuevo</button><button type="button" class="btn btn-default btn-xs" onClick="todosClientes();">Todos</button></td>
-						<td><%= collection_select(:remision, :cliente_id, @clientes, :id, :nombre, {:prompt => false, :selected => current_user.empresa.clientedefault}, :class => "form-control") %></td>
+						<td><%= collection_select(:remision, :cliente_id, @clientes, :id, :nombre, {:prompt => false, :selected => current_user.empresa.clientedefault}, {:class => "form-control", :onchange => 'clienteChange();' }) %>
+						<%= hidden_field_tag 'cliente_listadeprecio', @clientes[current_user.empresa.clientedefault].listadeprecio.id %>
+						</td>
 					</tr>
 					<tr>
 						<td class="pull-right"><strong>Forma de Pago </strong></td>
@@ -192,6 +194,19 @@
       }
       $("#remision_cliente_id").html(str);
     });
+  }
+  
+  function clienteChange(){
+  	
+	  var cli_id = $('#remision_cliente_id').val();
+      $.ajax({
+        type: "GET",
+        url: "/clientes/" + cli_id + ".json",
+        dataType: "json"
+      }).done(function( msg ) {
+		  $("#cliente_listadeprecio").val(msg['listadeprecio'].id);
+      });
+		
   }
   
   init();

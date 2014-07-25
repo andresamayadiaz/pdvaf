@@ -248,7 +248,7 @@ class RemisionesController < ApplicationController
       end
     end
   end
-
+  
   # GET /remisiones/1
   # GET /remisiones/1.json
   # GET /remisiones/1.pdf

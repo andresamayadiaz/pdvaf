@@ -85,9 +85,9 @@ function autoComp(){
 			this.value = ui.item.nombre;
 		
 			var linea = $(this).attr("linea");
-		
+			
 			//console.log(ui.item);
-		
+			
 			$("#cantidad"+linea).val("1");
 			$("#codigo"+linea).val(ui.item.codigobarras);
 			$("#costo"+linea).val(ui.item.precio);
@@ -101,8 +101,16 @@ function autoComp(){
 			
 			str = "";
 			prec = ui.item.precios;
+			
+			var cliente_listadeprecio = $("#cliente_listadeprecio").val();
+			
 	        for(key in prec){
-	          str += "<option value='"+prec[key].precio+"'>"+formatMoney(prec[key].precio,3,',', '.')+"</option>";
+				
+				if(cliente_listadeprecio == prec[key].listadeprecio_id){
+					str += "<option value='"+prec[key].precio+"' SELECTED>"+formatMoney(prec[key].precio,3,',', '.')+"</option>";
+				}else {
+					str += "<option value='"+prec[key].precio+"'>"+formatMoney(prec[key].precio,3,',', '.')+"</option>";
+				}
 	        }
 	        $("#vunitselect"+linea).html(str);
 			
@@ -116,11 +124,11 @@ function autoComp(){
 	  select: function( event, ui ) {
 			event.preventDefault();
 			this.value = ui.item.codigobarras;
-		
+			
 			var linea = $(this).attr("linea");
 			
 			//console.log(ui.item);
-		
+			
 			$("#cantidad"+linea).val("1");
 			$("#descripcion"+linea).val(ui.item.nombre);
 			$("#costo"+linea).val(ui.item.precio);
@@ -134,8 +142,16 @@ function autoComp(){
 			
 			str = "";
 			prec = ui.item.precios;
+			
+			var cliente_listadeprecio = $("#cliente_listadeprecio").val();
+			
 	        for(key in prec){
-	          str += "<option value='"+prec[key].precio+"'>"+formatMoney(prec[key].precio,3,',', '.')+"</option>";
+				
+				if(cliente_listadeprecio == prec[key].listadeprecio_id){
+					str += "<option value='"+prec[key].precio+"' SELECTED>"+formatMoney(prec[key].precio,3,',', '.')+"</option>";
+				}else {
+					str += "<option value='"+prec[key].precio+"'>"+formatMoney(prec[key].precio,3,',', '.')+"</option>";
+				}
 	        }
 	        $("#vunitselect"+linea).html(str);
 			setPrecio(linea);

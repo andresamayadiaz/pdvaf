@@ -111,9 +111,9 @@ class ProductosController < ApplicationController
     def set_producto
       @producto = current_user.empresa.productos.find(params[:id])
     end
-
+    
     # Never trust parameters from the scary internet, only allow the white list through.
     def producto_params
-      params.require(:producto).permit(:nombre, :unidad_id, :codigobarras, :precio, :ivatrasladado, :iepstrasladado, :ivaretenido, :isrretenido, precios_attributes: [:id, :listadeprecio_id, :precio])
+      params.require(:producto).permit(:nombre, :unidad_id, :codigobarras, :precio, :ivatrasladado, :iepstrasladado, :ivaretenido, :isrretenido, precios_attributes: [:id, :producto, :listadeprecio_id, :precio])
     end
 end

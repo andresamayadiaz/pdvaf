@@ -3,10 +3,12 @@
     <span class="glyphicon glyphicon-list-alt"></span>
     Atras
   <% end %>
+  <!-- 
   <%= link_to remision_path(@remision.id, :format => :txt), :class => 'btn btn-info', :target => "_blank" do %>
     <span class="glyphicon glyphicon-note"></span>
     Imprimir TXT
   <% end %>
+	  -->
   <%= link_to remision_path(@remision.id, :format => :pdf), :class => 'btn btn-info', :target => "_blank" do %>
     <span class="glyphicon glyphicon-print"></span>
     Imprimir PDF
