@@ -275,6 +275,8 @@ class RemisionesController < ApplicationController
     @metodosdepago = current_user.empresa.metodosdepagos.load
     @condicionesdepago = current_user.empresa.condicionesdepagos.load
     
+    @lista_default = Cliente.find(current_user.empresa.clientedefault).listadeprecio.id
+    
     # Validate
     if @clientes.size <= 0
       redirect_to clientes_path, alert: 'Debes tener al menos un cliente.'
@@ -304,6 +306,7 @@ class RemisionesController < ApplicationController
     @metodosdepago = current_user.empresa.metodosdepagos.load
     @condicionesdepago = current_user.empresa.condicionesdepagos.load
     @copiaremision = current_user.empresa.remisiones.new
+    @lista_default = Cliente.find(current_user.empresa.clientedefault).listadeprecio.id
     
   end
 
