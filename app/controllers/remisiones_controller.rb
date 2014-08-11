@@ -78,7 +78,7 @@ class RemisionesController < ApplicationController
      logger.debug "-----------------------------------------"
      
      comprobante = Autofactura::Comprobante.new( comp )
-     logger.info "Comprobante subTotal: " + comprobante.subTotal.to_s
+     #logger.info "Comprobante subTotal: " + comprobante.subTotal.to_s
      resp = af.emitir(comprobante)
      
      unless resp.nil?

@@ -17,6 +17,7 @@ class User < ActiveRecord::Base
       @empresa = Empresa.new
       @empresa.razonsocial = self.name
       @empresa.rfc = self.name
+      @empresa.decimales = 3
       @empresa.save!
       
       @sucursal = Sucursal.new
