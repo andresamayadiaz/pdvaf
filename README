@@ -8,6 +8,13 @@ http://railsapps.github.io/
 
 ________________________
 
+Empresa.all.each do |e|
+	e.decimales = 3
+	e.save!
+end
+
+________________________
+
 Recipes:
 ["apps4", "controllers", "core", "email", "extras", "frontend", "gems", "git", "init", "models", "prelaunch", "railsapps", "readme", "routes", "saas", "setup", "testing", "views"]
 

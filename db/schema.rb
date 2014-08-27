@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140711021203) do
+ActiveRecord::Schema.define(version: 20140811205255) do
 
   create_table "clientes", force: true do |t|
     t.string   "rfc"
@@ -93,6 +93,7 @@ ActiveRecord::Schema.define(version: 20140711021203) do
     t.integer  "metodopagodefault"
     t.integer  "condicionpagodefault"
     t.boolean  "ticket"
+    t.integer  "decimales",            default: 3
   end
 
   create_table "formasdepagos", force: true do |t|

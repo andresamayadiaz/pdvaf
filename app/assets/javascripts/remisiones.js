@@ -1,10 +1,15 @@
 //aad
 var lineas = 0;
 var otrosimptos = 0;
+var decimales = 3;
+
+function setDecimales(decs){
+	this.decimales = decs;
+}
 
 function formatMoney(number, decPlaces, thouSeparator, decSeparator) {
     var n = number,
-    decPlaces = isNaN(decPlaces = Math.abs(decPlaces)) ? 3 : decPlaces,
+    decPlaces = isNaN(decPlaces = Math.abs(decPlaces)) ? decimales : decPlaces,
     decSeparator = decSeparator == undefined ? "." : decSeparator,
     thouSeparator = thouSeparator == undefined ? "," : thouSeparator,
     sign = n < 0 ? "-" : "",
@@ -55,13 +60,13 @@ function calcTotales(){
 	
 	total = (isNaN(subtotal_desc) ? 0 : subtotal_desc) + (isNaN(ivatrasladado) ? 0 : ivatrasladado) + (isNaN(iepstrasladado) ? 0 : iepstrasladado) - (isNaN(ivaretenido) ? 0 : ivaretenido) - (isNaN(isrretenido) ? 0 : isrretenido);
 	
-	$("#subtotal").html(formatMoney(subtotal,3,',', '.'));
-	$("#totdescuento").html(formatMoney(descuento,3,',', '.'));
-	$("#totivatrasladado").html(formatMoney(ivatrasladado,3,',', '.'));
-	$("#totiepstrasladado").html(formatMoney(iepstrasladado,3,',', '.'));
-	$("#totivaretenido").html(formatMoney(ivaretenido,3,',', '.'));
-	$("#totisrretenido").html(formatMoney(isrretenido,3,',', '.'));
-	$("#total").html(formatMoney(total,3,',', '.'));
+	$("#subtotal").html(formatMoney(subtotal,decimales,',', '.'));
+	$("#totdescuento").html(formatMoney(descuento,decimales,',', '.'));
+	$("#totivatrasladado").html(formatMoney(ivatrasladado,decimales,',', '.'));
+	$("#totiepstrasladado").html(formatMoney(iepstrasladado,decimales,',', '.'));
+	$("#totivaretenido").html(formatMoney(ivaretenido,decimales,',', '.'));
+	$("#totisrretenido").html(formatMoney(isrretenido,decimales,',', '.'));
+	$("#total").html(formatMoney(total,decimales,',', '.'));
 	
 }
 
@@ -72,7 +77,7 @@ function calcImporte(linea){
 	var importe = (cantidad * valorunitario);
 	
 	//$("#importe"+linea).html(formatMoney(importe,2,',', '.'));
-	$("#importe"+linea).html(importe.toFixed(3));
+	$("#importe"+linea).html(importe.toFixed(decimales));
 	calcTotales();
 }
 
@@ -107,9 +112,9 @@ function autoComp(){
 	        for(key in prec){
 				
 				if(cliente_listadeprecio == prec[key].listadeprecio_id){
-					str += "<option value='"+prec[key].precio+"' SELECTED>"+formatMoney(prec[key].precio,3,',', '.')+"</option>";
+					str += "<option value='"+prec[key].precio+"' SELECTED>"+formatMoney(prec[key].precio,decimales,',', '.')+"</option>";
 				}else {
-					str += "<option value='"+prec[key].precio+"'>"+formatMoney(prec[key].precio,3,',', '.')+"</option>";
+					str += "<option value='"+prec[key].precio+"'>"+formatMoney(prec[key].precio,decimales,',', '.')+"</option>";
 				}
 	        }
 	        $("#vunitselect"+linea).html(str);
@@ -148,9 +153,9 @@ function autoComp(){
 	        for(key in prec){
 				
 				if(cliente_listadeprecio == prec[key].listadeprecio_id){
-					str += "<option value='"+prec[key].precio+"' SELECTED>"+formatMoney(prec[key].precio,3,',', '.')+"</option>";
+					str += "<option value='"+prec[key].precio+"' SELECTED>"+formatMoney(prec[key].precio,decimales,',', '.')+"</option>";
 				}else {
-					str += "<option value='"+prec[key].precio+"'>"+formatMoney(prec[key].precio,3,',', '.')+"</option>";
+					str += "<option value='"+prec[key].precio+"'>"+formatMoney(prec[key].precio,decimales,',', '.')+"</option>";
 				}
 	        }
 	        $("#vunitselect"+linea).html(str);

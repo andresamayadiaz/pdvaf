@@ -148,37 +148,37 @@ def footer
       
       [@acc.make_cell(:content => "SUBTOTAL:",
           :font_style => :bold, :size => @letraMed, :width => 120, :padding => 0),
-        @acc.make_cell(:content => "#{number_to_currency(@remision.subtotal, precision: 3 )}",
+        @acc.make_cell(:content => "#{number_to_currency(@remision.subtotal, precision: current_user.empresa.decimales )}",
           :size => @letraMed, :width => 120, :padding => 0, :align => :right)
       ],
       [@acc.make_cell(:content => "DESCUENTO:",
           :font_style => :bold, :size => @letraMed, :width => 120, :padding => 0),
-        @acc.make_cell(:content => "#{number_with_precision(@remision.descuento, precision: 3)}%",
+        @acc.make_cell(:content => "#{number_with_precision(@remision.descuento, precision: current_user.empresa.decimales)}%",
           :size => @letraMed, :width => 120, :padding => 0, :align => :right)
       ],
       [@acc.make_cell(:content => "I.V.A.:",
           :font_style => :bold, :size => @letraMed, :width => 120, :padding => 0),
-        @acc.make_cell(:content => "#{number_to_currency(@remision.ivaTrasladado.to_f, precision: 3 )}",
+        @acc.make_cell(:content => "#{number_to_currency(@remision.ivaTrasladado.to_f, precision: current_user.empresa.decimales )}",
           :size => @letraMed, :width => 120, :padding => 0, :align => :right)
       ],
       [@acc.make_cell(:content => "I.E.P.S.:",
           :font_style => :bold, :size => @letraMed, :width => 120, :padding => 0),
-        @acc.make_cell(:content => "#{number_to_currency(@remision.iepsTrasladado.to_f, precision: 3 )}",
+        @acc.make_cell(:content => "#{number_to_currency(@remision.iepsTrasladado.to_f, precision: current_user.empresa.decimales )}",
           :size => @letraMed, :width => 120, :padding => 0, :align => :right)
       ],
       [@acc.make_cell(:content => "RET I.V.A.:",
           :font_style => :bold, :size => @letraMed, :width => 120, :padding => 0),
-        @acc.make_cell(:content => "#{number_to_currency(@remision.ivaRetenido.to_f, precision: 3 )}",
+        @acc.make_cell(:content => "#{number_to_currency(@remision.ivaRetenido.to_f, precision: current_user.empresa.decimales )}",
           :size => @letraMed, :width => 120, :padding => 0, :align => :right)
       ],
       [@acc.make_cell(:content => "RET I.S.R.:",
           :font_style => :bold, :size => @letraMed, :width => 120, :padding => 0),
-        @acc.make_cell(:content => "#{number_to_currency(@remision.isrRetenido.to_f, precision: 3 )}",
+        @acc.make_cell(:content => "#{number_to_currency(@remision.isrRetenido.to_f, precision: current_user.empresa.decimales )}",
           :size => @letraMed, :width => 120, :padding => 0, :align => :right)
       ],
       [@acc.make_cell(:content => "TOTAL:",
           :font_style => :bold, :size => @letraMed, :width => 120, :padding => 0),
-        @acc.make_cell(:content => "#{number_to_currency(@remision.total, precision: 3 )}",
+        @acc.make_cell(:content => "#{number_to_currency(@remision.total, precision: current_user.empresa.decimales )}",
           :size => @letraMed, :width => 120, :padding => 0, :align => :right)
       ],
     ], :width => 500
@@ -249,8 +249,8 @@ header
     @acc.make_cell(:content => item.unidad, :size => @letraMed, :width => 60, :border_width => 0, :padding => 1),
     @acc.make_cell(:content => "", :size => @letraMed, :width => 20, :border_width => 0, :padding => 1),
     @acc.make_cell(:content => item.descripcion, :size => @letraMed, :width => 240, :border_width => 0, :padding => 1),
-    @acc.make_cell(:content => number_to_currency(item.valorunitario, precision: 3), :size => @letraMed, :align => :right, :width => 60, :border_width => 0, :padding => 1),
-    @acc.make_cell(:content => number_to_currency(item.importe, precision: 3), :size => @letraMed, :align => :right, :width => 60, :border_width => 0, :padding => 1)
+    @acc.make_cell(:content => number_to_currency(item.valorunitario, precision: current_user.empresa.decimales), :size => @letraMed, :align => :right, :width => 60, :border_width => 0, :padding => 1),
+    @acc.make_cell(:content => number_to_currency(item.importe, precision: current_user.empresa.decimales), :size => @letraMed, :align => :right, :width => 60, :border_width => 0, :padding => 1)
   ]
   
   items(item_cells)

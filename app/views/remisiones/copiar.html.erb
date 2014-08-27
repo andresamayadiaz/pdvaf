@@ -6,6 +6,7 @@
   <h1>Copiar Remision #<%= @remision.consecutivo %> de <%= @remision.sucursal.nombre %></h1>
 </div>
 <script>
+  setDecimales(<%= current_user.empresa.decimales %>);
   autoComp();
 </script>
 <%= render 'formcopiar' %>

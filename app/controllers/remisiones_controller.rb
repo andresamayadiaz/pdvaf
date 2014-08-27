@@ -48,7 +48,7 @@ class RemisionesController < ApplicationController
       :version => "3.2",
       :tipoCambio => 1,
       :moneda => "MXN",
-      :decimales => 3,
+      :decimales => current_user.empresa.decimales,
       :descuento_porcentual => @remision.descuento.to_f,
       :Receptor => {
         :rfc => clienteFactura.rfc.to_s,
@@ -408,7 +408,7 @@ class RemisionesController < ApplicationController
         :descuento => @remision.descuento.to_f
       },
       :Articulos => articulos,
-      :decimales => 3
+      :decimales => current_user.empresa.decimales
     }
     
     logger.debug "-----------------------------------------"
