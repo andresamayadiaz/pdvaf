@@ -209,7 +209,7 @@ class RemisionesController < ApplicationController
     end
     
   end
-
+  
   # GET /remisiones
   # GET /remisiones.json
   def index
