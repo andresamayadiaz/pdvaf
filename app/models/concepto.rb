@@ -3,11 +3,18 @@ class Concepto < ActiveRecord::Base
   
   def calc_importe
     
-    if self.importe.nil?
+    if self.valorunitario.nil?
       
-      self.importe = 0
+      self.valorunitario = 0
       
     end
+    
+    if self.cantidad.nil?
+      
+      self.cantidad = 0
+      
+    end
+    
     self.importe = self.cantidad * self.valorunitario
     
   end
