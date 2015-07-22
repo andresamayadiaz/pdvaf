@@ -193,7 +193,7 @@ def footer
        
        receptor = @acc.make_table [
          [@acc.make_cell(:content => 
-           "Para obtener su comprobante fiscal digital (Factura) de la presente nota, favor de ingresar a http:///www.autofactura.com en el apartado Ticket e ingrese el CODIGO DE NOTA DE REMISION O TICKET: #{@remision.ticket}".squish,
+           "Para obtener su comprobante fiscal digital (Factura) de la presente nota, favor de ingresar a http://app.autofactura.com/kiosko en el apartado Ticket e ingrese el CODIGO DE NOTA DE REMISION O TICKET: #{@remision.ticket}".squish,
            :size => @letraMed, :padding => 2)]
        ], :width => 500
        receptor.cells.select { |a| a.border_width = 0 }
