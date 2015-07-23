@@ -126,6 +126,18 @@ function autoComp(){
 	$( ".codigo" ).autocomplete({
 	  source: "/productos.json?codbarras=true",
 	  minLength: 1,
+		
+		response: function( event, ui ) {
+		      if (ui.content.length == 1)
+		      {
+						
+								ui.item = ui.content[0];
+								$(this).data('ui-autocomplete')._trigger('select', 'autocompleteselect', ui);
+		            $(this).autocomplete( "close" );
+		       }
+		},
+		
+		//autoFocus: true,
 	  select: function( event, ui ) {
 			event.preventDefault();
 			this.value = ui.item.codigobarras;
