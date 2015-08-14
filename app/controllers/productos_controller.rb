@@ -39,7 +39,10 @@ class ProductosController < ApplicationController
 
   # GET /productos/new
   def new
+    
     @producto = current_user.empresa.productos.new
+    authorize! :create, @producto
+    
     @unidades = current_user.empresa.unidades.load
     @listadeprecios = current_user.empresa.listadeprecios.load
     
@@ -66,6 +69,8 @@ class ProductosController < ApplicationController
   # POST /productos.json
   def create
     @producto = current_user.empresa.productos.new(producto_params)
+    
+    authorize! :create, @producto
     
     respond_to do |format|
       if @producto.save

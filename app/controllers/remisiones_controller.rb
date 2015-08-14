@@ -370,6 +370,9 @@ class RemisionesController < ApplicationController
   # DELETE /remisiones/1
   # DELETE /remisiones/1.json
   def destroy
+    
+    authorize! :destroy, @remision
+    
     @remision.cancelar
     respond_to do |format|
       format.html { redirect_to remisiones_url, notice: 'Remision Cancelada.' }

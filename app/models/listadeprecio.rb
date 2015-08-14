@@ -21,7 +21,9 @@ class Listadeprecio < ActiveRecord::Base
       # Validar si el producto ya existe
       prod = Producto.where(codigobarras: row['codigobarras']).first
       unless prod == nil
-        listadeprecio.save!
+        if listadeprecio.id == nil
+          listadeprecio.save!
+        end
         precio = Precio.new
         precio.producto = prod
         precio.listadeprecio = listadeprecio
